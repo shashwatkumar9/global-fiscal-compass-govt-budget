@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -64,6 +65,7 @@ import FranceVATPage from "./pages/tools/FranceVATPage";
 import FranceCorporateTaxPage from "./pages/tools/FranceCorporateTaxPage";
 import FranceCapitalGainsTaxPage from "./pages/tools/FranceCapitalGainsTaxPage";
 import FrancePropertyTaxPage from "./pages/tools/FrancePropertyTaxPage";
+import FranceInheritanceTaxPage from "./pages/tools/FranceInheritanceTaxPage";
 import FrancePayrollTaxPage from "./pages/tools/FrancePayrollTaxPage";
 
 const queryClient = new QueryClient();
@@ -166,6 +168,7 @@ const App = () => (
               <Route path="/tool/:lang/france/corporate-tax-calculator" element={<FranceCorporateTaxPage />} />
               <Route path="/tool/:lang/france/capital-gains-tax-calculator" element={<FranceCapitalGainsTaxPage />} />
               <Route path="/tool/:lang/france/property-tax-calculator" element={<FrancePropertyTaxPage />} />
+              <Route path="/tool/:lang/france/inheritance-tax-calculator" element={<FranceInheritanceTaxPage />} />
               <Route path="/tool/:lang/france/payroll-tax-calculator" element={<FrancePayrollTaxPage />} />
 
               <Route path="*" element={<NotFound />} />
