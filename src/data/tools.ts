@@ -98,9 +98,122 @@ export const germanySpecificTools = [
   {
     name: "Corporate Tax Calculator",
     slug: "corporate-tax-calculator",
-    description: "Calculate German corporate tax (Körperschaftsteuer) and trade tax (Gewerbesteuer)",
+    description: "Calculate German corporate tax (Körperschaftsteuer) and trade tax (Gewerbesteuer) with municipal multipliers",
     category: "Business Tax",
-    complexity: "Advanced"
+    complexity: "Professional",
+    features: [
+      "Corporate income tax (15%)",
+      "Solidarity surcharge calculation",
+      "Trade tax with municipal rates",
+      "All major German cities",
+      "Different company types",
+      "Professional tax optimization"
+    ]
+  },
+  {
+    name: "Capital Gains Tax Calculator",
+    slug: "capital-gains-tax-calculator",
+    description: "German capital gains tax calculator with Abgeltungsteuer for stocks, real estate, and crypto investments",
+    category: "Investment Tax",
+    complexity: "Advanced",
+    features: [
+      "Abgeltungsteuer (25% flat tax)",
+      "Real estate holding periods",
+      "Cryptocurrency tax rules",
+      "Church tax calculations",
+      "Holding period exemptions",
+      "All investment types"
+    ]
+  },
+  {
+    name: "Property Tax Calculator",
+    slug: "property-tax-calculator",
+    description: "German property tax calculator (Grundsteuer) with 2025 reform calculations and municipal multipliers",
+    category: "Property Tax",
+    complexity: "Professional",
+    features: [
+      "Grundsteuer Reform 2025",
+      "Federal state-specific rates",
+      "Municipal multipliers",
+      "All property types",
+      "Assessment value calculation",
+      "Monthly/annual breakdowns"
+    ]
+  },
+  {
+    name: "Inheritance Tax Calculator",
+    slug: "inheritance-tax-calculator",
+    description: "German inheritance and gift tax calculator (Erbschaftsteuer) with all exemptions and tax classes",
+    category: "Estate Tax",
+    complexity: "Advanced",
+    features: [
+      "All relationship categories",
+      "Tax-free allowances by relationship",
+      "Progressive tax rates",
+      "Real estate valuations",
+      "Gift tax calculations",
+      "Estate planning optimization"
+    ]
+  },
+  {
+    name: "Payroll Tax Calculator",
+    slug: "payroll-tax-calculator",
+    description: "German payroll tax calculator for employers and employees with social insurance and total employment costs",
+    category: "Employment Tax",
+    complexity: "Professional",
+    features: [
+      "All tax classes (Steuerklassen)",
+      "Social insurance contributions",
+      "Employer cost calculations",
+      "Church tax by state",
+      "Net salary calculations",
+      "2025 contribution rates"
+    ]
+  },
+  {
+    name: "Sales Tax Calculator",
+    slug: "sales-tax-calculator",
+    description: "German sales tax (VAT/Umsatzsteuer) calculator with all rates, business scenarios, and EU regulations",
+    category: "Sales Tax",
+    complexity: "Professional",
+    features: [
+      "All VAT rates (19%, 7%, 0%)",
+      "B2B and B2C scenarios",
+      "EU reverse charge rules",
+      "Export calculations",
+      "Product category rates",
+      "Digital services compliance"
+    ]
+  },
+  {
+    name: "Import Tax Calculator",
+    slug: "import-tax-calculator",
+    description: "German import tax calculator with customs duties, import VAT, and duty-free allowances",
+    category: "Import Tax",
+    complexity: "Advanced",
+    features: [
+      "Customs duty calculations",
+      "Import VAT (19%)",
+      "Duty-free allowances",
+      "Country-specific rates",
+      "Product classification",
+      "Total import cost breakdown"
+    ]
+  },
+  {
+    name: "Municipal Tax Calculator",
+    slug: "municipal-tax-calculator",
+    description: "German municipal trade tax calculator (Gewerbesteuer) with all municipal multipliers and exemptions",
+    category: "Municipal Tax",
+    complexity: "Professional",
+    features: [
+      "Trade tax calculations",
+      "Municipal multipliers (Hebesatz)",
+      "Business exemption thresholds",
+      "All major German cities",
+      "Effective tax rate analysis",
+      "Business optimization tips"
+    ]
   },
   {
     name: "Budget Analyzer",

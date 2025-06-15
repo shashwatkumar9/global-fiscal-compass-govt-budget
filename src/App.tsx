@@ -13,6 +13,9 @@ import NotFound from "./pages/NotFound";
 import ToolRedirect from "./pages/ToolRedirect";
 import GermanIncomeTaxPage from "./pages/tools/GermanIncomeTaxPage";
 import GermanVATPage from "./pages/tools/GermanVATPage";
+import GermanCorporateTaxPage from "./pages/tools/GermanCorporateTaxPage";
+import GermanCapitalGainsTaxPage from "./pages/tools/GermanCapitalGainsTaxPage";
+import GermanPropertyTaxPage from "./pages/tools/GermanPropertyTaxPage";
 
 const queryClient = new QueryClient();
 
@@ -39,11 +42,17 @@ const App = () => (
               {/* Language-specific tool pages */}
               <Route path="/tool/:lang/:countrySlug/:toolSlug" element={<ToolPage />} />
               
-              {/* Specific route for German Income Tax Calculator */}
+              {/* Specific routes for German calculators */}
               <Route path="/tool/:lang/germany/income-tax-calculator" element={<GermanIncomeTaxPage />} />
-              
-              {/* Specific route for German VAT Calculator */}
               <Route path="/tool/:lang/germany/vat-calculator" element={<GermanVATPage />} />
+              <Route path="/tool/:lang/germany/corporate-tax-calculator" element={<GermanCorporateTaxPage />} />
+              <Route path="/tool/:lang/germany/capital-gains-tax-calculator" element={<GermanCapitalGainsTaxPage />} />
+              <Route path="/tool/:lang/germany/property-tax-calculator" element={<GermanPropertyTaxPage />} />
+              <Route path="/tool/:lang/germany/inheritance-tax-calculator" element={<ToolPage />} />
+              <Route path="/tool/:lang/germany/payroll-tax-calculator" element={<ToolPage />} />
+              <Route path="/tool/:lang/germany/sales-tax-calculator" element={<ToolPage />} />
+              <Route path="/tool/:lang/germany/import-tax-calculator" element={<ToolPage />} />
+              <Route path="/tool/:lang/germany/municipal-tax-calculator" element={<ToolPage />} />
               
               <Route path="*" element={<NotFound />} />
             </Routes>
