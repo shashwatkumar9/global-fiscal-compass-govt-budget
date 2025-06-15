@@ -8,9 +8,9 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { LanguageCode, languages } from "@/data/languages";
-import FranceInheritanceTaxCalculator from "@/components/tools/FranceInheritanceTaxCalculator";
+import FranceImportTaxCalculator from "@/components/tools/FranceImportTaxCalculator";
 
-const FranceInheritanceTaxPage = () => {
+const FranceImportTaxPage = () => {
   const { lang } = useParams<{ lang: LanguageCode }>();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
@@ -35,9 +35,9 @@ const FranceInheritanceTaxPage = () => {
         <div className="flex items-center space-x-2 text-sm text-gray-600 mb-6">
           <Link to={`/${lang}`} className="hover:text-blue-600">Home</Link>
           <span>/</span>
-          <Link to={`/tool/${lang}/france/inheritance-tax-calculator`} className="hover:text-blue-600">France</Link>
+          <Link to={`/tool/${lang}/france/import-tax-calculator`} className="hover:text-blue-600">France</Link>
           <span>/</span>
-          <span className="text-gray-900">Inheritance Tax Calculator</span>
+          <span className="text-gray-900">Import Tax Calculator</span>
         </div>
 
         <Link to={`/${lang}`} className="inline-flex items-center mb-6">
@@ -48,9 +48,9 @@ const FranceInheritanceTaxPage = () => {
         </Link>
 
         <div className="bg-white rounded-lg shadow-md p-8 mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">France Inheritance Tax Calculator</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">France Import Tax Calculator</h1>
           <p className="text-xl text-gray-600 mb-6">
-            Professional French inheritance tax calculator for 2025 with all allowances and tax rates.
+            Estimate French import duties and taxes for 2025.
           </p>
           
           <div className="flex flex-wrap gap-3">
@@ -58,7 +58,7 @@ const FranceInheritanceTaxPage = () => {
               France
             </span>
             <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-              Inheritance Tax
+              Import Tax
             </span>
             <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">
               {languages[lang].name}
@@ -71,14 +71,14 @@ const FranceInheritanceTaxPage = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
-            <FranceInheritanceTaxCalculator />
+            <FranceImportTaxCalculator />
           </div>
 
           <div className="space-y-6">
             <div className="bg-white rounded-lg shadow-md p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Related French Tools</h3>
               <div className="space-y-2">
-                <Link
+                 <Link
                   to={`/tool/${lang}/france/income-tax-calculator`}
                   className="block text-sm text-blue-600 hover:text-blue-800 hover:underline"
                 >
@@ -91,16 +91,16 @@ const FranceInheritanceTaxPage = () => {
                   France VAT Calculator
                 </Link>
                 <Link
+                  to={`/tool/${lang}/france/inheritance-tax-calculator`}
+                  className="block text-sm text-blue-600 hover:text-blue-800 hover:underline"
+                >
+                  France Inheritance Tax Calculator
+                </Link>
+                 <Link
                   to={`/tool/${lang}/france/sales-tax-calculator`}
                   className="block text-sm text-blue-600 hover:text-blue-800 hover:underline"
                 >
                   France Sales Tax Calculator
-                </Link>
-                <Link
-                  to={`/tool/${lang}/france/import-tax-calculator`}
-                  className="block text-sm text-blue-600 hover:text-blue-800 hover:underline"
-                >
-                  France Import Tax Calculator
                 </Link>
                 <Link
                   to={`/tool/${lang}/france/municipal-tax-calculator`}
@@ -120,7 +120,7 @@ const FranceInheritanceTaxPage = () => {
                 </div>
                 <div>
                   <span className="font-medium text-gray-900">Tool Type:</span>
-                  <span className="ml-2 text-gray-600">Inheritance Tax Calculator</span>
+                  <span className="ml-2 text-gray-600">Import Tax Calculator</span>
                 </div>
                 <div>
                   <span className="font-medium text-gray-900">Last Updated:</span>
@@ -141,4 +141,5 @@ const FranceInheritanceTaxPage = () => {
   );
 };
 
-export default FranceInheritanceTaxPage;
+export default FranceImportTaxPage;
+

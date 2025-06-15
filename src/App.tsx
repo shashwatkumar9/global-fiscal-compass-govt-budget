@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -67,6 +66,9 @@ import FranceCapitalGainsTaxPage from "./pages/tools/FranceCapitalGainsTaxPage";
 import FrancePropertyTaxPage from "./pages/tools/FrancePropertyTaxPage";
 import FranceInheritanceTaxPage from "./pages/tools/FranceInheritanceTaxPage";
 import FrancePayrollTaxPage from "./pages/tools/FrancePayrollTaxPage";
+import FranceSalesTaxPage from "./pages/tools/FranceSalesTaxPage";
+import FranceImportTaxPage from "./pages/tools/FranceImportTaxPage";
+import FranceMunicipalTaxPage from "./pages/tools/FranceMunicipalTaxPage";
 
 const queryClient = new QueryClient();
 
@@ -170,6 +172,9 @@ const App = () => (
               <Route path="/tool/:lang/france/property-tax-calculator" element={<FrancePropertyTaxPage />} />
               <Route path="/tool/:lang/france/inheritance-tax-calculator" element={<FranceInheritanceTaxPage />} />
               <Route path="/tool/:lang/france/payroll-tax-calculator" element={<FrancePayrollTaxPage />} />
+              <Route path="/tool/:lang/france/sales-tax-calculator" element={<FranceSalesTaxPage />} />
+              <Route path="/tool/:lang/france/import-tax-calculator" element={<FranceImportTaxPage />} />
+              <Route path="/tool/:lang/france/municipal-tax-calculator" element={<FranceMunicipalTaxPage />} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>
