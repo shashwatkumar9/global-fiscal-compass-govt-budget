@@ -123,7 +123,7 @@ const FranceCorporateTaxCalculator = () => {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="small">PME (CA < 250M€)</SelectItem>
+                      <SelectItem value="small">PME (CA &lt; 250M€)</SelectItem>
                       <SelectItem value="large">Grande Entreprise</SelectItem>
                     </SelectContent>
                   </Select>
@@ -257,7 +257,7 @@ const FranceCorporateTaxCalculator = () => {
                 {results.socialContribution > 0 && (
                   <div className="p-4 bg-yellow-50 rounded-lg">
                     <h4 className="font-semibold mb-2">Contribution Sociale</h4>
-                    <p>3.3% sur les bénéfices > 763 000€</p>
+                    <p>3.3% sur les bénéfices {'>'}  763 000€</p>
                     <p className="font-semibold">Contribution: {formatCurrency(results.socialContribution)}</p>
                   </div>
                 )}
@@ -279,7 +279,7 @@ const FranceCorporateTaxCalculator = () => {
                 <div className="space-y-2">
                   <p><strong>PME:</strong> 15% jusqu'à 42 500€</p>
                   <p><strong>Taux normal:</strong> 25%</p>
-                  <p><strong>Contribution sociale:</strong> 3.3% (si bénéfice > 763 000€)</p>
+                  <p><strong>Contribution sociale:</strong> 3.3% (si bénéfice {'>'} 763 000€)</p>
                   <p><strong>Taux effectif max:</strong> 28.9%</p>
                 </div>
               </CardContent>
