@@ -30,6 +30,15 @@ export interface TranslationSet {
     budgetToolsButton: string;
     topEconomies: string;
   };
+  features: {
+    title: string;
+    countrySpecificToolsTitle: string;
+    countrySpecificToolsDescription: string;
+    smartNavigationTitle: string;
+    smartNavigationDescription: string;
+    expertAccuracyTitle: string;
+    expertAccuracyDescription: string;
+  };
   megaMenu: {
     countries: string;
     popularTools: string;
@@ -71,6 +80,15 @@ export const translations: Record<string, TranslationSet> = {
       budgetToolsButton: "{country} Budget Tools",
       topEconomies: "Top Global Economies"
     },
+    features: {
+      title: "Key Features",
+      countrySpecificToolsTitle: "Country-Specific Tools",
+      countrySpecificToolsDescription: "Access specialized calculators and tools tailored to each country's unique tax laws and regulations.",
+      smartNavigationTitle: "Smart Navigation",
+      smartNavigationDescription: "Easily find the right tools with our intelligent search and categorization system.",
+      expertAccuracyTitle: "Expert Accuracy",
+      expertAccuracyDescription: "All calculations are verified by tax professionals and updated with the latest regulations."
+    },
     megaMenu: {
       countries: "Countries",
       popularTools: "Popular Tools",
@@ -109,6 +127,15 @@ export const translations: Record<string, TranslationSet> = {
       taxCalculatorButton: "{country} Steuerrechner",
       budgetToolsButton: "{country} Budget-Tools",
       topEconomies: "Top-Weltwirtschaften"
+    },
+    features: {
+      title: "Hauptmerkmale",
+      countrySpecificToolsTitle: "Länderspezifische Tools",
+      countrySpecificToolsDescription: "Zugang zu spezialisierten Rechnern und Tools, die auf die einzigartigen Steuergesetze und Vorschriften jedes Landes zugeschnitten sind.",
+      smartNavigationTitle: "Intelligente Navigation",
+      smartNavigationDescription: "Finden Sie einfach die richtigen Tools mit unserem intelligenten Such- und Kategorisierungssystem.",
+      expertAccuracyTitle: "Expertengenauigkeit",
+      expertAccuracyDescription: "Alle Berechnungen werden von Steuerfachleuten überprüft und mit den neuesten Vorschriften aktualisiert."
     },
     megaMenu: {
       countries: "Länder",
@@ -149,6 +176,15 @@ export const translations: Record<string, TranslationSet> = {
       budgetToolsButton: "Outils budgétaires {country}",
       topEconomies: "Principales économies mondiales"
     },
+    features: {
+      title: "Caractéristiques principales",
+      countrySpecificToolsTitle: "Outils spécifiques au pays",
+      countrySpecificToolsDescription: "Accédez à des calculatrices et outils spécialisés adaptés aux lois fiscales et réglementations uniques de chaque pays.",
+      smartNavigationTitle: "Navigation intelligente",
+      smartNavigationDescription: "Trouvez facilement les bons outils avec notre système de recherche et de catégorisation intelligent.",
+      expertAccuracyTitle: "Précision d'expert",
+      expertAccuracyDescription: "Tous les calculs sont vérifiés par des professionnels fiscaux et mis à jour avec les dernières réglementations."
+    },
     megaMenu: {
       countries: "Pays",
       popularTools: "Outils populaires",
@@ -187,6 +223,15 @@ export const translations: Record<string, TranslationSet> = {
       taxCalculatorButton: "Calculadora fiscal de {country}",
       budgetToolsButton: "Herramientas de presupuesto de {country}",
       topEconomies: "Principales economías mundiales"
+    },
+    features: {
+      title: "Características principales",
+      countrySpecificToolsTitle: "Herramientas específicas del país",
+      countrySpecificToolsDescription: "Acceda a calculadoras y herramientas especializadas adaptadas a las leyes fiscales y regulaciones únicas de cada país.",
+      smartNavigationTitle: "Navegación inteligente",
+      smartNavigationDescription: "Encuentre fácilmente las herramientas correctas con nuestro sistema de búsqueda y categorización inteligente.",
+      expertAccuracyTitle: "Precisión experta",
+      expertAccuracyDescription: "Todos los cálculos son verificados por profesionales fiscales y actualizados con las últimas regulaciones."
     },
     megaMenu: {
       countries: "Países",
@@ -227,6 +272,15 @@ export const translations: Record<string, TranslationSet> = {
       budgetToolsButton: "{country} बजट उपकरण",
       topEconomies: "शीर्ष वैश्विक अर्थव्यवस्थाएं"
     },
+    features: {
+      title: "मुख्य विशेषताएं",
+      countrySpecificToolsTitle: "देश-विशिष्ट उपकरण",
+      countrySpecificToolsDescription: "प्रत्येक देश के अनूठे कर कानूनों और नियमों के अनुकूल विशेष कैलकुलेटर और उपकरणों तक पहुंच प्राप्त करें।",
+      smartNavigationTitle: "स्मार्ट नेविगेशन",
+      smartNavigationDescription: "हमारी बुद्धिमान खोज और वर्गीकरण प्रणाली के साथ आसानी से सही उपकरण खोजें।",
+      expertAccuracyTitle: "विशेषज्ञ सटीकता",
+      expertAccuracyDescription: "सभी गणनाएं कर पेशेवरों द्वारा सत्यापित की जाती हैं और नवीनतम नियमों के साथ अपडेट की जाती हैं।"
+    },
     megaMenu: {
       countries: "देश",
       popularTools: "लोकप्रिय उपकरण",
@@ -265,6 +319,15 @@ export const translations: Record<string, TranslationSet> = {
       taxCalculatorButton: "{country}税务计算器",
       budgetToolsButton: "{country}预算工具",
       topEconomies: "全球顶级经济体"
+    },
+    features: {
+      title: "主要特点",
+      countrySpecificToolsTitle: "国家特定工具",
+      countrySpecificToolsDescription: "访问针对每个国家独特税法和法规量身定制的专业计算器和工具。",
+      smartNavigationTitle: "智能导航",
+      smartNavigationDescription: "通过我们的智能搜索和分类系统轻松找到合适的工具。",
+      expertAccuracyTitle: "专家准确性",
+      expertAccuracyDescription: "所有计算都经过税务专业人员验证，并使用最新法规进行更新。"
     },
     megaMenu: {
       countries: "国家",
@@ -305,6 +368,15 @@ export const translations: Record<string, TranslationSet> = {
       budgetToolsButton: "{country}予算ツール",
       topEconomies: "世界のトップ経済国"
     },
+    features: {
+      title: "主な機能",
+      countrySpecificToolsTitle: "国固有のツール",
+      countrySpecificToolsDescription: "各国固有の税法と規制に合わせた専門的な計算機とツールにアクセスできます。",
+      smartNavigationTitle: "スマートナビゲーション",
+      smartNavigationDescription: "インテリジェントな検索と分類システムで適切なツールを簡単に見つけることができます。",
+      expertAccuracyTitle: "専門家の精度",
+      expertAccuracyDescription: "すべての計算は税務専門家によって検証され、最新の規制で更新されています。"
+    },
     megaMenu: {
       countries: "国",
       popularTools: "人気ツール",
@@ -343,6 +415,15 @@ export const translations: Record<string, TranslationSet> = {
       taxCalculatorButton: "حاسبة ضرائب {country}",
       budgetToolsButton: "أدوات ميزانية {country}",
       topEconomies: "أفضل الاقتصادات العالمية"
+    },
+    features: {
+      title: "الميزات الرئيسية",
+      countrySpecificToolsTitle: "أدوات خاصة بالدولة",
+      countrySpecificToolsDescription: "الوصول إلى حاسبات وأدوات متخصصة مصممة خصيصاً لقوانين الضرائب واللوائح الفريدة لكل دولة.",
+      smartNavigationTitle: "التنقل الذكي",
+      smartNavigationDescription: "اعثر بسهولة على الأدوات المناسبة مع نظام البحث والتصنيف الذكي لدينا.",
+      expertAccuracyTitle: "دقة الخبراء",
+      expertAccuracyDescription: "جميع العمليات الحسابية يتم التحقق منها من قبل متخصصي الضرائب وتحديثها بأحدث اللوائح."
     },
     megaMenu: {
       countries: "البلدان",
