@@ -1,206 +1,104 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Treemap } from "recharts";
-import { Calculator, PieChart as PieChartIcon, BarChart3, Users, TrendingUp, AlertCircle } from "lucide-react";
-
-interface BudgetAllocation {
-  health: number;
-  education: number;
-  defence: number;
-  pensions: number;
-  transport: number;
-  housing: number;
-  environment: number;
-  justice: number;
-  other: number;
-}
+import { Calculator, PoundSterling, FileText, Info, PieChart } from "lucide-react";
+import { Treemap, ResponsiveContainer, Cell } from 'recharts';
 
 const UKBudgetAllocationTool = () => {
-  const [totalBudget, setTotalBudget] = useState<number>(850000);
-  const [allocations, setAllocations] = useState<BudgetAllocation>({
-    health: 180000,
-    education: 120000,
-    defence: 55000,
-    pensions: 140000,
-    transport: 35000,
-    housing: 25000,
-    environment: 15000,
-    justice: 30000,
-    other: 250000
-  });
+  const [totalBudget, setTotalBudget] = useState<number>(100000000);
+  const [healthcarePercent, setHealthcarePercent] = useState<number>(25);
+  const [educationPercent, setEducationPercent] = useState<number>(20);
+  const [defensePercent, setDefensePercent] = useState<number>(15);
+  const [transportPercent, setTransportPercent] = useState<number>(10);
+  const [socialSecurityPercent, setSocialSecurityPercent] = useState<number>(15);
+  const [otherPercent, setOtherPercent] = useState<number>(15);
 
-  const [customAllocations, setCustomAllocations] = useState<BudgetAllocation>({ ...allocations });
+  const calculateAllocations = () => {
+    const totalPercentage = healthcarePercent + educationPercent + defensePercent + 
+                           transportPercent + socialSecurityPercent + otherPercent;
+    
+    const healthcare = (totalBudget * healthcarePercent) / 100;
+    const education = (totalBudget * educationPercent) / 100;
+    const defense = (totalBudget * defensePercent) / 100;
+    const transport = (totalBudget * transportPercent) / 100;
+    const socialSecurity = (totalBudget * socialSecurityPercent) / 100;
+    const other = (totalBudget * otherPercent) / 100;
 
-  const handleAllocationChange = (category: keyof BudgetAllocation, value: number) => {
-    const newAllocations = { ...customAllocations, [category]: value };
-    setCustomAllocations(newAllocations);
-  };
-
-  const applyCustomAllocations = () => {
-    setAllocations(customAllocations);
-  };
-
-  const resetToDefaults = () => {
-    const defaultAllocations: BudgetAllocation = {
-      health: 180000,
-      education: 120000,
-      defence: 55000,
-      pensions: 140000,
-      transport: 35000,
-      housing: 25000,
-      environment: 15000,
-      justice: 30000,
-      other: 250000
+    return {
+      totalPercentage,
+      allocations: {
+        healthcare,
+        education,
+        defense,
+        transport,
+        socialSecurity,
+        other
+      },
+      isValid: Math.abs(totalPercentage - 100) < 0.01
     };
-    setAllocations(defaultAllocations);
-    setCustomAllocations(defaultAllocations);
   };
 
-  const totalAllocated = Object.values(allocations).reduce((sum, value) => sum + value, 0);
-  const remainingBudget = totalBudget - totalAllocated;
-  const isOverBudget = remainingBudget < 0;
-
-  // Prepare data for charts
-  const pieData = Object.entries(allocations).map(([category, amount]) => ({
-    name: category.charAt(0).toUpperCase() + category.slice(1),
-    value: amount,
-    percentage: ((amount / totalBudget) * 100).toFixed(1)
-  }));
-
-  const barData = pieData.map(item => ({
-    category: item.name,
-    amount: item.value,
-    percentage: parseFloat(item.percentage)
-  }));
-
-  const treemapData = pieData.map(item => ({
-    name: item.name,
-    size: item.value,
-    percentage: item.percentage
-  }));
-
-  const COLORS = ['#3B82F6', '#EF4444', '#10B981', '#F59E0B', '#8B5CF6', '#F97316', '#06B6D4', '#84CC16', '#EC4899'];
+  const results = calculateAllocations();
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-GB', {
       style: 'currency',
       currency: 'GBP',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(amount * 1000000);
+      notation: 'compact',
+      maximumFractionDigits: 1
+    }).format(amount);
   };
 
-  const CustomTooltip = ({ active, payload }: any) => {
-    if (active && payload && payload.length) {
-      const data = payload[0];
-      return (
-        <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">
-          <p className="font-semibold">{data.payload.name}</p>
-          <p className="text-blue-600">
-            Amount: {formatCurrency(typeof data.value === 'number' ? data.value : 0)}
-          </p>
-          <p className="text-gray-600">
-            Percentage: {typeof data.payload.percentage === 'string' ? data.payload.percentage : '0'}%
-          </p>
-        </div>
-      );
-    }
-    return null;
-  };
+  const chartData = [
+    { name: 'Healthcare', size: results.allocations.healthcare, percentage: `${healthcarePercent}%` },
+    { name: 'Education', size: results.allocations.education, percentage: `${educationPercent}%` },
+    { name: 'Defense', size: results.allocations.defense, percentage: `${defensePercent}%` },
+    { name: 'Transport', size: results.allocations.transport, percentage: `${transportPercent}%` },
+    { name: 'Social Security', size: results.allocations.socialSecurity, percentage: `${socialSecurityPercent}%` },
+    { name: 'Other', size: results.allocations.other, percentage: `${otherPercent}%` }
+  ];
 
-  const TreemapTooltip = ({ active, payload }: any) => {
-    if (active && payload && payload.length) {
-      const data = payload[0].payload;
-      return (
-        <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">
-          <p className="font-semibold">{data.name}</p>
-          <p className="text-blue-600">
-            Amount: {formatCurrency(typeof data.size === 'number' ? data.size : 0)}
-          </p>
-          <p className="text-gray-600">
-            Percentage: {typeof data.percentage === 'string' ? data.percentage : '0'}%
-          </p>
-        </div>
-      );
-    }
-    return null;
-  };
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D'];
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8">
+    <div className="max-w-6xl mx-auto space-y-8">
       {/* Header */}
       <div className="text-center">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">UK Budget Allocation Tool</h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          Analyze and optimize government budget allocations across different sectors with interactive visualization tools.
+          Plan and visualize UK government budget allocations across key departments and services.
         </p>
       </div>
 
-      {/* Budget Overview */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Calculator className="w-5 h-5" />
-            Budget Overview
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="text-center">
-              <p className="text-2xl font-bold text-blue-600">{formatCurrency(totalBudget)}</p>
-              <p className="text-gray-600">Total Budget</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold text-green-600">{formatCurrency(totalAllocated)}</p>
-              <p className="text-gray-600">Total Allocated</p>
-            </div>
-            <div className="text-center">
-              <p className={`text-2xl font-bold ${isOverBudget ? 'text-red-600' : 'text-gray-900'}`}>
-                {formatCurrency(Math.abs(remainingBudget))}
-              </p>
-              <p className="text-gray-600">{isOverBudget ? 'Over Budget' : 'Remaining'}</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold text-purple-600">
-                {((totalAllocated / totalBudget) * 100).toFixed(1)}%
-              </p>
-              <p className="text-gray-600">Utilized</p>
-            </div>
-          </div>
-          
-          {isOverBudget && (
-            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2">
-              <AlertCircle className="w-5 h-5 text-red-600" />
-              <span className="text-red-700">Warning: Budget allocation exceeds total budget by {formatCurrency(Math.abs(remainingBudget))}</span>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      <Tabs defaultValue="allocate" className="w-full">
+      <Tabs defaultValue="allocator" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="allocate">Allocate Budget</TabsTrigger>
-          <TabsTrigger value="visualize">Visualizations</TabsTrigger>
-          <TabsTrigger value="analyze">Analysis</TabsTrigger>
+          <TabsTrigger value="allocator">Budget Allocator</TabsTrigger>
+          <TabsTrigger value="analysis">Analysis</TabsTrigger>
+          <TabsTrigger value="guide">Guide</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="allocate" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Budget Allocation</CardTitle>
-              <CardDescription>
-                Adjust budget allocations for different government sectors
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
+        <TabsContent value="allocator" className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Budget Input */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Calculator className="w-5 h-5" />
+                  Budget Allocation
+                </CardTitle>
+                <CardDescription>
+                  Allocate the total budget across different departments
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
                 <div>
-                  <Label htmlFor="totalBudget">Total Budget (£ millions)</Label>
+                  <Label htmlFor="totalBudget">Total Budget (£)</Label>
                   <Input
                     id="totalBudget"
                     type="number"
@@ -212,152 +110,228 @@ const UKBudgetAllocationTool = () => {
 
                 <Separator />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {Object.entries(customAllocations).map(([category, amount]) => (
-                    <div key={category}>
-                      <Label htmlFor={category}>
-                        {category.charAt(0).toUpperCase() + category.slice(1)} (£ millions)
-                      </Label>
-                      <Input
-                        id={category}
-                        type="number"
-                        value={amount}
-                        onChange={(e) => handleAllocationChange(category as keyof BudgetAllocation, Number(e.target.value))}
-                        className="mt-1"
-                      />
-                      <p className="text-sm text-gray-500 mt-1">
-                        {((amount / totalBudget) * 100).toFixed(1)}% of total budget
-                      </p>
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="healthcare">Healthcare (%)</Label>
+                    <Input
+                      id="healthcare"
+                      type="number"
+                      min="0"
+                      max="100"
+                      value={healthcarePercent}
+                      onChange={(e) => setHealthcarePercent(Number(e.target.value))}
+                      className="mt-1"
+                    />
+                    <p className="text-sm text-gray-600 mt-1">{formatCurrency(results.allocations.healthcare)}</p>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="education">Education (%)</Label>
+                    <Input
+                      id="education"
+                      type="number"
+                      min="0"
+                      max="100"
+                      value={educationPercent}
+                      onChange={(e) => setEducationPercent(Number(e.target.value))}
+                      className="mt-1"
+                    />
+                    <p className="text-sm text-gray-600 mt-1">{formatCurrency(results.allocations.education)}</p>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="defense">Defense (%)</Label>
+                    <Input
+                      id="defense"
+                      type="number"
+                      min="0"
+                      max="100"
+                      value={defensePercent}
+                      onChange={(e) => setDefensePercent(Number(e.target.value))}
+                      className="mt-1"
+                    />
+                    <p className="text-sm text-gray-600 mt-1">{formatCurrency(results.allocations.defense)}</p>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="transport">Transport (%)</Label>
+                    <Input
+                      id="transport"
+                      type="number"
+                      min="0"
+                      max="100"
+                      value={transportPercent}
+                      onChange={(e) => setTransportPercent(Number(e.target.value))}
+                      className="mt-1"
+                    />
+                    <p className="text-sm text-gray-600 mt-1">{formatCurrency(results.allocations.transport)}</p>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="socialSecurity">Social Security (%)</Label>
+                    <Input
+                      id="socialSecurity"
+                      type="number"
+                      min="0"
+                      max="100"
+                      value={socialSecurityPercent}
+                      onChange={(e) => setSocialSecurityPercent(Number(e.target.value))}
+                      className="mt-1"
+                    />
+                    <p className="text-sm text-gray-600 mt-1">{formatCurrency(results.allocations.socialSecurity)}</p>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="other">Other (%)</Label>
+                    <Input
+                      id="other"
+                      type="number"
+                      min="0"
+                      max="100"
+                      value={otherPercent}
+                      onChange={(e) => setOtherPercent(Number(e.target.value))}
+                      className="mt-1"
+                    />
+                    <p className="text-sm text-gray-600 mt-1">{formatCurrency(results.allocations.other)}</p>
+                  </div>
+                </div>
+
+                {!results.isValid && (
+                  <div className="p-4 bg-red-50 rounded-lg">
+                    <p className="text-sm text-red-700">
+                      <strong>Warning:</strong> Total percentage is {results.totalPercentage.toFixed(1)}%. 
+                      It should equal 100%.
+                    </p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Results Visualization */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <PieChart className="w-5 h-5" />
+                  Budget Visualization
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="text-center p-4 bg-blue-50 rounded-lg">
+                  <p className="text-3xl font-bold text-blue-600">{formatCurrency(totalBudget)}</p>
+                  <p className="text-sm text-gray-600">Total Budget</p>
+                </div>
+
+                <div className="h-64">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <Treemap
+                      data={chartData}
+                      dataKey="size"
+                      stroke="#fff"
+                      fill="#8884d8"
+                    >
+                      {chartData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Treemap>
+                  </ResponsiveContainer>
+                </div>
+
+                <div className="space-y-2">
+                  {chartData.map((item, index) => (
+                    <div key={item.name} className="flex justify-between items-center">
+                      <div className="flex items-center gap-2">
+                        <div 
+                          className="w-3 h-3 rounded"
+                          style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                        />
+                        <span className="text-sm">{item.name}</span>
+                      </div>
+                      <div className="text-right">
+                        <span className="font-semibold">{formatCurrency(item.size)}</span>
+                        <span className="text-sm text-gray-600 ml-2">{item.percentage}</span>
+                      </div>
                     </div>
                   ))}
                 </div>
-
-                <div className="flex gap-4">
-                  <Button onClick={applyCustomAllocations} className="flex-1">
-                    Apply Changes
-                  </Button>
-                  <Button onClick={resetToDefaults} variant="outline" className="flex-1">
-                    Reset to Defaults
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="visualize" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <PieChartIcon className="w-5 h-5" />
-                  Budget Distribution
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={400}>
-                  <PieChart>
-                    <Pie
-                      data={pieData}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      label={({ name, percentage }) => `${name}: ${percentage}%`}
-                      outerRadius={120}
-                      fill="#8884d8"
-                      dataKey="value"
-                    >
-                      {pieData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip content={<CustomTooltip />} />
-                  </PieChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <BarChart3 className="w-5 h-5" />
-                  Sector Comparison
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={400}>
-                  <BarChart data={barData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="category" angle={-45} textAnchor="end" height={100} />
-                    <YAxis />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Bar dataKey="amount" fill="#3B82F6" />
-                  </BarChart>
-                </ResponsiveContainer>
               </CardContent>
             </Card>
           </div>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Budget Treemap</CardTitle>
-              <CardDescription>Hierarchical view of budget allocations</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={400}>
-                <Treemap
-                  data={treemapData}
-                  dataKey="size"
-                  ratio={4/3}
-                  stroke="#fff"
-                  fill="#3B82F6"
-                >
-                  <Tooltip content={<TreemapTooltip />} />
-                </Treemap>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
         </TabsContent>
 
-        <TabsContent value="analyze" className="space-y-6">
+        <TabsContent value="analysis" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Users className="w-5 h-5" />
-                Impact Analysis
-              </CardTitle>
-              <CardDescription>
-                Assess the socio-economic impact of budget changes
-              </CardDescription>
+              <CardTitle>Budget Analysis</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                  <div>
-                    <p className="text-lg font-semibold text-blue-600">Health Sector</p>
-                    <p className="text-sm text-gray-500">Impact on public health services</p>
-                  </div>
-                  <TrendingUp className="w-6 h-6 text-blue-600" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <h4 className="font-semibold">Largest Allocations</h4>
+                  {chartData
+                    .sort((a, b) => b.size - a.size)
+                    .slice(0, 3)
+                    .map((item, index) => (
+                      <div key={item.name} className="p-3 bg-blue-50 rounded-lg">
+                        <div className="flex justify-between">
+                          <span className="font-medium">{index + 1}. {item.name}</span>
+                          <span className="font-semibold">{formatCurrency(item.size)}</span>
+                        </div>
+                      </div>
+                    ))}
                 </div>
 
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                  <div>
-                    <p className="text-lg font-semibold text-green-600">Education Sector</p>
-                    <p className="text-sm text-gray-500">Effect on educational outcomes</p>
+                <div className="space-y-4">
+                  <h4 className="font-semibold">Budget Efficiency</h4>
+                  <div className="p-4 bg-gray-50 rounded-lg">
+                    <p className="text-sm">
+                      <strong>Per Capita Allocation:</strong> {formatCurrency(totalBudget / 67000000)}
+                    </p>
+                    <p className="text-sm mt-2">
+                      <strong>Budget Balance:</strong> {results.isValid ? "✓ Balanced" : "⚠ Unbalanced"}
+                    </p>
                   </div>
-                  <TrendingUp className="w-6 h-6 text-green-600" />
-                </div>
-
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                  <div>
-                    <p className="text-lg font-semibold text-orange-600">Defence Sector</p>
-                    <p className="text-sm text-gray-500">Influence on national security</p>
-                  </div>
-                  <TrendingUp className="w-6 h-6 text-orange-600" />
                 </div>
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="guide" className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Info className="w-5 h-5" />
+                  UK Budget Context
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <p><strong>Total UK Budget (2024):</strong> ~£1.1 trillion</p>
+                  <p><strong>Healthcare (NHS):</strong> ~£180 billion</p>
+                  <p><strong>Education:</strong> ~£100 billion</p>
+                  <p><strong>Defense:</strong> ~£50 billion</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="w-5 h-5" />
+                  Budget Planning Tips
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <p><strong>Balance:</strong> Ensure total allocations equal 100%</p>
+                  <p><strong>Priorities:</strong> Consider current policy priorities</p>
+                  <p><strong>Efficiency:</strong> Monitor per-capita spending</p>
+                  <p><strong>Comparison:</strong> Compare with historical data</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
       </Tabs>
     </div>
