@@ -59,6 +59,13 @@ import UKEconomicGrowthCalculatorPage from "./pages/tools/UKEconomicGrowthCalcul
 import UKBudgetAllocationToolPage from "./pages/tools/UKBudgetAllocationToolPage";
 import UKDeficitCalculatorPage from "./pages/tools/UKDeficitCalculatorPage";
 
+// France Tool Pages
+import FranceIncomeTaxPage from "./pages/tools/FranceIncomeTaxPage";
+import FranceVATPage from "./pages/tools/FranceVATPage";
+import FranceCorporateTaxPage from "./pages/tools/FranceCorporateTaxPage";
+import FranceCapitalGainsTaxPage from "./pages/tools/FranceCapitalGainsTaxPage";
+import FrancePropertyTaxPage from "./pages/tools/FrancePropertyTaxPage";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -152,6 +159,13 @@ const App = () => (
               <Route path="/tool/:lang/united-kingdom/economic-growth-calculator" element={<UKEconomicGrowthCalculatorPage />} />
               <Route path="/tool/:lang/united-kingdom/budget-allocation-tool" element={<UKBudgetAllocationToolPage />} />
               <Route path="/tool/:lang/united-kingdom/deficit-calculator" element={<UKDeficitCalculatorPage />} />
+
+              {/* France Tool Routes */}
+              <Route path="/tool/:lang/france/income-tax-calculator" element={<FranceIncomeTaxPage />} />
+              <Route path="/tool/:lang/france/vat-calculator" element={<FranceVATPage />} />
+              <Route path="/tool/:lang/france/corporate-tax-calculator" element={<FranceCorporateTaxPage />} />
+              <Route path="/tool/:lang/france/capital-gains-tax-calculator" element={<FranceCapitalGainsTaxPage />} />
+              <Route path="/tool/:lang/france/property-tax-calculator" element={<FrancePropertyTaxPage />} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>

@@ -7,68 +7,54 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
-import { Calculator, Building, Euro, TrendingUp, FileText } from "lucide-react";
+import { Calculator, Euro, FileText, Info, Building } from "lucide-react";
 
 const FranceCorporateTaxCalculator = () => {
-  const [revenue, setRevenue] = useState<number>(500000);
-  const [expenses, setExpenses] = useState<number>(300000);
-  const [depreciation, setDepreciation] = useState<number>(20000);
-  const [financialCharges, setFinancialCharges] = useState<number>(10000);
-  const [companyType, setCompanyType] = useState<string>("sarl");
-  const [taxYear, setTaxYear] = useState<string>("2025");
-  const [isSmallCompany, setIsSmallCompany] = useState<string>("no");
+  const [revenue, setRevenue] = useState<number>(1000000);
+  const [expenses, setExpenses] = useState<number>(800000);
+  const [companySize, setCompanySize] = useState<string>("large");
+  const [sector, setSector] = useState<string>("general");
+  const [researchCredit, setResearchCredit] = useState<number>(0);
+  const [otherCredits, setOtherCredits] = useState<number>(0);
 
-  // French corporate tax rates for 2025
-  const getTaxRate = () => {
-    if (isSmallCompany === "yes") {
-      return 15; // Reduced rate for small companies (up to €42,500)
-    }
-    return 25; // Standard rate
-  };
-
-  const calculateCorporateTax = () => {
-    const taxableProfit = Math.max(0, revenue - expenses - depreciation - financialCharges);
-    const standardRate = 25;
-    const reducedRate = 15;
-    const reducedRateThreshold = 42500;
-
+  const calculateTax = () => {
+    const taxableProfit = Math.max(0, revenue - expenses);
+    
+    // Standard corporate tax rate in France
+    let standardRate = 25; // 25% standard rate for 2025
+    
+    // Reduced rate for small companies (SME) on profits up to €42,500
     let corporateTax = 0;
     
-    if (isSmallCompany === "yes" && taxableProfit <= reducedRateThreshold) {
-      corporateTax = taxableProfit * (reducedRate / 100);
-    } else if (isSmallCompany === "yes" && taxableProfit > reducedRateThreshold) {
-      corporateTax = reducedRateThreshold * (reducedRate / 100) + 
-                     (taxableProfit - reducedRateThreshold) * (standardRate / 100);
+    if (companySize === "small" && taxableProfit <= 42500) {
+      corporateTax = taxableProfit * 0.15; // 15% reduced rate
+    } else if (companySize === "small") {
+      corporateTax = 42500 * 0.15 + (taxableProfit - 42500) * 0.25;
     } else {
       corporateTax = taxableProfit * (standardRate / 100);
     }
 
-    // CVAE (Cotisation sur la Valeur Ajoutée des Entreprises) - simplified calculation
-    const cvae = revenue > 152500 ? Math.min(revenue * 0.015, taxableProfit * 0.015) : 0;
-
-    // CET (Contribution Économique Territoriale) = CFE + CVAE
-    const cfe = revenue > 5000 ? 500 : 0; // Simplified CFE calculation
-    const cet = cfe + cvae;
-
-    const totalTax = corporateTax + cet;
-    const netProfit = taxableProfit - totalTax;
-    const effectiveRate = taxableProfit > 0 ? (totalTax / taxableProfit) * 100 : 0;
-
+    // Apply tax credits
+    const totalCredits = researchCredit + otherCredits;
+    const finalTax = Math.max(0, corporateTax - totalCredits);
+    
+    // Additional contributions
+    const socialContribution = taxableProfit > 763000 ? taxableProfit * 0.033 : 0; // 3.3% social contribution
+    const totalTax = finalTax + socialContribution;
+    
     return {
-      revenue,
-      totalExpenses: expenses + depreciation + financialCharges,
       taxableProfit,
       corporateTax,
-      cvae,
-      cfe,
-      cet,
+      socialContribution,
+      totalCredits,
+      finalTax,
       totalTax,
-      netProfit,
-      effectiveRate
+      netProfit: taxableProfit - totalTax,
+      effectiveRate: taxableProfit > 0 ? (totalTax / taxableProfit) * 100 : 0
     };
   };
 
-  const results = calculateCorporateTax();
+  const results = calculateTax();
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('fr-FR', {
@@ -77,22 +63,13 @@ const FranceCorporateTaxCalculator = () => {
     }).format(amount);
   };
 
-  // Company types in France
-  const companyTypes = {
-    "sarl": "SARL (Société à Responsabilité Limitée)",
-    "sas": "SAS (Société par Actions Simplifiée)",
-    "sa": "SA (Société Anonyme)",
-    "eurl": "EURL (Entreprise Unipersonnelle à Responsabilité Limitée)",
-    "sasu": "SASU (Société par Actions Simplifiée Unipersonnelle)"
-  };
-
   return (
     <div className="max-w-6xl mx-auto space-y-8">
       {/* Header */}
       <div className="text-center">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">Calculateur d'Impôt sur les Sociétés Français</h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          Calculez l'impôt sur les sociétés français avec les taux 2025 et la contribution économique territoriale.
+          Calculez l'impôt sur les sociétés de votre entreprise en France avec les taux et crédits d'impôt 2025.
         </p>
       </div>
 
@@ -110,10 +87,10 @@ const FranceCorporateTaxCalculator = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Building className="w-5 h-5" />
-                  Informations de l'Entreprise
+                  Informations Financières
                 </CardTitle>
                 <CardDescription>
-                  Saisissez les données financières de votre société
+                  Saisissez les données financières de votre entreprise
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -129,7 +106,7 @@ const FranceCorporateTaxCalculator = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="expenses">Charges d'Exploitation (€)</Label>
+                  <Label htmlFor="expenses">Charges Déductibles (€)</Label>
                   <Input
                     id="expenses"
                     type="number"
@@ -140,57 +117,55 @@ const FranceCorporateTaxCalculator = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="depreciation">Amortissements (€)</Label>
-                  <Input
-                    id="depreciation"
-                    type="number"
-                    value={depreciation}
-                    onChange={(e) => setDepreciation(Number(e.target.value))}
-                    className="mt-1"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="financialCharges">Charges Financières (€)</Label>
-                  <Input
-                    id="financialCharges"
-                    type="number"
-                    value={financialCharges}
-                    onChange={(e) => setFinancialCharges(Number(e.target.value))}
-                    className="mt-1"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="companyType">Forme Juridique</Label>
-                  <Select value={companyType} onValueChange={setCompanyType}>
+                  <Label htmlFor="companySize">Taille de l'Entreprise</Label>
+                  <Select value={companySize} onValueChange={setCompanySize}>
                     <SelectTrigger className="mt-1">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      {Object.entries(companyTypes).map(([key, name]) => (
-                        <SelectItem key={key} value={key}>
-                          {name}
-                        </SelectItem>
-                      ))}
+                      <SelectItem value="small">PME (CA < 250M€)</SelectItem>
+                      <SelectItem value="large">Grande Entreprise</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 <div>
-                  <Label htmlFor="isSmallCompany">Éligible au Taux Réduit</Label>
-                  <Select value={isSmallCompany} onValueChange={setIsSmallCompany}>
+                  <Label htmlFor="sector">Secteur d'Activité</Label>
+                  <Select value={sector} onValueChange={setSector}>
                     <SelectTrigger className="mt-1">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="yes">Oui (PME)</SelectItem>
-                      <SelectItem value="no">Non</SelectItem>
+                      <SelectItem value="general">Général</SelectItem>
+                      <SelectItem value="innovation">Innovation/R&D</SelectItem>
+                      <SelectItem value="digital">Numérique</SelectItem>
+                      <SelectItem value="green">Transition Écologique</SelectItem>
                     </SelectContent>
                   </Select>
-                  <p className="text-sm text-gray-500 mt-1">
-                    Taux réduit de 15% jusqu'à 42 500€ de bénéfice
-                  </p>
+                </div>
+
+                <Separator />
+
+                <div>
+                  <Label htmlFor="researchCredit">Crédit d'Impôt Recherche (€)</Label>
+                  <Input
+                    id="researchCredit"
+                    type="number"
+                    value={researchCredit}
+                    onChange={(e) => setResearchCredit(Number(e.target.value))}
+                    className="mt-1"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="otherCredits">Autres Crédits d'Impôt (€)</Label>
+                  <Input
+                    id="otherCredits"
+                    type="number"
+                    value={otherCredits}
+                    onChange={(e) => setOtherCredits(Number(e.target.value))}
+                    className="mt-1"
+                  />
                 </div>
               </CardContent>
             </Card>
@@ -207,11 +182,11 @@ const FranceCorporateTaxCalculator = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center p-4 bg-blue-50 rounded-lg">
                     <p className="text-2xl font-bold text-blue-600">{formatCurrency(results.netProfit)}</p>
-                    <p className="text-sm text-gray-600">Résultat Net</p>
+                    <p className="text-sm text-gray-600">Bénéfice Net</p>
                   </div>
                   <div className="text-center p-4 bg-red-50 rounded-lg">
                     <p className="text-2xl font-bold text-red-600">{formatCurrency(results.totalTax)}</p>
-                    <p className="text-sm text-gray-600">Impôts Total</p>
+                    <p className="text-sm text-gray-600">Impôt Total</p>
                   </div>
                 </div>
 
@@ -219,32 +194,20 @@ const FranceCorporateTaxCalculator = () => {
 
                 <div className="space-y-4">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Chiffre d'Affaires:</span>
-                    <span className="font-semibold">{formatCurrency(results.revenue)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Total Charges:</span>
-                    <span className="font-semibold">{formatCurrency(results.totalExpenses)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Résultat Imposable:</span>
+                    <span className="text-gray-600">Bénéfice Imposable:</span>
                     <span className="font-semibold">{formatCurrency(results.taxableProfit)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Impôt sur les Sociétés:</span>
+                    <span className="text-gray-600">IS (25% ou 15%):</span>
                     <span className="font-semibold">{formatCurrency(results.corporateTax)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">CVAE:</span>
-                    <span className="font-semibold">{formatCurrency(results.cvae)}</span>
+                    <span className="text-gray-600">Contribution Sociale (3.3%):</span>
+                    <span className="font-semibold">{formatCurrency(results.socialContribution)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">CFE:</span>
-                    <span className="font-semibold">{formatCurrency(results.cfe)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">CET Total:</span>
-                    <span className="font-semibold">{formatCurrency(results.cet)}</span>
+                    <span className="text-gray-600">Crédits d'Impôt:</span>
+                    <span className="font-semibold text-green-600">-{formatCurrency(results.totalCredits)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Taux Effectif:</span>
@@ -252,11 +215,13 @@ const FranceCorporateTaxCalculator = () => {
                   </div>
                 </div>
 
-                <div className="p-4 bg-green-50 rounded-lg">
-                  <p className="text-sm text-green-700">
-                    <strong>Taux appliqué:</strong> {getTaxRate()}% {isSmallCompany === "yes" ? "(taux réduit PME)" : "(taux normal)"}
-                  </p>
-                </div>
+                {companySize === "small" && results.taxableProfit <= 42500 && (
+                  <div className="p-4 bg-green-50 rounded-lg">
+                    <p className="text-sm text-green-700">
+                      <strong>Taux réduit PME</strong> - 15% jusqu'à 42 500€
+                    </p>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
@@ -265,46 +230,37 @@ const FranceCorporateTaxCalculator = () => {
         <TabsContent value="breakdown" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Détail du Calcul de l'IS</CardTitle>
+              <CardTitle>Détail du Calcul IS</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <h4 className="font-semibold mb-2">Calcul du Bénéfice</h4>
+                  <p>Chiffre d'affaires: {formatCurrency(revenue)}</p>
+                  <p>Charges déductibles: {formatCurrency(expenses)}</p>
+                  <p className="font-semibold">Bénéfice imposable: {formatCurrency(results.taxableProfit)}</p>
+                </div>
+                
                 <div className="p-4 bg-blue-50 rounded-lg">
-                  <h4 className="font-semibold mb-2">Calcul du Résultat Imposable</h4>
-                  <div className="space-y-1 text-sm">
-                    <p>Chiffre d'affaires: {formatCurrency(revenue)}</p>
-                    <p>- Charges d'exploitation: {formatCurrency(expenses)}</p>
-                    <p>- Amortissements: {formatCurrency(depreciation)}</p>
-                    <p>- Charges financières: {formatCurrency(financialCharges)}</p>
-                    <p className="font-semibold border-t pt-1">= Résultat imposable: {formatCurrency(results.taxableProfit)}</p>
-                  </div>
+                  <h4 className="font-semibold mb-2">Application des Taux</h4>
+                  {companySize === "small" ? (
+                    <div>
+                      <p>Taux PME (15%) sur les premiers 42 500€</p>
+                      <p>Taux normal (25%) au-delà</p>
+                    </div>
+                  ) : (
+                    <p>Taux normal: 25%</p>
+                  )}
+                  <p className="font-semibold">IS calculé: {formatCurrency(results.corporateTax)}</p>
                 </div>
 
-                <div className="p-4 bg-orange-50 rounded-lg">
-                  <h4 className="font-semibold mb-2">Calcul de l'Impôt sur les Sociétés</h4>
-                  <div className="space-y-1 text-sm">
-                    {isSmallCompany === "yes" && results.taxableProfit <= 42500 ? (
-                      <p>Taux réduit 15%: {formatCurrency(results.taxableProfit)} × 15% = {formatCurrency(results.corporateTax)}</p>
-                    ) : isSmallCompany === "yes" && results.taxableProfit > 42500 ? (
-                      <div>
-                        <p>Tranche 1 (15%): {formatCurrency(42500)} × 15% = {formatCurrency(42500 * 0.15)}</p>
-                        <p>Tranche 2 (25%): {formatCurrency(results.taxableProfit - 42500)} × 25% = {formatCurrency((results.taxableProfit - 42500) * 0.25)}</p>
-                        <p className="font-semibold">Total IS: {formatCurrency(results.corporateTax)}</p>
-                      </div>
-                    ) : (
-                      <p>Taux normal 25%: {formatCurrency(results.taxableProfit)} × 25% = {formatCurrency(results.corporateTax)}</p>
-                    )}
+                {results.socialContribution > 0 && (
+                  <div className="p-4 bg-yellow-50 rounded-lg">
+                    <h4 className="font-semibold mb-2">Contribution Sociale</h4>
+                    <p>3.3% sur les bénéfices > 763 000€</p>
+                    <p className="font-semibold">Contribution: {formatCurrency(results.socialContribution)}</p>
                   </div>
-                </div>
-
-                <div className="p-4 bg-purple-50 rounded-lg">
-                  <h4 className="font-semibold mb-2">Contribution Économique Territoriale (CET)</h4>
-                  <div className="space-y-1 text-sm">
-                    <p>CFE (Cotisation Foncière): {formatCurrency(results.cfe)}</p>
-                    <p>CVAE (Cotisation sur la VA): {formatCurrency(results.cvae)}</p>
-                    <p className="font-semibold">Total CET: {formatCurrency(results.cet)}</p>
-                  </div>
-                </div>
+                )}
               </div>
             </CardContent>
           </Card>
@@ -315,43 +271,33 @@ const FranceCorporateTaxCalculator = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <FileText className="w-5 h-5" />
-                  Taux d'Imposition
+                  <Info className="w-5 h-5" />
+                  Taux d'IS 2025
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <div>
-                    <h4 className="font-semibold">Taux Normal</h4>
-                    <p className="text-sm text-gray-600">25% depuis 2022</p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold">Taux Réduit PME</h4>
-                    <p className="text-sm text-gray-600">15% jusqu'à 42 500€</p>
-                    <p className="text-sm text-gray-600">Conditions: CA < 10M€, capital détenu à 75% par personnes physiques</p>
-                  </div>
+                <div className="space-y-2">
+                  <p><strong>PME:</strong> 15% jusqu'à 42 500€</p>
+                  <p><strong>Taux normal:</strong> 25%</p>
+                  <p><strong>Contribution sociale:</strong> 3.3% (si bénéfice > 763 000€)</p>
+                  <p><strong>Taux effectif max:</strong> 28.9%</p>
                 </div>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Échéances Fiscales</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="w-5 h-5" />
+                  Crédits d'Impôt
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <div>
-                    <h4 className="font-semibold">Acomptes</h4>
-                    <p className="text-sm text-gray-600">15 mars, 15 juin, 15 septembre, 15 décembre</p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold">Solde</h4>
-                    <p className="text-sm text-gray-600">15 du 4e mois suivant la clôture</p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold">Déclaration</h4>
-                    <p className="text-sm text-gray-600">3 mois après la clôture</p>
-                  </div>
+                <div className="space-y-2">
+                  <p><strong>CIR:</strong> 30% des dépenses R&D</p>
+                  <p><strong>CII:</strong> 20% des dépenses innovation</p>
+                  <p><strong>Transition numérique:</strong> Jusqu'à 25%</p>
+                  <p><strong>Transition écologique:</strong> Divers taux</p>
                 </div>
               </CardContent>
             </Card>
