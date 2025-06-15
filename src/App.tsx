@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,6 +8,9 @@ import { AuthProvider } from "@/components/auth/AuthProvider";
 import { LanguageProvider } from "@/components/i18n/LanguageProvider";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
+import Services from "./pages/Services";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 import ToolPage from "./pages/ToolPage";
 import NotFound from "./pages/NotFound";
 import ToolRedirect from "./pages/ToolRedirect";
@@ -73,6 +77,9 @@ const App = () => (
               <Route path="/:lang" element={<Index />} />
               
               <Route path="/auth" element={<Auth />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
               
               {/* Tool redirects without language */}
               <Route path="/tool/:countrySlug/:toolSlug" element={<ToolRedirect />} />

@@ -1,4 +1,6 @@
 
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
     <footer className="bg-gray-800 text-white py-12">
@@ -11,9 +13,9 @@ const Footer = () => {
           <div>
             <h4 className="text-md font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#about" className="text-gray-300 hover:text-white">About Us</a></li>
-              <li><a href="#services" className="text-gray-300 hover:text-white">Services</a></li>
-              <li><a href="#contact" className="text-gray-300 hover:text-white">Contact</a></li>
+              <li><Link to="/about" className="text-gray-300 hover:text-white">About Us</Link></li>
+              <li><Link to="/services" className="text-gray-300 hover:text-white">Services</Link></li>
+              <li><Link to="/contact" className="text-gray-300 hover:text-white">Contact</Link></li>
               <li><a href="#privacy" className="text-gray-300 hover:text-white">Privacy Policy</a></li>
             </ul>
           </div>
@@ -29,9 +31,15 @@ const Footer = () => {
           <div>
             <h4 className="text-md font-semibold mb-4">Support</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#help" className="text-gray-300 hover:text-white">Help Center</a></li>
-              <li><a href="#docs" className="text-gray-300 hover:text-white">Documentation</a></li>
-              <li><a href="#api" className="text-gray-300 hover:text-white">API Access</a></li>
+              <li><Link to="/contact" className="text-gray-300 hover:text-white">Help Center</Link></li>
+              <li>
+                <span className="text-gray-300">Documentation</span>
+                <span className="ml-2 text-red-400 text-xs font-medium">Coming Soon</span>
+              </li>
+              <li>
+                <span className="text-gray-300">API Access</span>
+                <span className="ml-2 text-red-400 text-xs font-medium">Coming Soon</span>
+              </li>
               <li><a href="#updates" className="text-gray-300 hover:text-white">Updates</a></li>
             </ul>
           </div>
