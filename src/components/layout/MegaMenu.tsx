@@ -1,4 +1,5 @@
-import { baseTools, germanTools, ukTools } from "@/data/tools";
+
+import { baseTools, germanTools, ukTools, franceTools } from "@/data/tools";
 import { handleToolNavigation } from "@/utils/toolNavigation";
 import { useLanguage } from "@/components/i18n/LanguageProvider";
 import { useTranslations } from "@/hooks/useTranslations";
@@ -46,6 +47,13 @@ const MegaMenu = ({
       return {
         popular: ukTools.slice(0, 10),
         advanced: ukTools.slice(10)
+      };
+    }
+
+    if (country === 'France') {
+      return {
+        popular: franceTools.slice(0, 10),
+        advanced: franceTools.slice(10)
       };
     }
 

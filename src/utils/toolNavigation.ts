@@ -56,6 +56,30 @@ const germanToolRoutes: { [key: string]: string } = {
   "Germany Deficit Calculator": "deficit-calculator"
 };
 
+// Map of French tools to their actual page routes
+const franceToolRoutes: { [key: string]: string } = {
+  "France Income Tax Calculator": "income-tax-calculator",
+  "France VAT Calculator": "vat-calculator",
+  "France Corporate Tax Calculator": "corporate-tax-calculator",
+  "France Capital Gains Tax Calculator": "capital-gains-tax-calculator",
+  "France Property Tax Calculator": "property-tax-calculator",
+  "France Inheritance Tax Calculator": "inheritance-tax-calculator",
+  "France Payroll Tax Calculator": "payroll-tax-calculator",
+  "France Sales Tax Calculator": "sales-tax-calculator",
+  "France Import Tax Calculator": "import-tax-calculator",
+  "France Municipal Tax Calculator": "municipal-tax-calculator",
+  "France Budget Analyzer": "budget-analyzer",
+  "France GDP Calculator": "gdp-calculator",
+  "France Public Debt Calculator": "public-debt-calculator",
+  "France Revenue Projector": "revenue-projector",
+  "France Spending Tracker": "spending-tracker",
+  "France Budget Comparison": "budget-comparison",
+  "France Fiscal Impact Tool": "fiscal-impact-tool",
+  "France Economic Growth Calculator": "economic-growth-calculator",
+  "France Budget Allocation Tool": "budget-allocation-tool",
+  "France Deficit Calculator": "deficit-calculator"
+};
+
 export const parseToolName = (toolString: string): ParsedTool => {
   // Get all countries from continents
   const allCountries = Object.values(continents).flatMap(continent => continent.countries);
@@ -91,11 +115,12 @@ export const generateToolSlug = (toolString: string): string => {
 export const generateCountrySlug = (country: string): string => {
   // Handle special country slug mappings
   const countrySlugMap: { [key: string]: string } = {
-    "United Kingdom": "uk",  // Changed to "uk" to match desired URL format
+    "United Kingdom": "uk",
     "United States": "united-states",
     "South Korea": "south-korea",
     "New Zealand": "new-zealand",
-    "South Africa": "south-africa"
+    "South Africa": "south-africa",
+    "France": "france"
   };
   
   return countrySlugMap[country] || country.toLowerCase().replace(/\s+/g, '-');
@@ -115,6 +140,13 @@ export const getToolRoute = (toolString: string, lang: string): string => {
   if (germanToolRoutes[toolString]) {
     const route = `/tool/${lang}/germany/${germanToolRoutes[toolString]}`;
     console.log(`Found German tool route: ${route}`);
+    return route;
+  }
+  
+  // Check if it's a French tool with existing page
+  if (franceToolRoutes[toolString]) {
+    const route = `/tool/${lang}/france/${franceToolRoutes[toolString]}`;
+    console.log(`Found French tool route: ${route}`);
     return route;
   }
   
