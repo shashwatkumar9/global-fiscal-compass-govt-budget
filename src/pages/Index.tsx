@@ -1,8 +1,10 @@
-
 import { useState, useRef, useEffect } from "react";
 import { Search, ChevronDown, Menu, X, User, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/components/auth/AuthProvider";
+import UserMenu from "@/components/auth/UserMenu";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -10,6 +12,7 @@ const Index = () => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
+  const { user } = useAuth();
 
   // Mock data for search suggestions (in real app, this would come from API)
   const allTools = [
@@ -147,14 +150,25 @@ const Index = () => {
               <a href="#services" className="text-gray-700 hover:text-blue-600 font-medium">Services</a>
               <a href="#about" className="text-gray-700 hover:text-blue-600 font-medium">About</a>
               <a href="#contact" className="text-gray-700 hover:text-blue-600 font-medium">Contact</a>
-              <Button variant="outline" size="sm" className="flex items-center gap-2">
-                <User className="w-4 h-4" />
-                Sign In
-              </Button>
-              <Button size="sm" className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700">
-                <UserPlus className="w-4 h-4" />
-                Sign Up
-              </Button>
+              
+              {user ? (
+                <UserMenu />
+              ) : (
+                <>
+                  <Link to="/auth">
+                    <Button variant="outline" size="sm" className="flex items-center gap-2">
+                      <User className="w-4 h-4" />
+                      Sign In
+                    </Button>
+                  </Link>
+                  <Link to="/auth?mode=signup">
+                    <Button size="sm" className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700">
+                      <UserPlus className="w-4 h-4" />
+                      Sign Up
+                    </Button>
+                  </Link>
+                </>
+              )}
             </nav>
 
             {/* Mobile Menu Button */}
@@ -174,16 +188,27 @@ const Index = () => {
               <a href="#services" className="block text-gray-700 hover:text-blue-600 font-medium">Services</a>
               <a href="#about" className="block text-gray-700 hover:text-blue-600 font-medium">About</a>
               <a href="#contact" className="block text-gray-700 hover:text-blue-600 font-medium">Contact</a>
-              <div className="flex gap-2 pt-2">
-                <Button variant="outline" size="sm" className="flex items-center gap-2 flex-1">
-                  <User className="w-4 h-4" />
-                  Sign In
-                </Button>
-                <Button size="sm" className="flex items-center gap-2 flex-1 bg-blue-600 hover:bg-blue-700">
-                  <UserPlus className="w-4 h-4" />
-                  Sign Up
-                </Button>
-              </div>
+              
+              {user ? (
+                <div className="pt-2">
+                  <UserMenu />
+                </div>
+              ) : (
+                <div className="flex gap-2 pt-2">
+                  <Link to="/auth" className="flex-1">
+                    <Button variant="outline" size="sm" className="flex items-center gap-2 w-full">
+                      <User className="w-4 h-4" />
+                      Sign In
+                    </Button>
+                  </Link>
+                  <Link to="/auth?mode=signup" className="flex-1">
+                    <Button size="sm" className="flex items-center gap-2 w-full bg-blue-600 hover:bg-blue-700">
+                      <UserPlus className="w-4 h-4" />
+                      Sign Up
+                    </Button>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         )}
