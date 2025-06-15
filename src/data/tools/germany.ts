@@ -296,3 +296,5 @@ export const germanySpecificTools = [
     ]
   }
 ];
+
+export const germanTools = germanySpecificTools.map(tool => `Germany ${tool.name}`);
