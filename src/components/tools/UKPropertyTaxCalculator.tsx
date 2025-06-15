@@ -11,84 +11,66 @@ import { Home, Calculator, Info, AlertCircle } from "lucide-react";
 const UKPropertyTaxCalculator = () => {
   const [propertyValue, setPropertyValue] = useState<number>(300000);
   const [propertyType, setPropertyType] = useState<string>("residential");
-  const [region, setRegion] = useState<string>("england");
   const [firstTimeBuyer, setFirstTimeBuyer] = useState<string>("no");
   const [additionalProperty, setAdditionalProperty] = useState<string>("no");
+  const [councilTaxBand, setCouncilTaxBand] = useState<string>("D");
   const [results, setResults] = useState<any>(null);
 
   const calculatePropertyTax = () => {
     let stampDuty = 0;
-    let councilTaxBand = "";
-    let councilTaxRange = "";
+    let councilTax = 0;
 
-    // Calculate Stamp Duty Land Tax (SDLT)
+    // Calculate Stamp Duty Land Tax
     if (propertyType === "residential") {
-      if (region === "england" || region === "northern-ireland") {
-        // England and Northern Ireland SDLT rates
-        if (firstTimeBuyer === "yes" && propertyValue <= 625000) {
-          // First-time buyer relief
-          if (propertyValue <= 425000) {
-            stampDuty = 0;
-          } else {
-            stampDuty = (propertyValue - 425000) * 0.05;
-          }
+      if (firstTimeBuyer === "yes" && propertyValue <= 625000) {
+        // First-time buyer relief
+        if (propertyValue <= 425000) {
+          stampDuty = 0;
         } else {
-          // Standard rates
-          if (propertyValue <= 250000) {
-            stampDuty = 0;
-          } else if (propertyValue <= 925000) {
-            stampDuty = (propertyValue - 250000) * 0.05;
-          } else if (propertyValue <= 1500000) {
-            stampDuty = 33750 + (propertyValue - 925000) * 0.10;
-          } else {
-            stampDuty = 91250 + (propertyValue - 1500000) * 0.12;
-          }
+          stampDuty = (propertyValue - 425000) * 0.05;
         }
+      } else {
+        // Standard residential rates
+        if (propertyValue <= 250000) {
+          stampDuty = 0;
+        } else if (propertyValue <= 925000) {
+          stampDuty = (propertyValue - 250000) * 0.05;
+        } else if (propertyValue <= 1500000) {
+          stampDuty = (925000 - 250000) * 0.05 + (propertyValue - 925000) * 0.10;
+        } else {
+          stampDuty = (925000 - 250000) * 0.05 + (1500000 - 925000) * 0.10 + (propertyValue - 1500000) * 0.12;
+        }
+      }
 
-        // Additional property surcharge
-        if (additionalProperty === "yes") {
-          stampDuty += propertyValue * 0.03;
-        }
+      // Additional property surcharge
+      if (additionalProperty === "yes" && propertyValue > 40000) {
+        stampDuty += propertyValue * 0.03;
       }
     }
 
-    // Calculate Council Tax band (approximate based on property value)
-    if (propertyValue <= 40000) {
-      councilTaxBand = "A";
-      councilTaxRange = "£1,000 - £1,400";
-    } else if (propertyValue <= 52000) {
-      councilTaxBand = "B";
-      councilTaxRange = "£1,200 - £1,600";
-    } else if (propertyValue <= 68000) {
-      councilTaxBand = "C";
-      councilTaxRange = "£1,300 - £1,800";
-    } else if (propertyValue <= 88000) {
-      councilTaxBand = "D";
-      councilTaxRange = "£1,500 - £2,100";
-    } else if (propertyValue <= 120000) {
-      councilTaxBand = "E";
-      councilTaxRange = "£1,800 - £2,500";
-    } else if (propertyValue <= 160000) {
-      councilTaxBand = "F";
-      councilTaxRange = "£2,100 - £2,900";
-    } else if (propertyValue <= 320000) {
-      councilTaxBand = "G";
-      councilTaxRange = "£2,400 - £3,400";
-    } else {
-      councilTaxBand = "H";
-      councilTaxRange = "£3,000 - £4,200";
-    }
+    // Council Tax (annual estimates by band)
+    const councilTaxRates: { [key: string]: number } = {
+      "A": 1200,
+      "B": 1400,
+      "C": 1600,
+      "D": 1800,
+      "E": 2200,
+      "F": 2600,
+      "G": 3000,
+      "H": 3600
+    };
+
+    councilTax = councilTaxRates[councilTaxBand] || 1800;
 
     setResults({
       propertyValue,
       stampDuty,
-      councilTaxBand,
-      councilTaxRange,
-      totalUpfrontCost: propertyValue + stampDuty,
+      councilTax,
+      totalUpfront: stampDuty,
+      monthlyCouncilTax: councilTax / 12,
       propertyType,
-      region,
-      firstTimeBuyer: firstTimeBuyer === "yes",
-      additionalProperty: additionalProperty === "yes"
+      firstTimeBuyer,
+      additionalProperty
     });
   };
 
@@ -100,7 +82,7 @@ const UKPropertyTaxCalculator = () => {
           UK Property Tax Calculator
         </h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          Calculate UK Council Tax bands and Stamp Duty Land Tax for property transactions across England, Wales, Scotland and Northern Ireland.
+          Calculate UK Council Tax bands and Stamp Duty Land Tax for property transactions.
         </p>
       </div>
 
@@ -112,7 +94,7 @@ const UKPropertyTaxCalculator = () => {
               Property Details
             </CardTitle>
             <CardDescription>
-              Enter your property information
+              Enter your property information for tax calculations
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -136,28 +118,12 @@ const UKPropertyTaxCalculator = () => {
                 <SelectContent>
                   <SelectItem value="residential">Residential</SelectItem>
                   <SelectItem value="commercial">Commercial</SelectItem>
-                  <SelectItem value="mixed">Mixed Use</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="region">Region</Label>
-              <Select value={region} onValueChange={setRegion}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select region" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="england">England</SelectItem>
-                  <SelectItem value="wales">Wales</SelectItem>
-                  <SelectItem value="scotland">Scotland</SelectItem>
-                  <SelectItem value="northern-ireland">Northern Ireland</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="firstTimeBuyer">First-time Buyer?</Label>
+              <Label htmlFor="firstTimeBuyer">First-Time Buyer?</Label>
               <Select value={firstTimeBuyer} onValueChange={setFirstTimeBuyer}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select option" />
@@ -170,14 +136,33 @@ const UKPropertyTaxCalculator = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="additionalProperty">Additional Property/Second Home?</Label>
+              <Label htmlFor="additionalProperty">Additional Property?</Label>
               <Select value={additionalProperty} onValueChange={setAdditionalProperty}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select option" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="yes">Yes</SelectItem>
-                  <SelectItem value="no">No</SelectItem>
+                  <SelectItem value="yes">Yes (Buy-to-let/Second home)</SelectItem>
+                  <SelectItem value="no">No (Main residence)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="councilTaxBand">Council Tax Band</Label>
+              <Select value={councilTaxBand} onValueChange={setCouncilTaxBand}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select band" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="A">Band A (Up to £40,000)</SelectItem>
+                  <SelectItem value="B">Band B (£40,001 - £52,000)</SelectItem>
+                  <SelectItem value="C">Band C (£52,001 - £68,000)</SelectItem>
+                  <SelectItem value="D">Band D (£68,001 - £88,000)</SelectItem>
+                  <SelectItem value="E">Band E (£88,001 - £120,000)</SelectItem>
+                  <SelectItem value="F">Band F (£120,001 - £160,000)</SelectItem>
+                  <SelectItem value="G">Band G (£160,001 - £320,000)</SelectItem>
+                  <SelectItem value="H">Band H (Over £320,000)</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -196,63 +181,44 @@ const UKPropertyTaxCalculator = () => {
                 Property Tax Results
               </CardTitle>
               <CardDescription>
-                Your UK property tax calculation
+                Your UK property tax breakdown
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="space-y-4">
-                <div className="p-4 bg-blue-50 rounded-lg">
-                  <h3 className="font-semibold text-blue-800 mb-2">Stamp Duty Land Tax</h3>
-                  <div className="flex justify-between items-center">
-                    <span>SDLT Amount:</span>
-                    <span className="text-xl font-bold text-blue-600">
-                      £{results.stampDuty.toFixed(2)}
-                    </span>
-                  </div>
-                  {results.firstTimeBuyer && (
-                    <p className="text-sm text-green-600 mt-1">✓ First-time buyer relief applied</p>
-                  )}
-                  {results.additionalProperty && (
-                    <p className="text-sm text-orange-600 mt-1">! Additional property surcharge (3%) applied</p>
-                  )}
+              <div className="grid grid-cols-1 gap-4 text-sm">
+                <div>
+                  <p className="text-gray-600">Property Value</p>
+                  <p className="font-semibold text-lg">£{results.propertyValue.toLocaleString()}</p>
                 </div>
+              </div>
 
-                <div className="p-4 bg-green-50 rounded-lg">
-                  <h3 className="font-semibold text-green-800 mb-2">Council Tax</h3>
-                  <div className="flex justify-between items-center">
-                    <span>Council Tax Band:</span>
-                    <span className="text-xl font-bold text-green-600">
-                      Band {results.councilTaxBand}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center text-sm">
-                    <span>Annual Range:</span>
-                    <span className="font-semibold">{results.councilTaxRange}</span>
-                  </div>
-                </div>
+              <Separator />
 
-                <Separator />
-
-                <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                  <span className="font-medium">Total Upfront Cost:</span>
-                  <span className="text-xl font-bold text-gray-800">
-                    £{results.totalUpfrontCost.toLocaleString()}
+              <div className="space-y-3">
+                <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg">
+                  <span className="font-medium">Stamp Duty Land Tax:</span>
+                  <span className="text-xl font-bold text-red-600">
+                    £{results.stampDuty.toFixed(2)}
                   </span>
                 </div>
 
-                <div className="text-sm space-y-1">
-                  <div className="flex justify-between">
-                    <span>Property Value:</span>
-                    <span>£{results.propertyValue.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Region:</span>
-                    <span className="capitalize">{results.region.replace('-', ' ')}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Property Type:</span>
-                    <span className="capitalize">{results.propertyType}</span>
-                  </div>
+                <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                  <span className="font-medium">Annual Council Tax:</span>
+                  <span className="text-xl font-bold text-blue-600">
+                    £{results.councilTax.toFixed(2)}
+                  </span>
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">Monthly Council Tax:</span>
+                  <span className="font-semibold">£{results.monthlyCouncilTax.toFixed(2)}</span>
+                </div>
+
+                <div className="flex justify-between items-center p-3 bg-orange-50 rounded-lg">
+                  <span className="font-medium">Total Upfront Cost:</span>
+                  <span className="text-xl font-bold text-orange-600">
+                    £{results.totalUpfront.toFixed(2)}
+                  </span>
                 </div>
               </div>
             </CardContent>
@@ -265,7 +231,7 @@ const UKPropertyTaxCalculator = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <Info className="w-5 h-5 text-blue-600" />
-              SDLT Rates (England & NI)
+              Stamp Duty Rates
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-sm">
@@ -285,9 +251,6 @@ const UKPropertyTaxCalculator = () => {
               <span>Over £1.5m:</span>
               <span>12%</span>
             </div>
-            <p className="text-xs text-gray-500 mt-2">
-              Additional 3% surcharge for additional properties
-            </p>
           </CardContent>
         </Card>
 
@@ -295,29 +258,14 @@ const UKPropertyTaxCalculator = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <Info className="w-5 h-5 text-green-600" />
-              Council Tax Bands
+              First-Time Buyer Relief
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span>Band A:</span>
-              <span>Up to £40,000</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Band B:</span>
-              <span>£40,001 - £52,000</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Band C:</span>
-              <span>£52,001 - £68,000</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Band D:</span>
-              <span>£68,001 - £88,000</span>
-            </div>
-            <p className="text-xs text-gray-500 mt-2">
-              Based on 1991 property values in England
-            </p>
+            <p>• No stamp duty up to £425,000</p>
+            <p>• 5% on amount between £425,001 - £625,000</p>
+            <p>• Must be your only or main residence</p>
+            <p>• Property value under £625,000</p>
           </CardContent>
         </Card>
 
@@ -325,17 +273,14 @@ const UKPropertyTaxCalculator = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <AlertCircle className="w-5 h-5 text-orange-600" />
-              Important Notes
+              Additional Notes
             </CardTitle>
           </CardHeader>
           <CardContent className="text-sm space-y-2">
-            <p>• Wales and Scotland have different tax systems</p>
-            <p>• First-time buyer relief available up to £625,000</p>
-            <p>• Council Tax varies significantly by local authority</p>
-            <p>• Commercial properties have different rates</p>
-            <p className="text-xs text-gray-500 mt-2">
-              For official guidance, visit gov.uk/stamp-duty-land-tax
-            </p>
+            <p>• 3% surcharge on additional properties over £40,000</p>
+            <p>• Council Tax varies by local authority</p>
+            <p>• Some properties may be exempt from Council Tax</p>
+            <p>• Students and single person discounts available</p>
           </CardContent>
         </Card>
       </div>
