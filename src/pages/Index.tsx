@@ -8,13 +8,15 @@ import QuickAccessTools from "@/components/home/QuickAccessTools";
 import FeaturesSection from "@/components/home/FeaturesSection";
 import Footer from "@/components/layout/Footer";
 import { handleToolNavigation } from "@/utils/toolNavigation";
+import { useLanguage } from "@/components/i18n/LanguageProvider";
 
 const Index = () => {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { language } = useLanguage();
 
   const handleToolClick = (tool: string) => {
-    handleToolNavigation(tool);
+    handleToolNavigation(tool, language);
   };
 
   const handleEconomyCountryClick = (country: string) => {

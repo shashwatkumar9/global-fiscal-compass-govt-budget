@@ -2,17 +2,20 @@
 import { Button } from "@/components/ui/button";
 import { baseTools } from "@/data/tools";
 import { handleToolNavigation } from "@/utils/toolNavigation";
+import { useLanguage } from "@/components/i18n/LanguageProvider";
 
 interface QuickAccessToolsProps {
   onToolClick?: (tool: string) => void;
 }
 
 const QuickAccessTools = ({ onToolClick }: QuickAccessToolsProps) => {
+  const { language } = useLanguage();
+
   const handleClick = (tool: string) => {
     if (onToolClick) {
       onToolClick(tool);
     } else {
-      handleToolNavigation(tool);
+      handleToolNavigation(tool, language);
     }
   };
 

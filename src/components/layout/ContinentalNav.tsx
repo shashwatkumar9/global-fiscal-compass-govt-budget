@@ -1,9 +1,11 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { continents, ContinentKey } from "@/data/continents";
+import { continents } from "@/data/continents";
 import MegaMenu from "./MegaMenu";
 import { handleToolNavigation } from "@/utils/toolNavigation";
+import { useLanguage } from "@/components/i18n/LanguageProvider";
+import LanguageSwitcher from "@/components/i18n/LanguageSwitcher";
 
 interface ContinentalNavProps {
   selectedCountry: string | null;
@@ -13,6 +15,7 @@ interface ContinentalNavProps {
 const ContinentalNav = ({ selectedCountry, setSelectedCountry }: ContinentalNavProps) => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
+  const { language } = useLanguage();
 
   const handleCountryClick = (country: string) => {
     setSelectedCountry(country);
@@ -24,48 +27,53 @@ const ContinentalNav = ({ selectedCountry, setSelectedCountry }: ContinentalNavP
   };
 
   const handleToolClick = (tool: string) => {
-    handleToolNavigation(tool);
+    handleToolNavigation(tool, language);
     setActiveMenu(null);
   };
 
   return (
     <nav className="bg-gray-800 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex space-x-0">
-          {Object.entries(continents).map(([key, continent]) => (
-            <div key={key} className="relative group">
-              <button
-                className={`${continent.color} ${continent.hoverColor} text-white px-6 py-4 flex items-center space-x-2 transition-colors duration-200 font-medium text-sm`}
+        <div className="flex justify-between items-center">
+          <div className="flex space-x-0">
+            {Object.entries(continents).map(([key, continent]) => (
+              <div 
+                key={key} 
+                className="relative"
                 onMouseEnter={() => {
                   setActiveMenu(key);
                   setHoveredCountry(null);
                 }}
+                onMouseLeave={() => {
+                  setActiveMenu(null);
+                  setHoveredCountry(null);
+                }}
               >
-                <span>{continent.name}</span>
-                <ChevronDown className="w-4 h-4" />
-              </button>
-
-              {/* Mega Menu */}
-              {activeMenu === key && (
-                <div
-                  className="absolute top-full left-0 bg-white shadow-xl border border-gray-200 rounded-b-lg z-50 w-[800px]"
-                  onMouseEnter={() => setActiveMenu(key)}
-                  onMouseLeave={() => {
-                    setActiveMenu(null);
-                    setHoveredCountry(null);
-                  }}
+                <button
+                  className={`${continent.color} ${continent.hoverColor} text-white px-6 py-4 flex items-center space-x-2 transition-colors duration-200 font-medium text-sm`}
                 >
-                  <MegaMenu
-                    continent={continent}
-                    hoveredCountry={hoveredCountry}
-                    setHoveredCountry={setHoveredCountry}
-                    onCountryClick={handleCountryClick}
-                    onToolClick={handleToolClick}
-                  />
-                </div>
-              )}
-            </div>
-          ))}
+                  <span>{continent.name}</span>
+                  <ChevronDown className="w-4 h-4" />
+                </button>
+
+                {/* Mega Menu */}
+                {activeMenu === key && (
+                  <div
+                    className="absolute top-full left-0 bg-white shadow-xl border border-gray-200 rounded-b-lg z-50 w-[800px]"
+                  >
+                    <MegaMenu
+                      continent={continent}
+                      hoveredCountry={hoveredCountry}
+                      setHoveredCountry={setHoveredCountry}
+                      onCountryClick={handleCountryClick}
+                      onToolClick={handleToolClick}
+                    />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          <LanguageSwitcher />
         </div>
       </div>
     </nav>

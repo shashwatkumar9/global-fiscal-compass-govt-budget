@@ -1,4 +1,3 @@
-
 import { baseTools } from "@/data/tools";
 import { continents } from "@/data/continents";
 
@@ -44,16 +43,16 @@ export const generateCountrySlug = (country: string): string => {
   return country.toLowerCase().replace(/\s+/g, '-');
 };
 
-export const handleToolNavigation = (toolString: string) => {
+export const handleToolNavigation = (toolString: string, lang: string) => {
   const parsedTool = parseToolName(toolString);
   
-  console.log(`Navigating to tool: ${toolString}`);
+  console.log(`Navigating to tool: ${toolString} in language: ${lang}`);
   console.log(`Parsed tool:`, parsedTool);
   
   if (parsedTool.isCountrySpecific && parsedTool.country) {
     const countrySlug = generateCountrySlug(parsedTool.country);
     const toolSlug = generateToolSlug(parsedTool.toolName);
-    const route = `/tool/${countrySlug}/${toolSlug}`;
+    const route = `/tool/${lang}/${countrySlug}/${toolSlug}`;
     
     console.log(`Navigating to country-specific tool: ${route}`);
     window.location.href = route;

@@ -3,12 +3,14 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useParams, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/components/auth/AuthProvider";
+import { LanguageProvider } from "@/components/i18n/LanguageProvider";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import ToolPage from "./pages/ToolPage";
 import NotFound from "./pages/NotFound";
+import ToolRedirect from "./pages/ToolRedirect";
 
 const queryClient = new QueryClient();
 
@@ -16,16 +18,19 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
       <AuthProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/tool/:countrySlug/:toolSlug" element={<ToolPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </TooltipProvider>
+        <LanguageProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/tool/:countrySlug/:toolSlug" element={<ToolRedirect />} />
+              <Route path="/tool/:lang/:countrySlug/:toolSlug" element={<ToolPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </TooltipProvider>
+        </LanguageProvider>
       </AuthProvider>
     </BrowserRouter>
   </QueryClientProvider>

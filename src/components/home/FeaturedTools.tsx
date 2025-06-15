@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { topToolsForEconomies, topEconomies } from "@/data/tools";
 import { handleToolNavigation } from "@/utils/toolNavigation";
+import { useLanguage } from "@/components/i18n/LanguageProvider";
 
 interface FeaturedToolsProps {
   selectedCountry: string | null;
@@ -16,6 +17,7 @@ const FeaturedTools = ({
   onToolClick, 
   onEconomyCountryClick 
 }: FeaturedToolsProps) => {
+  const { language } = useLanguage();
   // Get featured tools based on selected country
   const getFeaturedTools = () => {
     if (selectedCountry) {
@@ -30,7 +32,7 @@ const FeaturedTools = ({
     if (onToolClick) {
       onToolClick(tool);
     } else {
-      handleToolNavigation(tool);
+      handleToolNavigation(tool, language);
     }
   };
 
