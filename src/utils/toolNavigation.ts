@@ -89,9 +89,9 @@ export const generateToolSlug = (toolString: string): string => {
 };
 
 export const generateCountrySlug = (country: string): string => {
-  // Handle special country slug mappings
+  // Handle special country slug mappings - this was the issue!
   const countrySlugMap: { [key: string]: string } = {
-    "United Kingdom": "united-kingdom",
+    "United Kingdom": "united-kingdom",  // This was mapping incorrectly before
     "United States": "united-states",
     "South Korea": "south-korea",
     "New Zealand": "new-zealand",
