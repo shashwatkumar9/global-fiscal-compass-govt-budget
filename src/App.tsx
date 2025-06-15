@@ -69,6 +69,16 @@ import FrancePayrollTaxPage from "./pages/tools/FrancePayrollTaxPage";
 import FranceSalesTaxPage from "./pages/tools/FranceSalesTaxPage";
 import FranceImportTaxPage from "./pages/tools/FranceImportTaxPage";
 import FranceMunicipalTaxPage from "./pages/tools/FranceMunicipalTaxPage";
+import FranceBudgetAnalyzerPage from "./pages/tools/FranceBudgetAnalyzerPage";
+import FranceGDPCalculatorPage from "./pages/tools/FranceGDPCalculatorPage";
+import FrancePublicDebtCalculatorPage from "./pages/tools/FrancePublicDebtCalculatorPage";
+import FranceRevenueProjectorPage from "./pages/tools/FranceRevenueProjectorPage";
+import FranceSpendingTrackerPage from "./pages/tools/FranceSpendingTrackerPage";
+import FranceBudgetComparisonPage from "./pages/tools/FranceBudgetComparisonPage";
+import FranceFiscalImpactToolPage from "./pages/tools/FranceFiscalImpactToolPage";
+import FranceEconomicGrowthCalculatorPage from "./pages/tools/FranceEconomicGrowthCalculatorPage";
+import FranceBudgetAllocationToolPage from "./pages/tools/FranceBudgetAllocationToolPage";
+import FranceDeficitCalculatorPage from "./pages/tools/FranceDeficitCalculatorPage";
 
 const queryClient = new QueryClient();
 
@@ -175,6 +185,16 @@ const App = () => (
               <Route path="/tool/:lang/france/sales-tax-calculator" element={<FranceSalesTaxPage />} />
               <Route path="/tool/:lang/france/import-tax-calculator" element={<FranceImportTaxPage />} />
               <Route path="/tool/:lang/france/municipal-tax-calculator" element={<FranceMunicipalTaxPage />} />
+              <Route path="/tool/:lang/france/budget-analyzer" element={<FranceBudgetAnalyzerPage />} />
+              <Route path="/tool/:lang/france/gdp-calculator" element={<FranceGDPCalculatorPage />} />
+              <Route path="/tool/:lang/france/public-debt-calculator" element={<FrancePublicDebtCalculatorPage />} />
+              <Route path="/tool/:lang/france/revenue-projector" element={<FranceRevenueProjectorPage />} />
+              <Route path="/tool/:lang/france/spending-tracker" element={<FranceSpendingTrackerPage />} />
+              <Route path="/tool/:lang/france/budget-comparison" element={<FranceBudgetComparisonPage />} />
+              <Route path="/tool/:lang/france/fiscal-impact-tool" element={<FranceFiscalImpactToolPage />} />
+              <Route path="/tool/:lang/france/economic-growth-calculator" element={<FranceEconomicGrowthCalculatorPage />} />
+              <Route path="/tool/:lang/france/budget-allocation-tool" element={<FranceBudgetAllocationToolPage />} />
+              <Route path="/tool/:lang/france/deficit-calculator" element={<FranceDeficitCalculatorPage />} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>
