@@ -41,7 +41,16 @@ export const generateToolSlug = (toolString: string): string => {
 };
 
 export const generateCountrySlug = (country: string): string => {
-  return country.toLowerCase().replace(/\s+/g, '-');
+  // Handle special country slug mappings
+  const countrySlugMap: { [key: string]: string } = {
+    "United Kingdom": "united-kingdom",
+    "United States": "united-states",
+    "South Korea": "south-korea",
+    "New Zealand": "new-zealand",
+    "South Africa": "south-africa"
+  };
+  
+  return countrySlugMap[country] || country.toLowerCase().replace(/\s+/g, '-');
 };
 
 export const getToolRoute = (toolString: string, lang: string): string => {

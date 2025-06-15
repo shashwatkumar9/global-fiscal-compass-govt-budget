@@ -11,6 +11,8 @@ import Auth from "./pages/Auth";
 import ToolPage from "./pages/ToolPage";
 import NotFound from "./pages/NotFound";
 import ToolRedirect from "./pages/ToolRedirect";
+
+// German Tool Pages
 import GermanIncomeTaxPage from "./pages/tools/GermanIncomeTaxPage";
 import GermanVATPage from "./pages/tools/GermanVATPage";
 import GermanCorporateTaxPage from "./pages/tools/GermanCorporateTaxPage";
@@ -31,6 +33,28 @@ import GermanFiscalImpactToolPage from "./pages/tools/GermanFiscalImpactToolPage
 import GermanEconomicGrowthCalculatorPage from "./pages/tools/GermanEconomicGrowthCalculatorPage";
 import GermanBudgetAllocationToolPage from "./pages/tools/GermanBudgetAllocationToolPage";
 import GermanDeficitCalculatorPage from "./pages/tools/GermanDeficitCalculatorPage";
+
+// UK Tool Pages
+import UKIncomeTaxPage from "./pages/tools/UKIncomeTaxPage";
+import UKVATPage from "./pages/tools/UKVATPage";
+import UKCorporateTaxPage from "./pages/tools/UKCorporateTaxPage";
+import UKCapitalGainsTaxPage from "./pages/tools/UKCapitalGainsTaxPage";
+import UKPropertyTaxPage from "./pages/tools/UKPropertyTaxPage";
+import UKInheritanceTaxPage from "./pages/tools/UKInheritanceTaxPage";
+import UKPayrollTaxPage from "./pages/tools/UKPayrollTaxPage";
+import UKSalesTaxPage from "./pages/tools/UKSalesTaxPage";
+import UKImportTaxPage from "./pages/tools/UKImportTaxPage";
+import UKMunicipalTaxPage from "./pages/tools/UKMunicipalTaxPage";
+import UKBudgetAnalyzerPage from "./pages/tools/UKBudgetAnalyzerPage";
+import UKGDPCalculatorPage from "./pages/tools/UKGDPCalculatorPage";
+import UKPublicDebtCalculatorPage from "./pages/tools/UKPublicDebtCalculatorPage";
+import UKRevenueProjectorPage from "./pages/tools/UKRevenueProjectorPage";
+import UKSpendingTrackerPage from "./pages/tools/UKSpendingTrackerPage";
+import UKBudgetComparisonPage from "./pages/tools/UKBudgetComparisonPage";
+import UKFiscalImpactToolPage from "./pages/tools/UKFiscalImpactToolPage";
+import UKEconomicGrowthCalculatorPage from "./pages/tools/UKEconomicGrowthCalculatorPage";
+import UKBudgetAllocationToolPage from "./pages/tools/UKBudgetAllocationToolPage";
+import UKDeficitCalculatorPage from "./pages/tools/UKDeficitCalculatorPage";
 
 const queryClient = new QueryClient();
 
@@ -57,7 +81,7 @@ const App = () => (
               {/* Language-specific tool pages */}
               <Route path="/tool/:lang/:countrySlug/:toolSlug" element={<ToolPage />} />
               
-              {/* Specific routes for German calculators */}
+              {/* German Tool Routes */}
               <Route path="/tool/:lang/germany/income-tax-calculator" element={<GermanIncomeTaxPage />} />
               <Route path="/tool/:lang/germany/vat-calculator" element={<GermanVATPage />} />
               <Route path="/tool/:lang/germany/corporate-tax-calculator" element={<GermanCorporateTaxPage />} />
@@ -68,8 +92,6 @@ const App = () => (
               <Route path="/tool/:lang/germany/sales-tax-calculator" element={<GermanSalesTaxPage />} />
               <Route path="/tool/:lang/germany/import-tax-calculator" element={<GermanImportTaxPage />} />
               <Route path="/tool/:lang/germany/municipal-tax-calculator" element={<GermanMunicipalTaxPage />} />
-              
-              {/* New German Budget and Economic Tool Routes */}
               <Route path="/tool/:lang/germany/budget-analyzer" element={<GermanBudgetAnalyzerPage />} />
               <Route path="/tool/:lang/germany/gdp-calculator" element={<GermanGDPCalculatorPage />} />
               <Route path="/tool/:lang/germany/public-debt-calculator" element={<GermanPublicDebtCalculatorPage />} />
@@ -80,6 +102,28 @@ const App = () => (
               <Route path="/tool/:lang/germany/economic-growth-calculator" element={<GermanEconomicGrowthCalculatorPage />} />
               <Route path="/tool/:lang/germany/budget-allocation-tool" element={<GermanBudgetAllocationToolPage />} />
               <Route path="/tool/:lang/germany/deficit-calculator" element={<GermanDeficitCalculatorPage />} />
+
+              {/* UK Tool Routes */}
+              <Route path="/tool/:lang/united-kingdom/income-tax-calculator" element={<UKIncomeTaxPage />} />
+              <Route path="/tool/:lang/united-kingdom/vat-calculator" element={<UKVATPage />} />
+              <Route path="/tool/:lang/united-kingdom/corporate-tax-calculator" element={<UKCorporateTaxPage />} />
+              <Route path="/tool/:lang/united-kingdom/capital-gains-tax-calculator" element={<UKCapitalGainsTaxPage />} />
+              <Route path="/tool/:lang/united-kingdom/property-tax-calculator" element={<UKPropertyTaxPage />} />
+              <Route path="/tool/:lang/united-kingdom/inheritance-tax-calculator" element={<UKInheritanceTaxPage />} />
+              <Route path="/tool/:lang/united-kingdom/payroll-tax-calculator" element={<UKPayrollTaxPage />} />
+              <Route path="/tool/:lang/united-kingdom/sales-tax-calculator" element={<UKSalesTaxPage />} />
+              <Route path="/tool/:lang/united-kingdom/import-tax-calculator" element={<UKImportTaxPage />} />
+              <Route path="/tool/:lang/united-kingdom/municipal-tax-calculator" element={<UKMunicipalTaxPage />} />
+              <Route path="/tool/:lang/united-kingdom/budget-analyzer" element={<UKBudgetAnalyzerPage />} />
+              <Route path="/tool/:lang/united-kingdom/gdp-calculator" element={<UKGDPCalculatorPage />} />
+              <Route path="/tool/:lang/united-kingdom/public-debt-calculator" element={<UKPublicDebtCalculatorPage />} />
+              <Route path="/tool/:lang/united-kingdom/revenue-projector" element={<UKRevenueProjectorPage />} />
+              <Route path="/tool/:lang/united-kingdom/spending-tracker" element={<UKSpendingTrackerPage />} />
+              <Route path="/tool/:lang/united-kingdom/budget-comparison" element={<UKBudgetComparisonPage />} />
+              <Route path="/tool/:lang/united-kingdom/fiscal-impact-tool" element={<UKFiscalImpactToolPage />} />
+              <Route path="/tool/:lang/united-kingdom/economic-growth-calculator" element={<UKEconomicGrowthCalculatorPage />} />
+              <Route path="/tool/:lang/united-kingdom/budget-allocation-tool" element={<UKBudgetAllocationToolPage />} />
+              <Route path="/tool/:lang/united-kingdom/deficit-calculator" element={<UKDeficitCalculatorPage />} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>
