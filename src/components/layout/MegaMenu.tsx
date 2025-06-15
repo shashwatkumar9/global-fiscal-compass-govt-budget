@@ -1,6 +1,7 @@
 
 import { baseTools } from "@/data/tools";
 import { handleToolNavigation } from "@/utils/toolNavigation";
+import { useLanguage } from "@/components/i18n/LanguageProvider";
 
 interface MegaMenuProps {
   continent: {
@@ -20,6 +21,8 @@ const MegaMenu = ({
   onCountryClick, 
   onToolClick 
 }: MegaMenuProps) => {
+  const { language } = useLanguage();
+
   // Generate country-specific tools that persist during hover
   const getCountryTools = (country: string | null) => {
     if (!country) {
@@ -41,7 +44,7 @@ const MegaMenu = ({
     if (onToolClick) {
       onToolClick(tool);
     } else {
-      handleToolNavigation(tool);
+      handleToolNavigation(tool, language);
     }
   };
 
