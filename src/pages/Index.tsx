@@ -16,25 +16,6 @@ const Index = () => {
   const searchRef = useRef<HTMLDivElement>(null);
   const { user } = useAuth();
 
-  // Mock data for search suggestions (in real app, this would come from API)
-  const allTools = [
-    // Tax Tools
-    "Income Tax Calculator", "VAT Calculator", "Corporate Tax Calculator", "Property Tax Calculator",
-    "Capital Gains Tax Calculator", "Inheritance Tax Calculator", "Sales Tax Calculator", "Payroll Tax Calculator",
-    
-    // Budget Tools
-    "Government Budget Analyzer", "Municipal Budget Tracker", "Budget Allocation Tool", "Spending Analysis Tool",
-    "Revenue Projection Tool", "Budget Comparison Tool", "Fiscal Policy Analyzer", "Public Debt Calculator",
-    
-    // Financial Tools
-    "GDP Calculator", "Inflation Calculator", "Currency Converter", "Economic Indicator Tracker",
-    "Import/Export Tax Calculator", "Customs Duty Calculator", "Trade Balance Analyzer", "Economic Growth Calculator",
-    
-    // Compliance Tools
-    "Tax Compliance Checker", "Regulatory Compliance Tool", "Audit Preparation Tool", "Filing Deadline Tracker",
-    "Document Generator", "Legal Framework Guide", "Policy Impact Analyzer", "Regulatory Change Tracker"
-  ];
-
   const continents = {
     europe: {
       name: "Europe",
@@ -79,10 +60,44 @@ const Index = () => {
     "GDP Calculator", "Currency Converter", "Import Tax Calculator", "Compliance Checker",
     "Inflation Calculator", "Property Tax Calculator", "Payroll Tax Calculator", "Trade Analyzer",
     "Revenue Projector", "Audit Tool", "Policy Analyzer", "Economic Tracker",
-    "Sales Tax Calculator", "Customs Calculator", "Filing Tracker", "Legal Guide"
+    "Sales Tax Calculator", "Customs Calculator", "Filing Tracker", "Legal Guide",
+    "Capital Gains Tax Calculator", "Inheritance Tax Calculator", "Municipal Budget Tracker",
+    "Budget Allocation Tool", "Spending Analysis Tool", "Revenue Projection Tool",
+    "Budget Comparison Tool", "Fiscal Policy Analyzer", "Public Debt Calculator",
+    "Economic Indicator Tracker", "Import/Export Tax Calculator", "Customs Duty Calculator",
+    "Trade Balance Analyzer", "Economic Growth Calculator", "Tax Compliance Checker",
+    "Regulatory Compliance Tool", "Audit Preparation Tool", "Filing Deadline Tracker",
+    "Document Generator", "Legal Framework Guide", "Policy Impact Analyzer",
+    "Regulatory Change Tracker"
   ];
 
-  // Generate country-specific tools
+  // Top 10 economies and their most relevant tools
+  const topEconomies = ["USA", "China", "Japan", "Germany", "India", "UK", "France", "Italy", "Brazil", "Canada"];
+  const topToolsForEconomies = [
+    "Income Tax Calculator", "Corporate Tax Calculator", "VAT Calculator", "Budget Analyzer",
+    "GDP Calculator", "Import Tax Calculator", "Property Tax Calculator", "Payroll Tax Calculator",
+    "Currency Converter", "Trade Analyzer"
+  ];
+
+  // Generate comprehensive search suggestions including all country-tool combinations
+  const generateAllToolSuggestions = () => {
+    const suggestions = [...baseTools];
+    
+    // Add country-specific tools for all countries
+    Object.values(continents).forEach(continent => {
+      continent.countries.forEach(country => {
+        baseTools.forEach(tool => {
+          suggestions.push(`${country} ${tool}`);
+        });
+      });
+    });
+    
+    return suggestions;
+  };
+
+  const allToolSuggestions = generateAllToolSuggestions();
+
+  // Generate country-specific tools that persist during hover
   const getCountryTools = (country: string | null) => {
     if (!country) {
       return {
@@ -97,7 +112,7 @@ const Index = () => {
     };
   };
 
-  const filteredSuggestions = allTools.filter(tool =>
+  const filteredSuggestions = allToolSuggestions.filter(tool =>
     tool.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -113,6 +128,19 @@ const Index = () => {
   }, []);
 
   const currentTools = getCountryTools(hoveredCountry);
+
+  const handleCountryClick = (country: string) => {
+    // This will be used for routing to country-specific pages
+    const countrySlug = country.toLowerCase().replace(/\s+/g, '-');
+    console.log(`Navigating to /${countrySlug}`);
+    // In the future, this will use: navigate(`/${countrySlug}`);
+  };
+
+  const handleToolClick = (tool: string) => {
+    const toolSlug = tool.toLowerCase().replace(/\s+/g, '-');
+    console.log(`Navigating to /tool/${toolSlug}`);
+    // In the future, this will use: navigate(`/tool/${toolSlug}`);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -155,6 +183,7 @@ const Index = () => {
                         onClick={() => {
                           setSearchQuery(suggestion);
                           setShowSearchSuggestions(false);
+                          handleToolClick(suggestion);
                         }}
                       >
                         <div className="flex items-center">
@@ -251,10 +280,6 @@ const Index = () => {
                     setActiveMenu(key);
                     setHoveredCountry(null);
                   }}
-                  onMouseLeave={() => {
-                    setActiveMenu(null);
-                    setHoveredCountry(null);
-                  }}
                 >
                   <span>{continent.name}</span>
                   <ChevronDown className="w-4 h-4" />
@@ -279,15 +304,14 @@ const Index = () => {
                           </h3>
                           <div className="space-y-2">
                             {continent.countries.map((country) => (
-                              <a
+                              <button
                                 key={country}
-                                href={`#${country.toLowerCase().replace(/\s+/g, '-')}`}
-                                className="block text-gray-700 hover:text-blue-600 hover:bg-gray-50 px-2 py-1 rounded transition-colors duration-150"
+                                onClick={() => handleCountryClick(country)}
+                                className="block w-full text-left text-gray-700 hover:text-blue-600 hover:bg-gray-50 px-2 py-1 rounded transition-colors duration-150"
                                 onMouseEnter={() => setHoveredCountry(country)}
-                                onMouseLeave={() => setHoveredCountry(null)}
                               >
                                 {country}
-                              </a>
+                              </button>
                             ))}
                           </div>
                         </div>
@@ -299,13 +323,13 @@ const Index = () => {
                           </h3>
                           <div className="space-y-2">
                             {currentTools.popular.map((tool) => (
-                              <a
+                              <button
                                 key={tool}
-                                href={`#${tool.toLowerCase().replace(/\s+/g, '-')}`}
-                                className="block text-gray-700 hover:text-blue-600 hover:bg-gray-50 px-2 py-1 rounded transition-colors duration-150 text-sm"
+                                onClick={() => handleToolClick(tool)}
+                                className="block w-full text-left text-gray-700 hover:text-blue-600 hover:bg-gray-50 px-2 py-1 rounded transition-colors duration-150 text-sm"
                               >
                                 {tool}
-                              </a>
+                              </button>
                             ))}
                           </div>
                         </div>
@@ -317,13 +341,13 @@ const Index = () => {
                           </h3>
                           <div className="space-y-2">
                             {currentTools.advanced.map((tool) => (
-                              <a
+                              <button
                                 key={tool}
-                                href={`#${tool.toLowerCase().replace(/\s+/g, '-')}`}
-                                className="block text-gray-700 hover:text-blue-600 hover:bg-gray-50 px-2 py-1 rounded transition-colors duration-150 text-sm"
+                                onClick={() => handleToolClick(tool)}
+                                className="block w-full text-left text-gray-700 hover:text-blue-600 hover:bg-gray-50 px-2 py-1 rounded transition-colors duration-150 text-sm"
                               >
                                 {tool}
-                              </a>
+                              </button>
                             ))}
                           </div>
                         </div>
@@ -349,13 +373,56 @@ const Index = () => {
           </p>
         </div>
 
+        {/* Featured Tools Section - Top 10 Tools for Top 10 Economies */}
+        <div className="mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Featured Tools for Major Economies</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+            {topToolsForEconomies.map((tool, index) => (
+              <div key={index} className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 border border-gray-200">
+                <h3 className="text-md font-semibold text-gray-900 mb-2">{tool}</h3>
+                <p className="text-gray-600 text-xs mb-3">Available for all major economies</p>
+                <Button 
+                  size="sm" 
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-xs"
+                  onClick={() => handleToolClick(tool)}
+                >
+                  Launch Tool
+                </Button>
+              </div>
+            ))}
+          </div>
+          
+          {/* Top Economies Grid */}
+          <div className="bg-gray-100 rounded-lg p-6">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4 text-center">Top 10 Global Economies</h3>
+            <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-10 gap-3">
+              {topEconomies.map((economy, index) => (
+                <button
+                  key={economy}
+                  onClick={() => handleCountryClick(economy)}
+                  className="bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-200 hover:border-blue-300"
+                >
+                  <div className="text-center">
+                    <div className="text-xs font-semibold text-blue-600 mb-1">#{index + 1}</div>
+                    <div className="text-sm font-medium text-gray-900">{economy}</div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Quick Access Tools Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {baseTools.slice(0, 8).map((tool, index) => (
             <div key={index} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 border border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900 mb-2">{tool}</h3>
               <p className="text-gray-600 text-sm mb-4">Calculate and analyze with precision</p>
-              <Button size="sm" className="w-full bg-blue-600 hover:bg-blue-700">
+              <Button 
+                size="sm" 
+                className="w-full bg-blue-600 hover:bg-blue-700"
+                onClick={() => handleToolClick(tool)}
+              >
                 Launch Tool
               </Button>
             </div>
