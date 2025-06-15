@@ -1,7 +1,7 @@
-
 import { baseTools } from "@/data/tools";
 import { handleToolNavigation } from "@/utils/toolNavigation";
 import { useLanguage } from "@/components/i18n/LanguageProvider";
+import { useTranslations } from "@/hooks/useTranslations";
 
 interface MegaMenuProps {
   continent: {
@@ -22,6 +22,7 @@ const MegaMenu = ({
   onToolClick 
 }: MegaMenuProps) => {
   const { language } = useLanguage();
+  const t = useTranslations();
 
   // Generate country-specific tools that persist during hover
   const getCountryTools = (country: string | null) => {
@@ -54,7 +55,7 @@ const MegaMenu = ({
         {/* Countries Column */}
         <div>
           <h3 className="text-lg font-semibold text-gray-900 mb-4 border-b border-gray-200 pb-2">
-            Countries
+            {t.megaMenu.countries}
           </h3>
           <div className="space-y-2">
             {continent.countries.map((country) => (
@@ -73,7 +74,9 @@ const MegaMenu = ({
         {/* Popular Tools Column */}
         <div>
           <h3 className="text-lg font-semibold text-gray-900 mb-4 border-b border-gray-200 pb-2">
-            {hoveredCountry ? `${hoveredCountry} Popular Tools` : 'Popular Tools'}
+            {hoveredCountry 
+              ? t.megaMenu.countryPopularTools.replace('{country}', hoveredCountry) 
+              : t.megaMenu.popularTools}
           </h3>
           <div className="space-y-2">
             {currentTools.popular.map((tool) => (
@@ -91,7 +94,9 @@ const MegaMenu = ({
         {/* Advanced Tools Column */}
         <div>
           <h3 className="text-lg font-semibold text-gray-900 mb-4 border-b border-gray-200 pb-2">
-            {hoveredCountry ? `${hoveredCountry} Advanced Tools` : 'Advanced Tools'}
+            {hoveredCountry
+              ? t.megaMenu.countryAdvancedTools.replace('{country}', hoveredCountry)
+              : t.megaMenu.advancedTools}
           </h3>
           <div className="space-y-2">
             {currentTools.advanced.map((tool) => (

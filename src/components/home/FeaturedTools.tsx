@@ -1,8 +1,8 @@
-
 import { Button } from "@/components/ui/button";
 import { topToolsForEconomies, topEconomies } from "@/data/tools";
 import { handleToolNavigation } from "@/utils/toolNavigation";
 import { useLanguage } from "@/components/i18n/LanguageProvider";
+import { useTranslations } from "@/hooks/useTranslations";
 
 interface FeaturedToolsProps {
   selectedCountry: string | null;
@@ -18,6 +18,8 @@ const FeaturedTools = ({
   onEconomyCountryClick 
 }: FeaturedToolsProps) => {
   const { language } = useLanguage();
+  const t = useTranslations();
+  
   // Get featured tools based on selected country
   const getFeaturedTools = () => {
     if (selectedCountry) {
@@ -41,8 +43,8 @@ const FeaturedTools = ({
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-3xl font-bold text-gray-900">
           {selectedCountry 
-            ? `Featured Tools for ${selectedCountry}` 
-            : 'Featured Tools for Major Economies'
+            ? t.featuredTools.titleForCountry.replace('{country}', selectedCountry) 
+            : t.featuredTools.title
           }
         </h2>
         {selectedCountry && (
@@ -51,7 +53,7 @@ const FeaturedTools = ({
             onClick={onClearCountrySelection}
             className="text-sm"
           >
-            Show All Countries
+            {t.featuredTools.showAllCountries}
           </Button>
         )}
       </div>
@@ -62,8 +64,8 @@ const FeaturedTools = ({
             <h3 className="text-md font-semibold text-gray-900 mb-2">{tool}</h3>
             <p className="text-gray-600 text-xs mb-3">
               {selectedCountry 
-                ? `Specifically designed for ${selectedCountry}` 
-                : 'Available for all major economies'
+                ? t.featuredTools.toolDescriptionForCountry.replace('{country}', selectedCountry)
+                : t.featuredTools.toolDescriptionGlobal
               }
             </p>
             <Button 
@@ -71,7 +73,7 @@ const FeaturedTools = ({
               className="w-full bg-blue-600 hover:bg-blue-700 text-xs"
               onClick={() => handleClick(tool)}
             >
-              Launch Tool
+              {t.featuredTools.launchTool}
             </Button>
           </div>
         ))}
@@ -82,29 +84,29 @@ const FeaturedTools = ({
         {selectedCountry ? (
           <div className="text-center">
             <h3 className="text-xl font-semibold text-gray-900 mb-4">
-              Currently Viewing: {selectedCountry}
+              {t.featuredTools.currentlyViewing.replace('{country}', selectedCountry)}
             </h3>
             <p className="text-gray-600 mb-4">
-              All tools above are specifically configured for {selectedCountry}'s financial regulations and requirements.
+              {t.featuredTools.viewingDescription.replace('{country}', selectedCountry)}
             </p>
             <div className="flex justify-center space-x-4">
               <Button 
                 onClick={() => handleClick(`${selectedCountry} Income Tax Calculator`)}
                 className="bg-blue-600 hover:bg-blue-700"
               >
-                {selectedCountry} Tax Calculator
+                {t.featuredTools.taxCalculatorButton.replace('{country}', selectedCountry)}
               </Button>
               <Button 
                 onClick={() => handleClick(`${selectedCountry} Budget Analyzer`)}
                 variant="outline"
               >
-                {selectedCountry} Budget Tools
+                {t.featuredTools.budgetToolsButton.replace('{country}', selectedCountry)}
               </Button>
             </div>
           </div>
         ) : (
           <>
-            <h3 className="text-xl font-semibold text-gray-900 mb-4 text-center">Top 10 Global Economies</h3>
+            <h3 className="text-xl font-semibold text-gray-900 mb-4 text-center">{t.featuredTools.topEconomies}</h3>
             <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-10 gap-3">
               {topEconomies.map((economy, index) => (
                 <button

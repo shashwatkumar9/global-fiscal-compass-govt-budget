@@ -1,17 +1,17 @@
-
 import { useState, useRef, useEffect } from "react";
 import { continents } from "@/data/continents";
 import { baseTools } from "@/data/tools";
 import { handleToolNavigation } from "@/utils/toolNavigation";
 import { useLanguage } from "@/components/i18n/LanguageProvider";
+import { useTranslations } from "@/hooks/useTranslations";
 
 export const useSearch = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const { language } = useLanguage();
+  const t = useTranslations();
 
-  // Generate comprehensive search suggestions including all country-tool combinations
   const generateAllToolSuggestions = () => {
     const suggestions: string[] = [];
     
@@ -91,6 +91,7 @@ export const useSearch = () => {
     setShowSearchSuggestions,
     searchRef,
     filteredSuggestions,
-    handleToolClick
+    handleToolClick,
+    t, // Pass translations
   };
 };

@@ -1,4 +1,3 @@
-
 import { Search, Menu, X, User, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,7 +20,8 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
     setShowSearchSuggestions,
     searchRef,
     filteredSuggestions,
-    handleToolClick
+    handleToolClick,
+    t,
   } = useSearch();
 
   return (
@@ -41,7 +41,7 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <Input
                 type="text"
-                placeholder="Search tools, countries, or tax calculators..."
+                placeholder={t.header.searchPlaceholder}
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
@@ -71,14 +71,14 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
                         <span className="text-sm text-gray-700">{suggestion}</span>
                         {suggestion.includes(' ') && !suggestion.match(/^(Income Tax|VAT|Corporate Tax|Budget|GDP|Currency|Import Tax|Compliance|Inflation|Property Tax|Payroll Tax|Trade|Revenue|Audit|Policy|Economic|Sales Tax|Customs|Filing|Legal|Capital Gains|Inheritance|Municipal|Allocation|Spending|Projection|Comparison|Fiscal|Public Debt|Growth|Regulatory|Preparation|Deadline|Document|Framework|Impact|Change)/) && (
                           <span className="ml-auto text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded">
-                            Country-specific
+                            {t.header.countrySpecific}
                           </span>
                         )}
                       </div>
                     </div>
                   ))
                 ) : (
-                  <div className="px-4 py-3 text-sm text-gray-500">No tools found</div>
+                  <div className="px-4 py-3 text-sm text-gray-500">{t.header.noToolsFound}</div>
                 )}
               </div>
             )}
@@ -86,9 +86,9 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
 
           {/* Navigation Links */}
           <nav className="hidden md:flex items-center space-x-6">
-            <a href="#services" className="text-gray-700 hover:text-blue-600 font-medium">Services</a>
-            <a href="#about" className="text-gray-700 hover:text-blue-600 font-medium">About</a>
-            <a href="#contact" className="text-gray-700 hover:text-blue-600 font-medium">Contact</a>
+            <a href="#services" className="text-gray-700 hover:text-blue-600 font-medium">{t.header.services}</a>
+            <a href="#about" className="text-gray-700 hover:text-blue-600 font-medium">{t.header.about}</a>
+            <a href="#contact" className="text-gray-700 hover:text-blue-600 font-medium">{t.header.contact}</a>
             
             {user ? (
               <UserMenu />
@@ -97,13 +97,13 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
                 <Link to="/auth">
                   <Button variant="outline" size="sm" className="flex items-center gap-2">
                     <User className="w-4 h-4" />
-                    Sign In
+                    {t.header.signIn}
                   </Button>
                 </Link>
                 <Link to="/auth?mode=signup">
                   <Button size="sm" className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700">
                     <UserPlus className="w-4 h-4" />
-                    Sign Up
+                    {t.header.signUp}
                   </Button>
                 </Link>
               </>
@@ -124,9 +124,9 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-200">
           <div className="px-4 py-4 space-y-4">
-            <a href="#services" className="block text-gray-700 hover:text-blue-600 font-medium">Services</a>
-            <a href="#about" className="block text-gray-700 hover:text-blue-600 font-medium">About</a>
-            <a href="#contact" className="block text-gray-700 hover:text-blue-600 font-medium">Contact</a>
+            <a href="#services" className="block text-gray-700 hover:text-blue-600 font-medium">{t.header.services}</a>
+            <a href="#about" className="block text-gray-700 hover:text-blue-600 font-medium">{t.header.about}</a>
+            <a href="#contact" className="block text-gray-700 hover:text-blue-600 font-medium">{t.header.contact}</a>
             
             {user ? (
               <div className="pt-2">
@@ -137,13 +137,13 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
                 <Link to="/auth" className="flex-1">
                   <Button variant="outline" size="sm" className="flex items-center gap-2 w-full">
                     <User className="w-4 h-4" />
-                    Sign In
+                    {t.header.signIn}
                   </Button>
                 </Link>
                 <Link to="/auth?mode=signup" className="flex-1">
                   <Button size="sm" className="flex items-center gap-2 w-full bg-blue-600 hover:bg-blue-700">
                     <UserPlus className="w-4 h-4" />
-                    Sign Up
+                    {t.header.signUp}
                   </Button>
                 </Link>
               </div>

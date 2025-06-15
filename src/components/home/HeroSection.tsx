@@ -1,13 +1,16 @@
 
+import { useTranslations } from "@/hooks/useTranslations";
+
 const HeroSection = () => {
+  const t = useTranslations();
+
   return (
     <div className="text-center mb-12">
       <h1 className="text-4xl font-bold text-gray-900 mb-4">
-        Global Government Finance & Taxation Tools
+        {t.hero.title}
       </h1>
       <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-        Comprehensive financial tools, tax calculators, and budget analyzers for over 50 countries across 6 continents. 
-        Make informed decisions with accurate, up-to-date government finance data.
+        {t.hero.subtitle}
       </p>
     </div>
   );
