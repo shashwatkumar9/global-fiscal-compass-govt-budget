@@ -35,7 +35,7 @@ const UKSpendingTrackerPage = () => {
         <div className="flex items-center space-x-2 text-sm text-gray-600 mb-6">
           <Link to={`/${lang}`} className="hover:text-blue-600">Home</Link>
           <span>/</span>
-          <Link to={`/tool/${lang}/united-kingdom/spending-tracker`} className="hover:text-blue-600">United Kingdom</Link>
+          <Link to={`/tool/${lang}/uk/spending-tracker`} className="hover:text-blue-600">United Kingdom</Link>
           <span>/</span>
           <span className="text-gray-900">Spending Tracker</span>
         </div>

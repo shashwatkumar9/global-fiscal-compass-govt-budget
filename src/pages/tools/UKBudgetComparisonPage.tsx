@@ -35,7 +35,7 @@ const UKBudgetComparisonPage = () => {
         <div className="flex items-center space-x-2 text-sm text-gray-600 mb-6">
           <Link to={`/${lang}`} className="hover:text-blue-600">Home</Link>
           <span>/</span>
-          <Link to={`/tool/${lang}/united-kingdom/budget-comparison`} className="hover:text-blue-600">United Kingdom</Link>
+          <Link to={`/tool/${lang}/uk/budget-comparison`} className="hover:text-blue-600">United Kingdom</Link>
           <span>/</span>
           <span className="text-gray-900">Budget Comparison</span>
         </div>
