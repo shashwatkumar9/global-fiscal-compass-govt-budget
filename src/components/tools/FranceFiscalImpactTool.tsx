@@ -4,64 +4,42 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LineChart, Line, ResponsiveContainer } from "recharts";
-import { Calculator, Impact, TrendingUp, AlertTriangle } from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { Calculator, Activity } from "lucide-react";
 
 const FranceFiscalImpactTool = () => {
-  const [impactData, setImpactData] = useState({
-    policyType: "tax_increase",
-    magnitude: 0,
-    implementation: "immediate",
-    duration: 5,
-    targetSector: "all"
+  const [policyData, setPolicyData] = useState({
+    taxChange: 0,
+    spendingChange: 0,
+    gdp: 0,
+    multiplier: 1.5
   });
 
-  const [results, setResults] = useState(null);
+  const [impact, setImpact] = useState<{
+    directImpact: number;
+    multiplierEffect: number;
+    totalImpact: number;
+    gdpImpact: number;
+    rating: string;
+  } | null>(null);
 
   const calculateImpact = () => {
-    const baseGDP = 2800; // France GDP in billions
-    const baseRevenue = 1200;
-    const baseSpending = 1350;
+    const netFiscalChange = policyData.spendingChange - policyData.taxChange;
+    const directImpact = netFiscalChange;
+    const multiplierEffect = netFiscalChange * (policyData.multiplier - 1);
+    const totalImpact = directImpact + multiplierEffect;
+    const gdpImpact = policyData.gdp > 0 ? (totalImpact / policyData.gdp) * 100 : 0;
+    
+    const rating = Math.abs(gdpImpact) < 1 ? "Low Impact" :
+                   Math.abs(gdpImpact) < 3 ? "Moderate Impact" : "High Impact";
 
-    // Impact multipliers based on policy type
-    const multipliers = {
-      tax_increase: { revenue: 1.0, gdp: -0.3, employment: -0.2 },
-      tax_decrease: { revenue: -1.0, gdp: 0.5, employment: 0.3 },
-      spending_increase: { revenue: 0, gdp: 0.8, employment: 0.4 },
-      spending_decrease: { revenue: 0, gdp: -0.4, employment: -0.3 }
-    };
-
-    const mult = multipliers[impactData.policyType];
-    const yearlyImpact = [];
-
-    for (let year = 1; year <= impactData.duration; year++) {
-      const impactFactor = impactData.implementation === "gradual" ? year / impactData.duration : 1;
-      const revenueImpact = impactData.magnitude * mult.revenue * impactFactor;
-      const gdpImpact = impactData.magnitude * mult.gdp * impactFactor * 0.01 * baseGDP;
-      const employmentImpact = impactData.magnitude * mult.employment * impactFactor * 0.1;
-
-      yearlyImpact.push({
-        year: new Date().getFullYear() + year,
-        revenueImpact,
-        gdpImpact,
-        employmentImpact,
-        fiscalBalance: revenueImpact
-      });
-    }
-
-    const totalImpact = {
-      revenue: yearlyImpact.reduce((sum, year) => sum + year.revenueImpact, 0),
-      gdp: yearlyImpact[yearlyImpact.length - 1]?.gdpImpact || 0,
-      employment: yearlyImpact[yearlyImpact.length - 1]?.employmentImpact || 0
-    };
-
-    setResults({
-      yearlyImpact,
+    setImpact({
+      directImpact,
+      multiplierEffect,
       totalImpact,
-      recommendation: totalImpact.gdp >= 0 ? "Positive economic impact expected" : "Caution: Negative economic impact expected",
-      riskLevel: Math.abs(totalImpact.gdp) > 50 ? "high" : Math.abs(totalImpact.gdp) > 20 ? "medium" : "low"
+      gdpImpact,
+      rating
     });
   };
 
@@ -70,107 +48,101 @@ const FranceFiscalImpactTool = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Impact className="w-5 h-5" />
+            <Activity className="w-5 h-5" />
             France Fiscal Impact Tool
           </CardTitle>
           <CardDescription>
-            Analyze the economic impact of fiscal policy changes with advanced modeling.
+            Analyze the economic impact of fiscal policy changes
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label>Policy Type</Label>
-              <Select onValueChange={(value) => setImpactData({...impactData, policyType: value})} defaultValue="tax_increase">
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="tax_increase">Tax Increase</SelectItem>
-                  <SelectItem value="tax_decrease">Tax Decrease</SelectItem>
-                  <SelectItem value="spending_increase">Spending Increase</SelectItem>
-                  <SelectItem value="spending_decrease">Spending Decrease</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label>Magnitude (€ billions)</Label>
+              <Label>Tax Change (€ billions)</Label>
               <Input
                 type="number"
-                value={impactData.magnitude || ""}
-                onChange={(e) => setImpactData({...impactData, magnitude: Number(e.target.value)})}
-                placeholder="Policy magnitude"
+                value={policyData.taxChange || ""}
+                onChange={(e) => setPolicyData({...policyData, taxChange: Number(e.target.value)})}
+                placeholder="Tax increase (+) or decrease (-)"
               />
             </div>
             <div className="space-y-2">
-              <Label>Implementation</Label>
-              <Select onValueChange={(value) => setImpactData({...impactData, implementation: value})} defaultValue="immediate">
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="immediate">Immediate</SelectItem>
-                  <SelectItem value="gradual">Gradual</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label>Duration (years)</Label>
+              <Label>Spending Change (€ billions)</Label>
               <Input
                 type="number"
-                value={impactData.duration || ""}
-                onChange={(e) => setImpactData({...impactData, duration: Number(e.target.value)})}
-                placeholder="Policy duration"
+                value={policyData.spendingChange || ""}
+                onChange={(e) => setPolicyData({...policyData, spendingChange: Number(e.target.value)})}
+                placeholder="Spending increase (+) or decrease (-)"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>GDP (€ billions)</Label>
+              <Input
+                type="number"
+                value={policyData.gdp || ""}
+                onChange={(e) => setPolicyData({...policyData, gdp: Number(e.target.value)})}
+                placeholder="Current GDP"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Fiscal Multiplier</Label>
+              <Input
+                type="number"
+                step="0.1"
+                value={policyData.multiplier || ""}
+                onChange={(e) => setPolicyData({...policyData, multiplier: Number(e.target.value)})}
+                placeholder="Economic multiplier effect"
               />
             </div>
           </div>
 
           <Button onClick={calculateImpact} className="w-full">
             <Calculator className="w-4 h-4 mr-2" />
-            Calculate Impact
+            Calculate Fiscal Impact
           </Button>
         </CardContent>
       </Card>
 
-      {results && (
+      {impact && (
         <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Card>
               <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600">Revenue Impact</p>
-                    <p className={`text-2xl font-bold ${results.totalImpact.revenue >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                      €{results.totalImpact.revenue.toFixed(1)}B
-                    </p>
-                  </div>
-                  <TrendingUp className="w-8 h-8 text-blue-600" />
+                <div className="text-center">
+                  <p className="text-sm text-gray-600">Direct Impact</p>
+                  <p className="text-xl font-bold text-blue-600">
+                    €{impact.directImpact.toFixed(1)}B
+                  </p>
                 </div>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600">GDP Impact</p>
-                    <p className={`text-2xl font-bold ${results.totalImpact.gdp >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                      €{results.totalImpact.gdp.toFixed(1)}B
-                    </p>
-                  </div>
-                  <TrendingUp className="w-8 h-8 text-green-600" />
+                <div className="text-center">
+                  <p className="text-sm text-gray-600">Multiplier Effect</p>
+                  <p className="text-xl font-bold text-green-600">
+                    €{impact.multiplierEffect.toFixed(1)}B
+                  </p>
                 </div>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600">Risk Level</p>
-                    <Badge variant={results.riskLevel === 'high' ? 'destructive' : results.riskLevel === 'medium' ? 'secondary' : 'default'}>
-                      {results.riskLevel.toUpperCase()}
-                    </Badge>
-                  </div>
-                  <AlertTriangle className="w-8 h-8 text-orange-600" />
+                <div className="text-center">
+                  <p className="text-sm text-gray-600">Total Impact</p>
+                  <p className="text-xl font-bold text-purple-600">
+                    €{impact.totalImpact.toFixed(1)}B
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <div className="text-center">
+                  <p className="text-sm text-gray-600">GDP Impact</p>
+                  <p className="text-xl font-bold text-orange-600">
+                    {impact.gdpImpact >= 0 ? "+" : ""}{impact.gdpImpact.toFixed(2)}%
+                  </p>
                 </div>
               </CardContent>
             </Card>
@@ -178,19 +150,31 @@ const FranceFiscalImpactTool = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle>Impact Over Time</CardTitle>
+              <CardTitle>Impact Assessment</CardTitle>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={results.yearlyImpact}>
+              <div className="flex justify-between items-center mb-4">
+                <span className="font-semibold">Overall Impact Rating:</span>
+                <Badge variant={
+                  impact.rating === "Low Impact" ? "secondary" :
+                  impact.rating === "Moderate Impact" ? "default" : "destructive"
+                }>
+                  {impact.rating}
+                </Badge>
+              </div>
+              
+              <ResponsiveContainer width="100%" height={200}>
+                <BarChart data={[
+                  { name: "Direct", value: impact.directImpact },
+                  { name: "Multiplier", value: impact.multiplierEffect },
+                  { name: "Total", value: impact.totalImpact }
+                ]}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="year" />
+                  <XAxis dataKey="name" />
                   <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line type="monotone" dataKey="revenueImpact" stroke="#8884d8" name="Revenue Impact" />
-                  <Line type="monotone" dataKey="gdpImpact" stroke="#82ca9d" name="GDP Impact" />
-                </LineChart>
+                  <Tooltip formatter={(value) => `€${Number(value).toFixed(1)}B`} />
+                  <Bar dataKey="value" fill="#8884d8" />
+                </BarChart>
               </ResponsiveContainer>
             </CardContent>
           </Card>

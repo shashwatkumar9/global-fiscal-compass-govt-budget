@@ -18,7 +18,12 @@ const FranceBudgetAllocationTool = () => {
     infrastructure: 10
   });
 
-  const [results, setResults] = useState(null);
+  const [results, setResults] = useState<{
+    allocatedAmounts: Record<string, number>;
+    chartData: Array<{name: string; value: number; percentage: number}>;
+    totalPercentage: number;
+    remainingBudget: number;
+  } | null>(null);
 
   const calculateAllocation = () => {
     const total = allocation.healthcare + allocation.education + allocation.defense + allocation.social + allocation.infrastructure;
@@ -120,7 +125,7 @@ const FranceBudgetAllocationTool = () => {
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(value) => `€${(value / 1000).toFixed(2)}T`} />
+                  <Tooltip formatter={(value) => `€${(Number(value) / 1000).toFixed(2)}T`} />
                 </PieChart>
               </ResponsiveContainer>
             </CardContent>
@@ -137,7 +142,7 @@ const FranceBudgetAllocationTool = () => {
                         €{amount.toFixed(1)}B
                       </p>
                       <p className="text-sm text-gray-600">
-                        {allocation[sector]}% of budget
+                        {allocation[sector as keyof typeof allocation]}% of budget
                       </p>
                     </div>
                   </div>

@@ -10,6 +10,15 @@ import { Badge } from "@/components/ui/badge";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LineChart, Line, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from "recharts";
 import { Calculator, GitCompare, TrendingUp, TrendingDown, ArrowRight } from "lucide-react";
 
+interface ComparisonResults {
+  changes: Record<string, { absolute: number; percentage: number }>;
+  metrics: Array<{ name: string; budget1: number; budget2: number; change: number; status: string }>;
+  healthIndicators: Array<{ indicator: string; budget1: number; budget2: number; fullMark: number }>;
+  budgetBalance1: number;
+  budgetBalance2: number;
+  fiscalImpact: { rating: string; summary: string };
+}
+
 const FranceBudgetComparison = () => {
   const [comparisonData, setComparisonData] = useState({
     budget1: { year: 2024, revenue: 0, spending: 0, deficit: 0 },
@@ -17,7 +26,7 @@ const FranceBudgetComparison = () => {
     comparisonType: "yearly"
   });
 
-  const [results, setResults] = useState(null);
+  const [results, setResults] = useState<ComparisonResults | null>(null);
 
   const calculateComparison = () => {
     const { budget1, budget2 } = comparisonData;
@@ -297,7 +306,7 @@ const FranceBudgetComparison = () => {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis />
-                    <Tooltip formatter={(value) => `€${value.toFixed(1)}B`} />
+                    <Tooltip formatter={(value) => `€${Number(value).toFixed(1)}B`} />
                     <Legend />
                     <Bar dataKey="budget1" fill="#8884d8" name={`Budget ${comparisonData.budget1.year}`} />
                     <Bar dataKey="budget2" fill="#82ca9d" name={`Budget ${comparisonData.budget2.year}`} />
@@ -357,7 +366,7 @@ const FranceBudgetComparison = () => {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="category" />
                     <YAxis />
-                    <Tooltip formatter={(value) => `${value.toFixed(1)}%`} />
+                    <Tooltip formatter={(value) => `${Number(value).toFixed(1)}%`} />
                     <Bar dataKey="change" fill="#8884d8" />
                   </BarChart>
                 </ResponsiveContainer>

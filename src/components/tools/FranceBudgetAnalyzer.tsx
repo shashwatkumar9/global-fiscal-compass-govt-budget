@@ -10,6 +10,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell, LineChart, Line, ResponsiveContainer } from "recharts";
 import { TrendingUp, TrendingDown, AlertTriangle, PiggyBank, Calculator } from "lucide-react";
 
+interface AnalysisData {
+  totalExpenses: number;
+  remainingIncome: number;
+  savingsRate: number;
+  recommendations: Record<string, { recommended: number; actual: number }>;
+  chartData: Array<{ name: string; value: number; recommended: number }>;
+  pieData: Array<{ name: string; value: number }>;
+  budgetHealth: string;
+}
+
 const FranceBudgetAnalyzer = () => {
   const [budgetData, setBudgetData] = useState({
     income: 0,
@@ -23,7 +33,7 @@ const FranceBudgetAnalyzer = () => {
     period: "monthly"
   });
 
-  const [analysis, setAnalysis] = useState(null);
+  const [analysis, setAnalysis] = useState<AnalysisData | null>(null);
 
   const calculateAnalysis = () => {
     const totalExpenses = budgetData.housing + budgetData.food + budgetData.transportation + 
@@ -283,7 +293,7 @@ const FranceBudgetAnalyzer = () => {
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>
-                    <Tooltip formatter={(value) => `€${value.toFixed(2)}`} />
+                    <Tooltip formatter={(value) => `€${Number(value).toFixed(2)}`} />
                   </PieChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -301,7 +311,7 @@ const FranceBudgetAnalyzer = () => {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis />
-                    <Tooltip formatter={(value) => `€${value.toFixed(2)}`} />
+                    <Tooltip formatter={(value) => `€${Number(value).toFixed(2)}`} />
                     <Legend />
                     <Bar dataKey="value" fill="#8884d8" name="Actual" />
                     <Bar dataKey="recommended" fill="#82ca9d" name="Recommended" />
@@ -362,7 +372,7 @@ const FranceBudgetAnalyzer = () => {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="month" />
                     <YAxis />
-                    <Tooltip formatter={(value) => `€${value.toFixed(2)}`} />
+                    <Tooltip formatter={(value) => `€${Number(value).toFixed(2)}`} />
                     <Legend />
                     <Line type="monotone" dataKey="savings" stroke="#8884d8" name="Projected Savings" />
                     <Line type="monotone" dataKey="expenses" stroke="#82ca9d" name="Projected Expenses" />
