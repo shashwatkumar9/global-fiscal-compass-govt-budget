@@ -12,6 +12,7 @@ import ToolPage from "./pages/ToolPage";
 import NotFound from "./pages/NotFound";
 import ToolRedirect from "./pages/ToolRedirect";
 import GermanIncomeTaxPage from "./pages/tools/GermanIncomeTaxPage";
+import GermanVATPage from "./pages/tools/GermanVATPage";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,9 @@ const App = () => (
               
               {/* Specific route for German Income Tax Calculator */}
               <Route path="/tool/:lang/germany/income-tax-calculator" element={<GermanIncomeTaxPage />} />
+              
+              {/* Specific route for German VAT Calculator */}
+              <Route path="/tool/:lang/germany/vat-calculator" element={<GermanVATPage />} />
               
               <Route path="*" element={<NotFound />} />
             </Routes>

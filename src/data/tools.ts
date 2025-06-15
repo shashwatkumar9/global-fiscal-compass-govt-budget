@@ -81,9 +81,19 @@ export const germanySpecificTools = [
   {
     name: "VAT Calculator",
     slug: "vat-calculator", 
-    description: "German VAT (Mehrwertsteuer) calculator with standard and reduced rates",
+    description: "Comprehensive German VAT calculator with all rates, business scenarios, and EU regulations",
     category: "Tax Calculation",
-    complexity: "Intermediate"
+    complexity: "Professional",
+    features: [
+      "All VAT rates (19%, 7%, 5%)",
+      "B2B and B2C scenarios",
+      "Reverse charge mechanism",
+      "Intra-Community supplies",
+      "Digital services rules",
+      "Small business exemption",
+      "Export/Import calculations",
+      "Legal compliance checking"
+    ]
   },
   {
     name: "Corporate Tax Calculator",
