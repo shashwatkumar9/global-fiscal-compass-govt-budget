@@ -1,5 +1,6 @@
 
-import { baseTools, germanTools, ukTools } from "@/data/tools";
+import { baseTools, ukTools } from "@/data/tools";
+import { germanTools } from "@/data/tools/germany";
 import { handleToolNavigation } from "@/utils/toolNavigation";
 import { useLanguage } from "@/components/i18n/LanguageProvider";
 import { useTranslations } from "@/hooks/useTranslations";
