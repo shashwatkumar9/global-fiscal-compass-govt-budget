@@ -1,32 +1,24 @@
 
 import { useState } from "react";
+import { useParams, Navigate } from "react-router-dom";
 import Header from "@/components/layout/Header";
 import ContinentalNav from "@/components/layout/ContinentalNav";
 import HeroSection from "@/components/home/HeroSection";
-import FeaturedTools from "@/components/home/FeaturedTools";
 import QuickAccessTools from "@/components/home/QuickAccessTools";
+import FeaturedTools from "@/components/home/FeaturedTools";
 import FeaturesSection from "@/components/home/FeaturesSection";
 import Footer from "@/components/layout/Footer";
-import { handleToolNavigation } from "@/utils/toolNavigation";
-import { useLanguage } from "@/components/i18n/LanguageProvider";
+import { LanguageCode, languages } from "@/data/languages";
 
 const Index = () => {
-  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { language } = useLanguage();
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+  const { lang } = useParams<{ lang: LanguageCode }>();
 
-  const handleToolClick = (tool: string) => {
-    handleToolNavigation(tool, language);
-  };
-
-  const handleEconomyCountryClick = (country: string) => {
-    setSelectedCountry(country);
-    console.log(`Selected economy country: ${country}`);
-  };
-
-  const clearCountrySelection = () => {
-    setSelectedCountry(null);
-  };
+  // If lang is not valid, redirect to English
+  if (!lang || !languages[lang]) {
+    return <Navigate to="/en" replace />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -40,18 +32,10 @@ const Index = () => {
         setSelectedCountry={setSelectedCountry}
       />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main>
         <HeroSection />
-
-        <FeaturedTools
-          selectedCountry={selectedCountry}
-          onClearCountrySelection={clearCountrySelection}
-          onToolClick={handleToolClick}
-          onEconomyCountryClick={handleEconomyCountryClick}
-        />
-
-        <QuickAccessTools onToolClick={handleToolClick} />
-
+        <QuickAccessTools />
+        <FeaturedTools />
         <FeaturesSection />
       </main>
 

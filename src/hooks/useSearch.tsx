@@ -1,15 +1,18 @@
+
 import { useState, useRef, useEffect } from "react";
 import { continents } from "@/data/continents";
 import { baseTools } from "@/data/tools";
 import { handleToolNavigation } from "@/utils/toolNavigation";
 import { useLanguage } from "@/components/i18n/LanguageProvider";
 import { useTranslations } from "@/hooks/useTranslations";
+import { useNavigate } from "react-router-dom";
 
 export const useSearch = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const { language } = useLanguage();
+  const navigate = useNavigate();
   const t = useTranslations();
 
   const generateAllToolSuggestions = () => {
@@ -79,7 +82,7 @@ export const useSearch = () => {
   }, []);
 
   const handleToolClick = (tool: string) => {
-    handleToolNavigation(tool, language);
+    handleToolNavigation(tool, language, navigate);
     setShowSearchSuggestions(false);
     setSearchQuery("");
   };

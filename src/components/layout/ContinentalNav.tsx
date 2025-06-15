@@ -5,6 +5,7 @@ import { continents } from "@/data/continents";
 import MegaMenu from "./MegaMenu";
 import { handleToolNavigation } from "@/utils/toolNavigation";
 import { useLanguage } from "@/components/i18n/LanguageProvider";
+import { useNavigate } from "react-router-dom";
 import LanguageSwitcher from "@/components/i18n/LanguageSwitcher";
 
 interface ContinentalNavProps {
@@ -16,6 +17,7 @@ const ContinentalNav = ({ selectedCountry, setSelectedCountry }: ContinentalNavP
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
   const { language } = useLanguage();
+  const navigate = useNavigate();
 
   const handleCountryClick = (country: string) => {
     setSelectedCountry(country);
@@ -27,7 +29,7 @@ const ContinentalNav = ({ selectedCountry, setSelectedCountry }: ContinentalNavP
   };
 
   const handleToolClick = (tool: string) => {
-    handleToolNavigation(tool, language);
+    handleToolNavigation(tool, language, navigate);
     setActiveMenu(null);
   };
 

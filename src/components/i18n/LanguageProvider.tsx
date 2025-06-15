@@ -23,18 +23,26 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
       if (language !== params.lang) {
         setLanguageState(params.lang);
       }
+    } else if (location.pathname === '/') {
+      // Redirect to English version of homepage
+      navigate('/en', { replace: true });
     }
-  }, [params.lang, language]);
+  }, [params.lang, language, location.pathname, navigate]);
 
   const setLanguage = (newLang: LanguageCode) => {
-    setLanguageState(newLang); // Optimistically update state
-    // If on a tool page, navigate to the new language version
-    if (location.pathname.startsWith('/tool/') && params.countrySlug && params.toolSlug) {
-      const currentPath = location.pathname;
-      const newPath = currentPath.replace(`/tool/${params.lang || 'en'}/`, `/tool/${newLang}/`);
-      if (currentPath !== newPath) {
-        navigate(newPath);
-      }
+    setLanguageState(newLang);
+    
+    // Handle different page types
+    if (location.pathname === '/' || location.pathname === `/${language}`) {
+      // On homepage, navigate to language-specific homepage
+      navigate(`/${newLang}`, { replace: true });
+    } else if (location.pathname.startsWith('/tool/') && params.countrySlug && params.toolSlug) {
+      // On tool page, change language in URL
+      navigate(`/tool/${newLang}/${params.countrySlug}/${params.toolSlug}`, { replace: true });
+    } else {
+      // For other pages, try to maintain the structure
+      const pathWithoutLang = location.pathname.replace(`/${params.lang || 'en'}`, '');
+      navigate(`/${newLang}${pathWithoutLang}`, { replace: true });
     }
   };
 
