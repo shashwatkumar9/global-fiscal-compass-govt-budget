@@ -1,4 +1,3 @@
-
 export interface TranslationSet {
   hero: {
     title: string;
@@ -45,6 +44,41 @@ export interface TranslationSet {
     advancedTools: string;
     countryPopularTools: string;
     countryAdvancedTools: string;
+  };
+  germanTaxCalculator: {
+    title: string;
+    subtitle: string;
+    basicInfo: string;
+    personal: string;
+    deductions: string;
+    grossIncome: string;
+    taxClass: string;
+    federalState: string;
+    churchMember: string;
+    children: string;
+    maritalStatus: string;
+    spouseIncome: string;
+    workExpenses: string;
+    commuteDistance: string;
+    workDays: string;
+    homeOfficeDays: string;
+    specialExpenses: string;
+    results: string;
+    netIncome: string;
+    taxBreakdown: string;
+    taxableIncome: string;
+    incomeTax: string;
+    solidaritySurcharge: string;
+    churchTax: string;
+    totalTax: string;
+    effectiveRate: string;
+    marginalRate: string;
+    monthlyNet: string;
+    childBenefits: string;
+    keyFeatures: string;
+    legalBasis: string;
+    quickGuide: string;
+    disclaimer: string;
   };
 }
 
@@ -95,6 +129,41 @@ export const translations: Record<string, TranslationSet> = {
       advancedTools: "Advanced Tools",
       countryPopularTools: "{country} Popular Tools",
       countryAdvancedTools: "{country} Advanced Tools"
+    },
+    germanTaxCalculator: {
+      title: "German Income Tax Calculator",
+      subtitle: "Professional German income tax calculator for 2025 with all deductions and allowances",
+      basicInfo: "Basic Information",
+      personal: "Personal Details",
+      deductions: "Deductions & Expenses",
+      grossIncome: "Annual Gross Income (€)",
+      taxClass: "Tax Class (Steuerklasse)",
+      federalState: "Federal State",
+      churchMember: "Church Tax Member",
+      children: "Number of Children",
+      maritalStatus: "Marital Status",
+      spouseIncome: "Spouse Annual Income (€)",
+      workExpenses: "Additional Work Expenses (€)",
+      commuteDistance: "Daily Commute Distance (km)",
+      workDays: "Annual Work Days",
+      homeOfficeDays: "Home Office Days",
+      specialExpenses: "Special Expenses (€)",
+      results: "Tax Calculation Results",
+      netIncome: "Net Income",
+      taxBreakdown: "Tax Breakdown",
+      taxableIncome: "Taxable Income",
+      incomeTax: "Income Tax",
+      solidaritySurcharge: "Solidarity Surcharge",
+      churchTax: "Church Tax",
+      totalTax: "Total Tax",
+      effectiveRate: "Effective Rate",
+      marginalRate: "Marginal Rate",
+      monthlyNet: "Monthly Net Income",
+      childBenefits: "Child Benefits",
+      keyFeatures: "Key Features",
+      legalBasis: "Legal Basis",
+      quickGuide: "Quick Guide",
+      disclaimer: "Important Disclaimer"
     }
   },
   de: {
@@ -143,6 +212,41 @@ export const translations: Record<string, TranslationSet> = {
       advancedTools: "Erweiterte Tools",
       countryPopularTools: "{country} Beliebte Tools",
       countryAdvancedTools: "{country} Erweiterte Tools"
+    },
+    germanTaxCalculator: {
+      title: "Deutscher Einkommensteuerrechner",
+      subtitle: "Professioneller deutscher Einkommensteuerrechner für 2025 mit allen Abzügen und Freibeträgen",
+      basicInfo: "Grundinformationen",
+      personal: "Persönliche Angaben",
+      deductions: "Abzüge & Ausgaben",
+      grossIncome: "Jahres-Bruttoeinkommen (€)",
+      taxClass: "Steuerklasse",
+      federalState: "Bundesland",
+      churchMember: "Kirchensteuerpflichtig",
+      children: "Anzahl Kinder",
+      maritalStatus: "Familienstand",
+      spouseIncome: "Jahreseinkommen Ehepartner (€)",
+      workExpenses: "Zusätzliche Werbungskosten (€)",
+      commuteDistance: "Tägliche Pendelstrecke (km)",
+      workDays: "Jährliche Arbeitstage",
+      homeOfficeDays: "Homeoffice-Tage",
+      specialExpenses: "Sonderausgaben (€)",
+      results: "Steuerberechnungsergebnisse",
+      netIncome: "Nettoeinkommen",
+      taxBreakdown: "Steueraufschlüsselung",
+      taxableIncome: "Zu versteuerndes Einkommen",
+      incomeTax: "Einkommensteuer",
+      solidaritySurcharge: "Solidaritätszuschlag",
+      churchTax: "Kirchensteuer",
+      totalTax: "Gesamtsteuer",
+      effectiveRate: "Effektiver Steuersatz",
+      marginalRate: "Grenzsteuersatz",
+      monthlyNet: "Monatliches Nettoeinkommen",
+      childBenefits: "Kindergeld/Kinderfreibetrag",
+      keyFeatures: "Hauptfunktionen",
+      legalBasis: "Rechtsgrundlage",
+      quickGuide: "Schnellanleitung",
+      disclaimer: "Wichtiger Hinweis"
     }
   },
   fr: {
@@ -191,6 +295,41 @@ export const translations: Record<string, TranslationSet> = {
       advancedTools: "Outils avancés",
       countryPopularTools: "{country} Outils populaires",
       countryAdvancedTools: "{country} Outils avancés"
+    },
+    germanTaxCalculator: {
+      title: "Calculateur d'impôt sur le revenu allemand",
+      subtitle: "Calculateur professionnel d'impôt sur le revenu allemand pour 2025 avec toutes les déductions et allocations",
+      basicInfo: "Informations de base",
+      personal: "Détails personnels",
+      deductions: "Déductions et dépenses",
+      grossIncome: "Revenu brut annuel (€)",
+      taxClass: "Classe d'impôt (Steuerklasse)",
+      federalState: "État fédéral",
+      churchMember: "Membre de l'impôt d'église",
+      children: "Nombre d'enfants",
+      maritalStatus: "État civil",
+      spouseIncome: "Revenu annuel du conjoint (€)",
+      workExpenses: "Frais professionnels supplémentaires (€)",
+      commuteDistance: "Distance quotidienne de trajet (km)",
+      workDays: "Jours de travail annuels",
+      homeOfficeDays: "Jours de bureau à domicile",
+      specialExpenses: "Dépenses spéciales (€)",
+      results: "Résultats du calcul d'impôt",
+      netIncome: "Revenu net",
+      taxBreakdown: "Répartition des impôts",
+      taxableIncome: "Revenu imposable",
+      incomeTax: "Impôt sur le revenu",
+      solidaritySurcharge: "Surtaxe de solidarité",
+      churchTax: "Impôt d'église",
+      totalTax: "Impôt total",
+      effectiveRate: "Taux effectif",
+      marginalRate: "Taux marginal",
+      monthlyNet: "Revenu net mensuel",
+      childBenefits: "Allocations familiales",
+      keyFeatures: "Caractéristiques principales",
+      legalBasis: "Base légale",
+      quickGuide: "Guide rapide",
+      disclaimer: "Avertissement important"
     }
   },
   es: {
@@ -239,6 +378,41 @@ export const translations: Record<string, TranslationSet> = {
       advancedTools: "Herramientas avanzadas",
       countryPopularTools: "{country} Herramientas populares",
       countryAdvancedTools: "{country} Herramientas avanzadas"
+    },
+    germanTaxCalculator: {
+      title: "Calculadora de impuesto sobre la renta alemán",
+      subtitle: "Calculadora profesional de impuesto sobre la renta alemán para 2025 con todas las deducciones y asignaciones",
+      basicInfo: "Información básica",
+      personal: "Detalles personales",
+      deductions: "Deducciones y gastos",
+      grossIncome: "Ingreso bruto anual (€)",
+      taxClass: "Clase de impuesto (Steuerklasse)",
+      federalState: "Estado federal",
+      churchMember: "Miembro del impuesto de iglesia",
+      children: "Número de hijos",
+      maritalStatus: "Estado civil",
+      spouseIncome: "Ingreso anual del cónyuge (€)",
+      workExpenses: "Gastos laborales adicionales (€)",
+      commuteDistance: "Distancia diaria de viaje (km)",
+      workDays: "Días laborales anuales",
+      homeOfficeDays: "Días de oficina en casa",
+      specialExpenses: "Gastos especiales (€)",
+      results: "Resultados del cálculo de impuestos",
+      netIncome: "Ingreso neto",
+      taxBreakdown: "Desglose de impuestos",
+      taxableIncome: "Ingreso gravable",
+      incomeTax: "Impuesto sobre la renta",
+      solidaritySurcharge: "Recargo de solidaridad",
+      churchTax: "Impuesto de iglesia",
+      totalTax: "Impuesto total",
+      effectiveRate: "Tasa efectiva",
+      marginalRate: "Tasa marginal",
+      monthlyNet: "Ingreso neto mensual",
+      childBenefits: "Beneficios por hijos",
+      keyFeatures: "Características principales",
+      legalBasis: "Base legal",
+      quickGuide: "Guía rápida",
+      disclaimer: "Descargo de responsabilidad importante"
     }
   },
   hi: {
@@ -287,6 +461,41 @@ export const translations: Record<string, TranslationSet> = {
       advancedTools: "उन्नत उपकरण",
       countryPopularTools: "{country} लोकप्रिय उपकरण",
       countryAdvancedTools: "{country} उन्नत उपकरण"
+    },
+    germanTaxCalculator: {
+      title: "जर्मन आयकर कैलकुलेटर",
+      subtitle: "सभी कटौती और भत्तों के साथ 2025 के लिए पेशेवर जर्मन आयकर कैलकुलेटर",
+      basicInfo: "बुनियादी जानकारी",
+      personal: "व्यक्तिगत विवरण",
+      deductions: "कटौती और खर्च",
+      grossIncome: "वार्षिक सकल आय (€)",
+      taxClass: "कर वर्ग (Steuerklasse)",
+      federalState: "संघीय राज्य",
+      churchMember: "चर्च कर सदस्य",
+      children: "बच्चों की संख्या",
+      maritalStatus: "वैवाहिक स्थिति",
+      spouseIncome: "जीवनसाथी की वार्षिक आय (€)",
+      workExpenses: "अतिरिक्त कार्य व्यय (€)",
+      commuteDistance: "दैनिक आवागमन दूरी (km)",
+      workDays: "वार्षिक कार्य दिवस",
+      homeOfficeDays: "होम ऑफिस दिन",
+      specialExpenses: "विशेष व्यय (€)",
+      results: "कर गणना परिणाम",
+      netIncome: "शुद्ध आय",
+      taxBreakdown: "कर विवरण",
+      taxableIncome: "कर योग्य आय",
+      incomeTax: "आयकर",
+      solidaritySurcharge: "एकजुटता अधिभार",
+      churchTax: "चर्च कर",
+      totalTax: "कुल कर",
+      effectiveRate: "प्रभावी दर",
+      marginalRate: "सीमांत दर",
+      monthlyNet: "मासिक शुद्ध आय",
+      childBenefits: "बाल लाभ",
+      keyFeatures: "मुख्य विशेषताएं",
+      legalBasis: "कानूनी आधार",
+      quickGuide: "त्वरित गाइड",
+      disclaimer: "महत्वपूर्ण अस्वीकरण"
     }
   },
   zh: {
@@ -335,6 +544,41 @@ export const translations: Record<string, TranslationSet> = {
       advancedTools: "高级工具",
       countryPopularTools: "{country}热门工具",
       countryAdvancedTools: "{country}高级工具"
+    },
+    germanTaxCalculator: {
+      title: "德国所得税计算器",
+      subtitle: "2025年专业德国所得税计算器，包含所有扣除额和津贴",
+      basicInfo: "基本信息",
+      personal: "个人详情",
+      deductions: "扣除和费用",
+      grossIncome: "年度总收入 (€)",
+      taxClass: "税收等级 (Steuerklasse)",
+      federalState: "联邦州",
+      churchMember: "教会税成员",
+      children: "子女人数",
+      maritalStatus: "婚姻状况",
+      spouseIncome: "配偶年收入 (€)",
+      workExpenses: "额外工作费用 (€)",
+      commuteDistance: "每日通勤距离 (km)",
+      workDays: "年度工作日",
+      homeOfficeDays: "居家办公日",
+      specialExpenses: "特殊费用 (€)",
+      results: "税收计算结果",
+      netIncome: "净收入",
+      taxBreakdown: "税收明细",
+      taxableIncome: "应税收入",
+      incomeTax: "所得税",
+      solidaritySurcharge: "团结附加税",
+      churchTax: "教会税",
+      totalTax: "总税额",
+      effectiveRate: "有效税率",
+      marginalRate: "边际税率",
+      monthlyNet: "月净收入",
+      childBenefits: "儿童福利",
+      keyFeatures: "主要功能",
+      legalBasis: "法律依据",
+      quickGuide: "快速指南",
+      disclaimer: "重要免责声明"
     }
   },
   ja: {
@@ -383,6 +627,41 @@ export const translations: Record<string, TranslationSet> = {
       advancedTools: "高度なツール",
       countryPopularTools: "{country}人気ツール",
       countryAdvancedTools: "{country}高度なツール"
+    },
+    germanTaxCalculator: {
+      title: "ドイツ所得税計算機",
+      subtitle: "すべての控除と手当を含む2025年のプロフェッショナルなドイツ所得税計算機",
+      basicInfo: "基本情報",
+      personal: "個人詳細",
+      deductions: "控除と費用",
+      grossIncome: "年間総所得 (€)",
+      taxClass: "税務クラス (Steuerklasse)",
+      federalState: "連邦州",
+      churchMember: "教会税メンバー",
+      children: "子どもの数",
+      maritalStatus: "婚姻状況",
+      spouseIncome: "配偶者年収 (€)",
+      workExpenses: "追加業務費用 (€)",
+      commuteDistance: "日次通勤距離 (km)",
+      workDays: "年間勤務日数",
+      homeOfficeDays: "在宅勤務日数",
+      specialExpenses: "特別費用 (€)",
+      results: "税務計算結果",
+      netIncome: "手取り収入",
+      taxBreakdown: "税金内訳",
+      taxableIncome: "課税所得",
+      incomeTax: "所得税",
+      solidaritySurcharge: "連帯付加税",
+      churchTax: "教会税",
+      totalTax: "総税額",
+      effectiveRate: "実効税率",
+      marginalRate: "限界税率",
+      monthlyNet: "月次手取り収入",
+      childBenefits: "児童手当",
+      keyFeatures: "主な機能",
+      legalBasis: "法的根拠",
+      quickGuide: "クイックガイド",
+      disclaimer: "重要な免責事項"
     }
   },
   ar: {
@@ -431,6 +710,41 @@ export const translations: Record<string, TranslationSet> = {
       advancedTools: "الأدوات المتقدمة",
       countryPopularTools: "{country} الأدوات الشائعة",
       countryAdvancedTools: "{country} الأدوات المتقدمة"
+    },
+    germanTaxCalculator: {
+      title: "حاسبة ضريبة الدخل الألمانية",
+      subtitle: "حاسبة ضريبة الدخل الألمانية المهنية لعام 2025 مع جميع الخصومات والبدلات",
+      basicInfo: "المعلومات الأساسية",
+      personal: "التفاصيل الشخصية",
+      deductions: "الخصومات والمصروفات",
+      grossIncome: "الدخل الإجمالي السنوي (€)",
+      taxClass: "فئة الضريبة (Steuerklasse)",
+      federalState: "الولاية الفيدرالية",
+      churchMember: "عضو ضريبة الكنيسة",
+      children: "عدد الأطفال",
+      maritalStatus: "الحالة الاجتماعية",
+      spouseIncome: "الدخل السنوي للزوج/ة (€)",
+      workExpenses: "مصروفات العمل الإضافية (€)",
+      commuteDistance: "مسافة التنقل اليومية (km)",
+      workDays: "أيام العمل السنوية",
+      homeOfficeDays: "أيام العمل من المنزل",
+      specialExpenses: "المصروفات الخاصة (€)",
+      results: "نتائج حساب الضريبة",
+      netIncome: "الدخل الصافي",
+      taxBreakdown: "تفصيل الضرائب",
+      taxableIncome: "الدخل الخاضع للضريبة",
+      incomeTax: "ضريبة الدخل",
+      solidaritySurcharge: "رسوم التضامن",
+      churchTax: "ضريبة الكنيسة",
+      totalTax: "إجمالي الضريبة",
+      effectiveRate: "المعدل الفعلي",
+      marginalRate: "المعدل الحدي",
+      monthlyNet: "الدخل الصافي الشهري",
+      childBenefits: "إعانات الأطفال",
+      keyFeatures: "الميزات الرئيسية",
+      legalBasis: "الأساس القانوني",
+      quickGuide: "الدليل السريع",
+      disclaimer: "إخلاء مسؤولية مهم"
     }
   }
 };

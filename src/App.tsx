@@ -11,6 +11,7 @@ import Auth from "./pages/Auth";
 import ToolPage from "./pages/ToolPage";
 import NotFound from "./pages/NotFound";
 import ToolRedirect from "./pages/ToolRedirect";
+import GermanIncomeTaxPage from "./pages/tools/GermanIncomeTaxPage";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,8 @@ const App = () => (
               <Route path="/auth" element={<Auth />} />
               <Route path="/tool/:countrySlug/:toolSlug" element={<ToolRedirect />} />
               <Route path="/tool/:lang/:countrySlug/:toolSlug" element={<ToolPage />} />
+              {/* Specific route for German Income Tax Calculator */}
+              <Route path="/tool/:lang/germany/income-tax-calculator" element={<GermanIncomeTaxPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </TooltipProvider>

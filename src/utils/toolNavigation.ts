@@ -1,3 +1,4 @@
+
 import { baseTools } from "@/data/tools";
 import { continents } from "@/data/continents";
 
@@ -52,6 +53,16 @@ export const handleToolNavigation = (toolString: string, lang: string) => {
   if (parsedTool.isCountrySpecific && parsedTool.country) {
     const countrySlug = generateCountrySlug(parsedTool.country);
     const toolSlug = generateToolSlug(parsedTool.toolName);
+    
+    // Special handling for German Income Tax Calculator
+    if (parsedTool.country.toLowerCase() === 'germany' && 
+        parsedTool.toolName.toLowerCase().includes('income tax')) {
+      const route = `/tool/${lang}/germany/income-tax-calculator`;
+      console.log(`Navigating to German Income Tax Calculator: ${route}`);
+      window.location.href = route;
+      return;
+    }
+    
     const route = `/tool/${lang}/${countrySlug}/${toolSlug}`;
     
     console.log(`Navigating to country-specific tool: ${route}`);
