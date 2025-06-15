@@ -32,13 +32,27 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const setLanguage = (newLang: LanguageCode) => {
     setLanguageState(newLang);
     
-    // Handle different page types
+    console.log('Setting language to:', newLang, 'Current path:', location.pathname);
+    
+    // Handle different page types - prioritize tool pages first
+    if (location.pathname.includes('/tool/')) {
+      // Parse the tool URL to extract country and tool parts
+      const pathParts = location.pathname.split('/').filter(Boolean);
+      console.log('Tool page - path parts:', pathParts);
+      
+      // Tool URLs should be: /tool/{lang}/{country}/{tool}
+      if (pathParts[0] === 'tool' && pathParts.length >= 4) {
+        const [, currentLang, countrySlug, toolSlug] = pathParts;
+        const newPath = `/tool/${newLang}/${countrySlug}/${toolSlug}`;
+        console.log('Navigating to tool page:', newPath);
+        navigate(newPath, { replace: true });
+        return;
+      }
+    }
+    
     if (location.pathname === '/' || location.pathname === `/${language}`) {
       // On homepage, navigate to language-specific homepage
       navigate(`/${newLang}`, { replace: true });
-    } else if (location.pathname.includes('/tool/') && params.countrySlug && params.toolSlug) {
-      // On tool page, maintain the /tool/{lang}/{country}/{tool} format
-      navigate(`/tool/${newLang}/${params.countrySlug}/${params.toolSlug}`, { replace: true });
     } else if (location.pathname.startsWith(`/${language}`)) {
       // For other language-specific pages, replace the language part
       const pathWithoutLang = location.pathname.replace(`/${language}`, '');
