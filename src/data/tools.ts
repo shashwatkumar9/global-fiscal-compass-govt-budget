@@ -220,6 +220,139 @@ export const germanySpecificTools = [
     slug: "budget-analyzer",
     description: "Analyze German federal and state budgets with detailed breakdowns",
     category: "Budget Analysis", 
-    complexity: "Professional"
+    complexity: "Professional",
+    features: [
+      "Federal (Bund) budget data",
+      "State (Länder) budget data",
+      "Revenue vs. Expenditure analysis",
+      "Historical budget comparisons",
+      "Interactive charts and graphs"
+    ]
+  },
+  {
+    name: "GDP Calculator",
+    slug: "gdp-calculator",
+    description: "Calculate and project German GDP using various economic indicators.",
+    category: "Economic Analysis",
+    complexity: "Advanced",
+    features: [
+      "Expenditure approach (C+I+G+NX)",
+      "Income approach",
+      "Production approach",
+      "Real vs. Nominal GDP",
+      "Inflation adjustments"
+    ]
+  },
+  {
+    name: "Public Debt Calculator",
+    slug: "public-debt-calculator",
+    description: "Analyze Germany's public debt, debt-to-GDP ratio, and sustainability.",
+    category: "Economic Analysis",
+    complexity: "Advanced",
+    features: [
+      "Total public debt tracking",
+      "Debt-to-GDP ratio analysis",
+      "Maastricht criteria compliance",
+      "Interest payment projections",
+      "Historical debt trends"
+    ]
+  },
+  {
+    name: "Revenue Projector",
+    slug: "revenue-projector",
+    description: "Project future government revenue based on economic forecasts.",
+    category: "Budget Analysis",
+    complexity: "Professional",
+    features: [
+      "Tax revenue projections (VAT, Income, Corporate)",
+      "Social security contribution forecasts",
+      "Economic growth modeling",
+      "Policy change impact simulation",
+      "Sensitivity analysis"
+    ]
+  },
+  {
+    name: "Spending Tracker",
+    slug: "spending-tracker",
+    description: "Track German government spending across different ministries and programs.",
+    category: "Budget Analysis",
+    complexity: "Professional",
+    features: [
+      "Ministry-level spending breakdown",
+      "Program-specific expenditure tracking",
+      "Comparison with budgeted amounts",
+      "Per-capita spending analysis",
+      "Interactive treemaps"
+    ]
+  },
+  {
+    name: "Budget Comparison",
+    slug: "budget-comparison",
+    description: "Compare Germany's budget with other EU countries and top economies.",
+    category: "Budget Analysis",
+    complexity: "Advanced",
+    features: [
+      "EU country budget comparison",
+      "G7/G20 economies comparison",
+      "Spending priorities analysis",
+      "Revenue sources comparison",
+      "Debt-to-GDP ratio benchmarks"
+    ]
+  },
+  {
+    name: "Fiscal Impact Tool",
+    slug: "fiscal-impact-tool",
+    description: "Assess the fiscal impact of proposed economic policies or projects.",
+    category: "Economic Analysis",
+    complexity: "Professional",
+    features: [
+      "Dynamic scoring of policy changes",
+      "Impact on revenue and expenditure",
+      "Short-term and long-term effects",
+      "Cost-benefit analysis",
+      "Scenario modeling"
+    ]
+  },
+  {
+    name: "Economic Growth Calculator",
+    slug: "economic-growth-calculator",
+    description: "Model and forecast Germany's economic growth based on key drivers.",
+    category: "Economic Analysis",
+    complexity: "Advanced",
+    features: [
+      "Solow-Swan growth model",
+      "Endogenous growth factors",
+      "Impact of investment and TFP",
+      "Demographic change effects",
+      "Long-term growth projections"
+    ]
+  },
+  {
+    name: "Budget Allocation Tool",
+    slug: "budget-allocation-tool",
+    description: "Simulate different budget allocation scenarios and their outcomes.",
+    category: "Budget Analysis",
+    complexity: "Professional",
+    features: [
+      "Interactive budget allocation",
+      "Constraint-based modeling",
+      "Trade-off analysis",
+      "Impact on deficit and debt",
+      "Program outcome simulation"
+    ]
+  },
+  {
+    name: "Deficit Calculator",
+    slug: "deficit-calculator",
+    description: "Calculate Germany's budget deficit and its relation to economic performance.",
+    category: "Budget Analysis",
+    complexity: "Advanced",
+    features: [
+      "Structural vs. Cyclical deficit",
+      "Primary balance calculation",
+      "Deficit-to-GDP ratio",
+      "Maastricht criteria monitoring",
+      "Automatic stabilizers analysis"
+    ]
   }
 ];

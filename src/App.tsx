@@ -21,6 +21,16 @@ import GermanPayrollTaxPage from "./pages/tools/GermanPayrollTaxPage";
 import GermanSalesTaxPage from "./pages/tools/GermanSalesTaxPage";
 import GermanImportTaxPage from "./pages/tools/GermanImportTaxPage";
 import GermanMunicipalTaxPage from "./pages/tools/GermanMunicipalTaxPage";
+import GermanBudgetAnalyzerPage from "./pages/tools/GermanBudgetAnalyzerPage";
+import GermanGDPCalculatorPage from "./pages/tools/GermanGDPCalculatorPage";
+import GermanPublicDebtCalculatorPage from "./pages/tools/GermanPublicDebtCalculatorPage";
+import GermanRevenueProjectorPage from "./pages/tools/GermanRevenueProjectorPage";
+import GermanSpendingTrackerPage from "./pages/tools/GermanSpendingTrackerPage";
+import GermanBudgetComparisonPage from "./pages/tools/GermanBudgetComparisonPage";
+import GermanFiscalImpactToolPage from "./pages/tools/GermanFiscalImpactToolPage";
+import GermanEconomicGrowthCalculatorPage from "./pages/tools/GermanEconomicGrowthCalculatorPage";
+import GermanBudgetAllocationToolPage from "./pages/tools/GermanBudgetAllocationToolPage";
+import GermanDeficitCalculatorPage from "./pages/tools/GermanDeficitCalculatorPage";
 
 const queryClient = new QueryClient();
 
@@ -59,6 +69,18 @@ const App = () => (
               <Route path="/tool/:lang/germany/import-tax-calculator" element={<GermanImportTaxPage />} />
               <Route path="/tool/:lang/germany/municipal-tax-calculator" element={<GermanMunicipalTaxPage />} />
               
+              {/* New German Budget and Economic Tool Routes */}
+              <Route path="/tool/:lang/germany/budget-analyzer" element={<GermanBudgetAnalyzerPage />} />
+              <Route path="/tool/:lang/germany/gdp-calculator" element={<GermanGDPCalculatorPage />} />
+              <Route path="/tool/:lang/germany/public-debt-calculator" element={<GermanPublicDebtCalculatorPage />} />
+              <Route path="/tool/:lang/germany/revenue-projector" element={<GermanRevenueProjectorPage />} />
+              <Route path="/tool/:lang/germany/spending-tracker" element={<GermanSpendingTrackerPage />} />
+              <Route path="/tool/:lang/germany/budget-comparison" element={<GermanBudgetComparisonPage />} />
+              <Route path="/tool/:lang/germany/fiscal-impact-tool" element={<GermanFiscalImpactToolPage />} />
+              <Route path="/tool/:lang/germany/economic-growth-calculator" element={<GermanEconomicGrowthCalculatorPage />} />
+              <Route path="/tool/:lang/germany/budget-allocation-tool" element={<GermanBudgetAllocationToolPage />} />
+              <Route path="/tool/:lang/germany/deficit-calculator" element={<GermanDeficitCalculatorPage />} />
+
               <Route path="*" element={<NotFound />} />
             </Routes>
           </TooltipProvider>
