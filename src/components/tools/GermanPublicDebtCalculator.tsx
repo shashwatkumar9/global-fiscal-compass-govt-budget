@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, BarChart, Bar, ComposedChart } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, BarChart, Bar, ComposedChart, Cell } from "recharts";
 import { TrendingUp, TrendingDown, AlertTriangle, Calculator, Target, Clock } from "lucide-react";
 
 const GermanPublicDebtCalculator = () => {
@@ -65,6 +64,16 @@ const GermanPublicDebtCalculator = () => {
     s2Indicator: 2.1,           // S2 sustainability indicator
     fiscalSpace: 15.8           // Fiscal space before crisis threshold
   };
+
+  // Create properly colored data for EU comparison chart
+  const euComparisonData = [
+    { country: "Germany", debtRatio: 66.3, status: "Above limit", color: "#ff8042" },
+    { country: "France", debtRatio: 110.6, status: "Well above limit", color: "#ff8042" },
+    { country: "Italy", debtRatio: 144.4, status: "Well above limit", color: "#ff8042" },
+    { country: "Spain", debtRatio: 107.7, status: "Well above limit", color: "#ff8042" },
+    { country: "Netherlands", debtRatio: 47.4, status: "Below limit", color: "#00C49F" },
+    { country: "EU Limit", debtRatio: 60.0, status: "Maastricht Criterion", color: "#ff0000" }
+  ];
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('de-DE', {
@@ -537,15 +546,16 @@ const GermanPublicDebtCalculator = () => {
                 </CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={400}>
-                    <BarChart data={euComparison}>
+                    <BarChart data={euComparisonData}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="country" />
                       <YAxis />
                       <Tooltip formatter={(value) => [`${value}%`, 'Debt-to-GDP Ratio']} />
-                      <Bar 
-                        dataKey="debtRatio" 
-                        fill={(entry) => entry.country === 'EU Limit' ? '#ff0000' : entry.debtRatio > 60 ? '#ff8042' : '#00C49F'}
-                      />
+                      <Bar dataKey="debtRatio">
+                        {euComparisonData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Bar>
                     </BarChart>
                   </ResponsiveContainer>
                 </CardContent>

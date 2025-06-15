@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, AreaChart, Area, ComposedChart } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, AreaChart, Area, ComposedChart, Cell } from "recharts";
 import { TrendingDown, Calculator, AlertTriangle, CheckCircle, Target, Download, FileText } from "lucide-react";
 
 const GermanDeficitCalculator = () => {
@@ -141,6 +140,12 @@ const GermanDeficitCalculator = () => {
       description: "Linked to employment levels"
     }
   ];
+
+  // Create properly colored data for the automatic stabilizers chart
+  const stabilizerChartData = automaticStabilizers.map(stabilizer => ({
+    ...stabilizer,
+    color: stabilizer.procyclical ? "#ff7300" : "#00C49F"
+  }));
 
   const formatBillions = (amount: number) => {
     return `€${amount.toFixed(1)}B`;
@@ -653,12 +658,16 @@ const GermanDeficitCalculator = () => {
                 </CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={automaticStabilizers}>
+                    <BarChart data={stabilizerChartData}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="component" angle={-45} textAnchor="end" height={100} />
                       <YAxis />
                       <Tooltip formatter={(value: number) => [`${value}B EUR`, 'Impact']} />
-                      <Bar dataKey="impact" fill={(entry) => entry.procyclical ? "#ff7300" : "#00C49F"} />
+                      <Bar dataKey="impact">
+                        {stabilizerChartData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Bar>
                     </BarChart>
                   </ResponsiveContainer>
                 </CardContent>
