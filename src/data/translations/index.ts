@@ -1,5 +1,5 @@
 
-import { TranslationSet } from './types';
+import type { TranslationSet } from './types';
 import { enTranslations } from './en';
 import { deTranslations } from './de';
 import { frTranslations } from './fr';
@@ -20,4 +20,4 @@ export const translations: Record<string, TranslationSet> = {
   ar: arTranslations
 };
 
-export { TranslationSet } from './types';
+export type { TranslationSet } from './types';
