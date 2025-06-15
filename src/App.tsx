@@ -16,6 +16,11 @@ import GermanVATPage from "./pages/tools/GermanVATPage";
 import GermanCorporateTaxPage from "./pages/tools/GermanCorporateTaxPage";
 import GermanCapitalGainsTaxPage from "./pages/tools/GermanCapitalGainsTaxPage";
 import GermanPropertyTaxPage from "./pages/tools/GermanPropertyTaxPage";
+import GermanInheritanceTaxPage from "./pages/tools/GermanInheritanceTaxPage";
+import GermanPayrollTaxPage from "./pages/tools/GermanPayrollTaxPage";
+import GermanSalesTaxPage from "./pages/tools/GermanSalesTaxPage";
+import GermanImportTaxPage from "./pages/tools/GermanImportTaxPage";
+import GermanMunicipalTaxPage from "./pages/tools/GermanMunicipalTaxPage";
 
 const queryClient = new QueryClient();
 
@@ -48,11 +53,11 @@ const App = () => (
               <Route path="/tool/:lang/germany/corporate-tax-calculator" element={<GermanCorporateTaxPage />} />
               <Route path="/tool/:lang/germany/capital-gains-tax-calculator" element={<GermanCapitalGainsTaxPage />} />
               <Route path="/tool/:lang/germany/property-tax-calculator" element={<GermanPropertyTaxPage />} />
-              <Route path="/tool/:lang/germany/inheritance-tax-calculator" element={<ToolPage />} />
-              <Route path="/tool/:lang/germany/payroll-tax-calculator" element={<ToolPage />} />
-              <Route path="/tool/:lang/germany/sales-tax-calculator" element={<ToolPage />} />
-              <Route path="/tool/:lang/germany/import-tax-calculator" element={<ToolPage />} />
-              <Route path="/tool/:lang/germany/municipal-tax-calculator" element={<ToolPage />} />
+              <Route path="/tool/:lang/germany/inheritance-tax-calculator" element={<GermanInheritanceTaxPage />} />
+              <Route path="/tool/:lang/germany/payroll-tax-calculator" element={<GermanPayrollTaxPage />} />
+              <Route path="/tool/:lang/germany/sales-tax-calculator" element={<GermanSalesTaxPage />} />
+              <Route path="/tool/:lang/germany/import-tax-calculator" element={<GermanImportTaxPage />} />
+              <Route path="/tool/:lang/germany/municipal-tax-calculator" element={<GermanMunicipalTaxPage />} />
               
               <Route path="*" element={<NotFound />} />
             </Routes>
