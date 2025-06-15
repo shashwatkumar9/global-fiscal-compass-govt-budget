@@ -1,3 +1,4 @@
+
 import { Search, Menu, X, User, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -86,9 +87,9 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
 
           {/* Navigation Links */}
           <nav className="hidden md:flex items-center space-x-6">
-            <a href="#services" className="text-gray-700 hover:text-blue-600 font-medium">{t.header.services}</a>
-            <a href="#about" className="text-gray-700 hover:text-blue-600 font-medium">{t.header.about}</a>
-            <a href="#contact" className="text-gray-700 hover:text-blue-600 font-medium">{t.header.contact}</a>
+            <Link to="/services" className="text-gray-700 hover:text-blue-600 font-medium">{t.header.services}</Link>
+            <Link to="/about" className="text-gray-700 hover:text-blue-600 font-medium">{t.header.about}</Link>
+            <Link to="/contact" className="text-gray-700 hover:text-blue-600 font-medium">{t.header.contact}</Link>
             
             {user ? (
               <UserMenu />
@@ -124,9 +125,9 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-200">
           <div className="px-4 py-4 space-y-4">
-            <a href="#services" className="block text-gray-700 hover:text-blue-600 font-medium">{t.header.services}</a>
-            <a href="#about" className="block text-gray-700 hover:text-blue-600 font-medium">{t.header.about}</a>
-            <a href="#contact" className="block text-gray-700 hover:text-blue-600 font-medium">{t.header.contact}</a>
+            <Link to="/services" className="block text-gray-700 hover:text-blue-600 font-medium">{t.header.services}</Link>
+            <Link to="/about" className="block text-gray-700 hover:text-blue-600 font-medium">{t.header.about}</Link>
+            <Link to="/contact" className="block text-gray-700 hover:text-blue-600 font-medium">{t.header.contact}</Link>
             
             {user ? (
               <div className="pt-2">
