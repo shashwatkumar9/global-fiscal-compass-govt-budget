@@ -30,9 +30,9 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-gray-900">
+            <Link to="/" className="text-2xl font-bold text-gray-900">
               GovtBudget<span className="text-blue-600">.com</span>
-            </h1>
+            </Link>
           </div>
 
           {/* Search Bar */}
@@ -54,12 +54,12 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
             
             {/* Search Suggestions */}
             {showSearchSuggestions && searchQuery && (
-              <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 max-h-64 overflow-y-auto z-50">
+              <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 max-h-80 overflow-y-auto z-50">
                 {filteredSuggestions.length > 0 ? (
-                  filteredSuggestions.slice(0, 8).map((suggestion, index) => (
+                  filteredSuggestions.slice(0, 12).map((suggestion, index) => (
                     <div
                       key={index}
-                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0"
+                      className="px-4 py-3 hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0"
                       onClick={() => {
                         setSearchQuery(suggestion);
                         setShowSearchSuggestions(false);
@@ -69,11 +69,16 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
                       <div className="flex items-center">
                         <Search className="w-4 h-4 text-gray-400 mr-3" />
                         <span className="text-sm text-gray-700">{suggestion}</span>
+                        {suggestion.includes(' ') && !suggestion.match(/^(Income Tax|VAT|Corporate Tax|Budget|GDP|Currency|Import Tax|Compliance|Inflation|Property Tax|Payroll Tax|Trade|Revenue|Audit|Policy|Economic|Sales Tax|Customs|Filing|Legal|Capital Gains|Inheritance|Municipal|Allocation|Spending|Projection|Comparison|Fiscal|Public Debt|Growth|Regulatory|Preparation|Deadline|Document|Framework|Impact|Change)/) && (
+                          <span className="ml-auto text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded">
+                            Country-specific
+                          </span>
+                        )}
                       </div>
                     </div>
                   ))
                 ) : (
-                  <div className="px-4 py-2 text-sm text-gray-500">No tools found</div>
+                  <div className="px-4 py-3 text-sm text-gray-500">No tools found</div>
                 )}
               </div>
             )}

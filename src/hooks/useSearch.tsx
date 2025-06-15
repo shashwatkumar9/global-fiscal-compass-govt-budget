@@ -16,7 +16,7 @@ export const useSearch = () => {
     // Add base tools first
     suggestions.push(...baseTools);
     
-    // Add country-specific tools for all countries
+    // Add country-specific tools for all countries across all continents
     Object.values(continents).forEach(continent => {
       continent.countries.forEach(country => {
         baseTools.forEach(tool => {
@@ -41,6 +41,17 @@ export const useSearch = () => {
       if (aStartsWith && !bStartsWith) return -1;
       if (bStartsWith && !aStartsWith) return 1;
       
+      // Then country-specific tools (they contain country names)
+      const aIsCountrySpecific = Object.values(continents).some(continent =>
+        continent.countries.some(country => aLower.startsWith(country.toLowerCase()))
+      );
+      const bIsCountrySpecific = Object.values(continents).some(continent =>
+        continent.countries.some(country => bLower.startsWith(country.toLowerCase()))
+      );
+      
+      if (aIsCountrySpecific && !bIsCountrySpecific) return -1;
+      if (bIsCountrySpecific && !aIsCountrySpecific) return 1;
+      
       // Then shorter strings
       return a.length - b.length;
     });
@@ -51,7 +62,7 @@ export const useSearch = () => {
   const filteredSuggestions = searchQuery.length > 0 
     ? allToolSuggestions.filter(tool =>
         tool.toLowerCase().includes(searchQuery.toLowerCase())
-      ).slice(0, 12) // Limit to 12 suggestions for better performance
+      ).slice(0, 15) // Increased to 15 suggestions for better coverage
     : [];
 
   useEffect(() => {

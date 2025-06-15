@@ -40,23 +40,28 @@ export const generateToolSlug = (toolString: string): string => {
   return toolString.toLowerCase().replace(/\s+/g, '-');
 };
 
+export const generateCountrySlug = (country: string): string => {
+  return country.toLowerCase().replace(/\s+/g, '-');
+};
+
 export const handleToolNavigation = (toolString: string) => {
-  const toolSlug = generateToolSlug(toolString);
   const parsedTool = parseToolName(toolString);
   
   console.log(`Navigating to tool: ${toolString}`);
-  console.log(`Tool slug: ${toolSlug}`);
   console.log(`Parsed tool:`, parsedTool);
   
-  if (parsedTool.isCountrySpecific) {
-    console.log(`Country-specific tool: ${parsedTool.country} - ${parsedTool.toolName}`);
-    // Future route: `/tool/${country-slug}/${tool-slug}`
-    const countrySlug = parsedTool.country!.toLowerCase().replace(/\s+/g, '-');
-    const baseToolSlug = generateToolSlug(parsedTool.toolName);
-    console.log(`Future route: /tool/${countrySlug}/${baseToolSlug}`);
+  if (parsedTool.isCountrySpecific && parsedTool.country) {
+    const countrySlug = generateCountrySlug(parsedTool.country);
+    const toolSlug = generateToolSlug(parsedTool.toolName);
+    const route = `/tool/${countrySlug}/${toolSlug}`;
+    
+    console.log(`Navigating to country-specific tool: ${route}`);
+    window.location.href = route;
   } else {
-    console.log(`Global tool: ${parsedTool.toolName}`);
-    // Future route: `/tool/${tool-slug}`
-    console.log(`Future route: /tool/${toolSlug}`);
+    // For global tools, we'll redirect to a general tool page
+    const toolSlug = generateToolSlug(parsedTool.toolName);
+    console.log(`Global tool not yet implemented: ${toolSlug}`);
+    // For now, just log it - you can implement global tool pages later
+    alert(`Global tool "${parsedTool.toolName}" page not yet implemented. Please select a country-specific version.`);
   }
 };
