@@ -1,213 +1,355 @@
 
-import { LanguageCode } from './languages';
+export interface TranslationSet {
+  hero: {
+    title: string;
+    subtitle: string;
+  };
+  header: {
+    searchPlaceholder: string;
+    countrySpecific: string;
+    noToolsFound: string;
+    services: string;
+    about: string;
+    contact: string;
+    signIn: string;
+    signUp: string;
+  };
+  quickAccessTools: {
+    description: string;
+  };
+  featuredTools: {
+    title: string;
+    titleForCountry: string;
+    showAllCountries: string;
+    toolDescriptionForCountry: string;
+    toolDescriptionGlobal: string;
+    launchTool: string;
+    currentlyViewing: string;
+    viewingDescription: string;
+    taxCalculatorButton: string;
+    budgetToolsButton: string;
+    topEconomies: string;
+  };
+  megaMenu: {
+    countries: string;
+    popularTools: string;
+    advancedTools: string;
+    countryPopularTools: string;
+    countryAdvancedTools: string;
+  };
+}
 
-const translationsData = {
+export const translations: Record<string, TranslationSet> = {
   en: {
+    hero: {
+      title: "Government Budget & Tax Tools for Every Country",
+      subtitle: "Professional tax calculators, budget analyzers, and compliance tools tailored for each country's regulations and available in multiple languages."
+    },
     header: {
-      searchPlaceholder: "Search tools, countries, or tax calculators...",
-      noToolsFound: "No tools found",
+      searchPlaceholder: "Search for tax tools, calculators, or countries...",
       countrySpecific: "Country-specific",
+      noToolsFound: "No tools found matching your search",
       services: "Services",
       about: "About",
       contact: "Contact",
       signIn: "Sign In",
-      signUp: "Sign Up",
+      signUp: "Sign Up"
+    },
+    quickAccessTools: {
+      description: "Quick access to essential government and tax tools"
+    },
+    featuredTools: {
+      title: "Featured Tools",
+      titleForCountry: "Featured Tools for {country}",
+      showAllCountries: "Show All Countries",
+      toolDescriptionForCountry: "Specialized for {country}'s regulations",
+      toolDescriptionGlobal: "Professional government and tax calculation tools",
+      launchTool: "Launch Tool",
+      currentlyViewing: "Currently Viewing: {country}",
+      viewingDescription: "All tools are customized for {country}'s specific regulations and tax laws.",
+      taxCalculatorButton: "{country} Tax Calculator",
+      budgetToolsButton: "{country} Budget Tools",
+      topEconomies: "Top Global Economies"
     },
     megaMenu: {
       countries: "Countries",
       popularTools: "Popular Tools",
       advancedTools: "Advanced Tools",
       countryPopularTools: "{country} Popular Tools",
-      countryAdvancedTools: "{country} Advanced Tools",
-    },
-    hero: {
-      title: "Global Government Finance & Taxation Tools",
-      subtitle: "Comprehensive financial tools, tax calculators, and budget analyzers for over 50 countries across 6 continents. Make informed decisions with accurate, up-to-date government finance data.",
-    },
-    featuredTools: {
-      title: "Featured Tools for Major Economies",
-      titleForCountry: "Featured Tools for {country}",
-      showAllCountries: "Show All Countries",
-      toolDescriptionForCountry: "Specifically designed for {country}",
-      toolDescriptionGlobal: "Available for all major economies",
-      launchTool: "Launch Tool",
-      currentlyViewing: "Currently Viewing: {country}",
-      viewingDescription: "All tools above are specifically configured for {country}'s financial regulations and requirements.",
-      taxCalculatorButton: "{country} Tax Calculator",
-      budgetToolsButton: "{country} Budget Tools",
-      topEconomies: "Top 10 Global Economies",
-    },
-    quickAccessTools: {
-      description: "Calculate and analyze with precision",
-    },
-    features: {
-      title: "Why Choose GovtBudget.com?",
-      countrySpecificToolsTitle: "Country-Specific Tools",
-      countrySpecificToolsDescription: "Over 500 country-specific financial tools covering 50+ countries across all major continents",
-      smartNavigationTitle: "Smart Navigation",
-      smartNavigationDescription: "Intelligent navigation that dynamically shows country-specific tools as you browse",
-      expertAccuracyTitle: "Expert Accuracy",
-      expertAccuracyDescription: "All calculations based on current country-specific government data and regulations",
-    },
+      countryAdvancedTools: "{country} Advanced Tools"
+    }
   },
   de: {
+    hero: {
+      title: "Regierungsbudget- und Steuertools für jedes Land",
+      subtitle: "Professionelle Steuerrechner, Budget-Analyzer und Compliance-Tools, die auf die Vorschriften jedes Landes zugeschnitten und in mehreren Sprachen verfügbar sind."
+    },
     header: {
-      searchPlaceholder: "Suchen Sie nach Tools, Ländern oder Steuerrechnern...",
-      noToolsFound: "Keine Tools gefunden",
+      searchPlaceholder: "Suchen Sie nach Steuertools, Rechnern oder Ländern...",
       countrySpecific: "Länderspezifisch",
+      noToolsFound: "Keine Tools gefunden, die Ihrer Suche entsprechen",
       services: "Dienstleistungen",
       about: "Über uns",
       contact: "Kontakt",
       signIn: "Anmelden",
-      signUp: "Registrieren",
+      signUp: "Registrieren"
+    },
+    quickAccessTools: {
+      description: "Schnellzugriff auf wichtige Regierungs- und Steuertools"
+    },
+    featuredTools: {
+      title: "Empfohlene Tools",
+      titleForCountry: "Empfohlene Tools für {country}",
+      showAllCountries: "Alle Länder anzeigen",
+      toolDescriptionForCountry: "Spezialisiert auf die Vorschriften von {country}",
+      toolDescriptionGlobal: "Professionelle Regierungs- und Steuerberechnungstools",
+      launchTool: "Tool starten",
+      currentlyViewing: "Aktuell angezeigt: {country}",
+      viewingDescription: "Alle Tools sind auf die spezifischen Vorschriften und Steuergesetze von {country} zugeschnitten.",
+      taxCalculatorButton: "{country} Steuerrechner",
+      budgetToolsButton: "{country} Budget-Tools",
+      topEconomies: "Top-Weltwirtschaften"
     },
     megaMenu: {
       countries: "Länder",
       popularTools: "Beliebte Tools",
       advancedTools: "Erweiterte Tools",
       countryPopularTools: "{country} Beliebte Tools",
-      countryAdvancedTools: "{country} Erweiterte Tools",
-    },
-    hero: {
-      title: "Globale Tools für öffentliche Finanzen und Steuern",
-      subtitle: "Umfassende Finanzinstrumente, Steuerrechner und Budgetanalysatoren für über 50 Länder auf 6 Kontinenten. Treffen Sie fundierte Entscheidungen mit genauen, aktuellen Daten zu den öffentlichen Finanzen.",
-    },
-    featuredTools: {
-      title: "Ausgewählte Tools für große Volkswirtschaften",
-      titleForCountry: "Ausgewählte Tools für {country}",
-      showAllCountries: "Alle Länder anzeigen",
-      toolDescriptionForCountry: "Speziell für {country} entwickelt",
-      toolDescriptionGlobal: "Verfügbar für alle großen Volkswirtschaften",
-      launchTool: "Tool starten",
-      currentlyViewing: "Aktuelle Ansicht: {country}",
-      viewingDescription: "Alle oben genannten Tools sind speziell für die Finanzvorschriften und -anforderungen von {country} konfiguriert.",
-      taxCalculatorButton: "{country} Steuerrechner",
-      budgetToolsButton: "{country} Budget-Tools",
-      topEconomies: "Top 10 globale Volkswirtschaften",
-    },
-    quickAccessTools: {
-      description: "Präzise berechnen und analysieren",
-    },
-    features: {
-      title: "Warum GovtBudget.com wählen?",
-      countrySpecificToolsTitle: "Länderspezifische Tools",
-      countrySpecificToolsDescription: "Über 500 länderspezifische Finanzinstrumente für mehr als 50 Länder auf allen wichtigen Kontinenten",
-      smartNavigationTitle: "Intelligente Navigation",
-      smartNavigationDescription: "Intelligente Navigation, die beim Surfen dynamisch länderspezifische Tools anzeigt",
-      expertAccuracyTitle: "Experten-Genauigkeit",
-      expertAccuracyDescription: "Alle Berechnungen basieren auf aktuellen länderspezifischen Regierungsdaten und -vorschriften",
-    },
-  },
-  es: {
-    header: {
-      searchPlaceholder: "Buscar herramientas, países o calculadoras de impuestos...",
-      noToolsFound: "No se encontraron herramientas",
-      countrySpecific: "Específico del país",
-      services: "Servicios",
-      about: "Sobre nosotros",
-      contact: "Contacto",
-      signIn: "Iniciar sesión",
-      signUp: "Registrarse",
-    },
-    megaMenu: {
-      countries: "Países",
-      popularTools: "Herramientas populares",
-      advancedTools: "Herramientas avanzadas",
-      countryPopularTools: "Herramientas populares de {country}",
-      countryAdvancedTools: "Herramientas avanzadas de {country}",
-    },
-    hero: {
-      title: "Herramientas globales de finanzas y fiscalidad gubernamentales",
-      subtitle: "Herramientas financieras integrales, calculadoras de impuestos y analizadores de presupuesto para más de 50 países en 6 continentes. Tome decisiones informadas con datos precisos y actualizados sobre las finanzas gubernamentales.",
-    },
-    featuredTools: {
-      title: "Herramientas destacadas para las principales economías",
-      titleForCountry: "Herramientas destacadas para {country}",
-      showAllCountries: "Mostrar todos los países",
-      toolDescriptionForCountry: "Diseñado específicamente para {country}",
-      toolDescriptionGlobal: "Disponible para las principales economías",
-      launchTool: "Lanzar herramienta",
-      currentlyViewing: "Viendo actualmente: {country}",
-      viewingDescription: "Todas las herramientas anteriores están configuradas específicamente para las regulaciones y requisitos financieros de {country}.",
-      taxCalculatorButton: "Calculadora de impuestos de {country}",
-      budgetToolsButton: "Herramientas de presupuesto de {country}",
-      topEconomies: "Las 10 principales economías mundiales",
-    },
-    quickAccessTools: {
-      description: "Calcule y analice con precisión",
-    },
-    features: {
-      title: "¿Por qué elegir GovtBudget.com?",
-      countrySpecificToolsTitle: "Herramientas específicas por país",
-      countrySpecificToolsDescription: "Más de 500 herramientas financieras específicas por país que cubren más de 50 países en los principales continentes",
-      smartNavigationTitle: "Navegación inteligente",
-      smartNavigationDescription: "Navegación inteligente que muestra dinámicamente herramientas específicas del país mientras navega",
-      expertAccuracyTitle: "Precisión experta",
-      expertAccuracyDescription: "Todos los cálculos se basan en datos y regulaciones gubernamentales actuales específicas del país",
-    },
+      countryAdvancedTools: "{country} Erweiterte Tools"
+    }
   },
   fr: {
+    hero: {
+      title: "Outils de budget gouvernemental et fiscaux pour chaque pays",
+      subtitle: "Calculatrices fiscales professionnelles, analyseurs de budget et outils de conformité adaptés aux réglementations de chaque pays et disponibles en plusieurs langues."
+    },
     header: {
-      searchPlaceholder: "Rechercher des outils, des pays ou des calculateurs d'impôts...",
-      noToolsFound: "Aucun outil trouvé",
+      searchPlaceholder: "Rechercher des outils fiscaux, calculatrices ou pays...",
       countrySpecific: "Spécifique au pays",
+      noToolsFound: "Aucun outil trouvé correspondant à votre recherche",
       services: "Services",
       about: "À propos",
       contact: "Contact",
       signIn: "Se connecter",
-      signUp: "S'inscrire",
+      signUp: "S'inscrire"
+    },
+    quickAccessTools: {
+      description: "Accès rapide aux outils gouvernementaux et fiscaux essentiels"
+    },
+    featuredTools: {
+      title: "Outils en vedette",
+      titleForCountry: "Outils en vedette pour {country}",
+      showAllCountries: "Afficher tous les pays",
+      toolDescriptionForCountry: "Spécialisé pour les réglementations de {country}",
+      toolDescriptionGlobal: "Outils professionnels de calcul gouvernemental et fiscal",
+      launchTool: "Lancer l'outil",
+      currentlyViewing: "Actuellement affiché : {country}",
+      viewingDescription: "Tous les outils sont personnalisés pour les réglementations et lois fiscales spécifiques de {country}.",
+      taxCalculatorButton: "Calculatrice fiscale {country}",
+      budgetToolsButton: "Outils budgétaires {country}",
+      topEconomies: "Principales économies mondiales"
     },
     megaMenu: {
       countries: "Pays",
       popularTools: "Outils populaires",
       advancedTools: "Outils avancés",
-      countryPopularTools: "Outils populaires pour {country}",
-      countryAdvancedTools: "Outils avancés pour {country}",
-    },
+      countryPopularTools: "{country} Outils populaires",
+      countryAdvancedTools: "{country} Outils avancés"
+    }
+  },
+  es: {
     hero: {
-      title: "Outils mondiaux de finances publiques et de fiscalité",
-      subtitle: "Outils financiers complets, calculateurs d'impôts et analyseurs de budget pour plus de 50 pays sur 6 continents. Prenez des décisions éclairées avec des données précises et à jour sur les finances publiques.",
+      title: "Herramientas de presupuesto gubernamental y fiscales para cada país",
+      subtitle: "Calculadoras fiscales profesionales, analizadores de presupuesto y herramientas de cumplimiento adaptadas a las regulaciones de cada país y disponibles en múltiples idiomas."
     },
-    featuredTools: {
-      title: "Outils phares pour les grandes économies",
-      titleForCountry: "Outils phares pour {country}",
-      showAllCountries: "Afficher tous les pays",
-      toolDescriptionForCountry: "Spécialement conçu pour {country}",
-      toolDescriptionGlobal: "Disponible pour toutes les grandes économies",
-      launchTool: "Lancer l'outil",
-      currentlyViewing: "Affichage en cours : {country}",
-      viewingDescription: "Tous les outils ci-dessus sont spécifiquement configurés pour les réglementations et exigences financières de {country}.",
-      taxCalculatorButton: "Calculateur d'impôts {country}",
-      budgetToolsButton: "Outils budgétaires {country}",
-      topEconomies: "Top 10 des économies mondiales",
+    header: {
+      searchPlaceholder: "Buscar herramientas fiscales, calculadoras o países...",
+      countrySpecific: "Específico del país",
+      noToolsFound: "No se encontraron herramientas que coincidan con su búsqueda",
+      services: "Servicios",
+      about: "Acerca de",
+      contact: "Contacto",
+      signIn: "Iniciar sesión",
+      signUp: "Registrarse"
     },
     quickAccessTools: {
-      description: "Calculez et analysez avec précision",
+      description: "Acceso rápido a herramientas gubernamentales y fiscales esenciales"
     },
-    features: {
-      title: "Pourquoi choisir GovtBudget.com ?",
-      countrySpecificToolsTitle: "Outils par pays",
-      countrySpecificToolsDescription: "Plus de 500 outils financiers spécifiques à chaque pays, couvrant plus de 50 pays sur tous les grands continents",
-      smartNavigationTitle: "Navigation intelligente",
-      smartNavigationDescription: "Navigation intelligente qui affiche dynamiquement les outils spécifiques au pays pendant que vous naviguez",
-      expertAccuracyTitle: "Précision d'expert",
-      expertAccuracyDescription: "Tous les calculs sont basés sur les données et réglementations gouvernementales en vigueur spécifiques à chaque pays",
+    featuredTools: {
+      title: "Herramientas destacadas",
+      titleForCountry: "Herramientas destacadas para {country}",
+      showAllCountries: "Mostrar todos los países",
+      toolDescriptionForCountry: "Especializado para las regulaciones de {country}",
+      toolDescriptionGlobal: "Herramientas profesionales de cálculo gubernamental y fiscal",
+      launchTool: "Lanzar herramienta",
+      currentlyViewing: "Viendo actualmente: {country}",
+      viewingDescription: "Todas las herramientas están personalizadas para las regulaciones y leyes fiscales específicas de {country}.",
+      taxCalculatorButton: "Calculadora fiscal de {country}",
+      budgetToolsButton: "Herramientas de presupuesto de {country}",
+      topEconomies: "Principales economías mundiales"
     },
+    megaMenu: {
+      countries: "Países",
+      popularTools: "Herramientas populares",
+      advancedTools: "Herramientas avanzadas",
+      countryPopularTools: "{country} Herramientas populares",
+      countryAdvancedTools: "{country} Herramientas avanzadas"
+    }
   },
+  hi: {
+    hero: {
+      title: "हर देश के लिए सरकारी बजट और कर उपकरण",
+      subtitle: "प्रत्येक देश के नियमों के लिए तैयार किए गए पेशेवर कर कैलकुलेटर, बजट विश्लेषक और अनुपालन उपकरण और कई भाषाओं में उपलब्ध।"
+    },
+    header: {
+      searchPlaceholder: "कर उपकरण, कैलकुलेटर या देशों की खोज करें...",
+      countrySpecific: "देश-विशिष्ट",
+      noToolsFound: "आपकी खोज से मेल खाने वाले कोई उपकरण नहीं मिले",
+      services: "सेवाएं",
+      about: "के बारे में",
+      contact: "संपर्क",
+      signIn: "साइन इन",
+      signUp: "साइन अप"
+    },
+    quickAccessTools: {
+      description: "आवश्यक सरकारी और कर उपकरणों तक त्वरित पहुंच"
+    },
+    featuredTools: {
+      title: "विशेष उपकरण",
+      titleForCountry: "{country} के लिए विशेष उपकरण",
+      showAllCountries: "सभी देश दिखाएं",
+      toolDescriptionForCountry: "{country} के नियमों के लिए विशेषीकृत",
+      toolDescriptionGlobal: "पेशेवर सरकारी और कर गणना उपकरण",
+      launchTool: "उपकरण लॉन्च करें",
+      currentlyViewing: "वर्तमान में देख रहे हैं: {country}",
+      viewingDescription: "सभी उपकरण {country} के विशिष्ट नियमों और कर कानूनों के लिए अनुकूलित हैं।",
+      taxCalculatorButton: "{country} कर कैलकुलेटर",
+      budgetToolsButton: "{country} बजट उपकरण",
+      topEconomies: "शीर्ष वैश्विक अर्थव्यवस्थाएं"
+    },
+    megaMenu: {
+      countries: "देश",
+      popularTools: "लोकप्रिय उपकरण",
+      advancedTools: "उन्नत उपकरण",
+      countryPopularTools: "{country} लोकप्रिय उपकरण",
+      countryAdvancedTools: "{country} उन्नत उपकरण"
+    }
+  },
+  zh: {
+    hero: {
+      title: "每个国家的政府预算和税务工具",
+      subtitle: "专业税务计算器、预算分析器和合规工具，针对每个国家的法规量身定制，提供多种语言版本。"
+    },
+    header: {
+      searchPlaceholder: "搜索税务工具、计算器或国家...",
+      countrySpecific: "特定国家",
+      noToolsFound: "未找到与您搜索匹配的工具",
+      services: "服务",
+      about: "关于",
+      contact: "联系",
+      signIn: "登录",
+      signUp: "注册"
+    },
+    quickAccessTools: {
+      description: "快速访问基本政府和税务工具"
+    },
+    featuredTools: {
+      title: "特色工具",
+      titleForCountry: "{country}的特色工具",
+      showAllCountries: "显示所有国家",
+      toolDescriptionForCountry: "专为{country}法规定制",
+      toolDescriptionGlobal: "专业政府和税务计算工具",
+      launchTool: "启动工具",
+      currentlyViewing: "当前查看：{country}",
+      viewingDescription: "所有工具都针对{country}的具体法规和税法进行了定制。",
+      taxCalculatorButton: "{country}税务计算器",
+      budgetToolsButton: "{country}预算工具",
+      topEconomies: "全球顶级经济体"
+    },
+    megaMenu: {
+      countries: "国家",
+      popularTools: "热门工具",
+      advancedTools: "高级工具",
+      countryPopularTools: "{country}热门工具",
+      countryAdvancedTools: "{country}高级工具"
+    }
+  },
+  ja: {
+    hero: {
+      title: "すべての国のための政府予算・税務ツール",
+      subtitle: "各国の規制に合わせたプロフェッショナルな税務計算機、予算分析ツール、コンプライアンスツールを多言語で提供。"
+    },
+    header: {
+      searchPlaceholder: "税務ツール、計算機、または国を検索...",
+      countrySpecific: "国固有",
+      noToolsFound: "検索に一致するツールが見つかりません",
+      services: "サービス",
+      about: "会社概要",
+      contact: "お問い合わせ",
+      signIn: "サインイン",
+      signUp: "サインアップ"
+    },
+    quickAccessTools: {
+      description: "重要な政府・税務ツールへの迅速なアクセス"
+    },
+    featuredTools: {
+      title: "注目のツール",
+      titleForCountry: "{country}の注目ツール",
+      showAllCountries: "すべての国を表示",
+      toolDescriptionForCountry: "{country}の規制に特化",
+      toolDescriptionGlobal: "プロフェッショナルな政府・税務計算ツール",
+      launchTool: "ツールを起動",
+      currentlyViewing: "現在表示中：{country}",
+      viewingDescription: "すべてのツールは{country}の特定の規制と税法に合わせてカスタマイズされています。",
+      taxCalculatorButton: "{country}税務計算機",
+      budgetToolsButton: "{country}予算ツール",
+      topEconomies: "世界のトップ経済国"
+    },
+    megaMenu: {
+      countries: "国",
+      popularTools: "人気ツール",
+      advancedTools: "高度なツール",
+      countryPopularTools: "{country}人気ツール",
+      countryAdvancedTools: "{country}高度なツール"
+    }
+  },
+  ar: {
+    hero: {
+      title: "أدوات الميزانية الحكومية والضرائب لكل دولة",
+      subtitle: "حاسبات ضرائب مهنية ومحللات ميزانية وأدوات امتثال مصممة خصيصاً لقوانين كل دولة ومتاحة بعدة لغات."
+    },
+    header: {
+      searchPlaceholder: "البحث عن أدوات الضرائب أو الحاسبات أو البلدان...",
+      countrySpecific: "خاص بالدولة",
+      noToolsFound: "لم يتم العثور على أدوات تطابق بحثك",
+      services: "الخدمات",
+      about: "حول",
+      contact: "اتصل بنا",
+      signIn: "تسجيل الدخول",
+      signUp: "إنشاء حساب"
+    },
+    quickAccessTools: {
+      description: "وصول سريع للأدوات الحكومية والضريبية الأساسية"
+    },
+    featuredTools: {
+      title: "الأدوات المميزة",
+      titleForCountry: "الأدوات المميزة لـ {country}",
+      showAllCountries: "عرض جميع البلدان",
+      toolDescriptionForCountry: "متخصص لقوانين {country}",
+      toolDescriptionGlobal: "أدوات حساب حكومية وضريبية مهنية",
+      launchTool: "تشغيل الأداة",
+      currentlyViewing: "العرض الحالي: {country}",
+      viewingDescription: "جميع الأدوات مخصصة للقوانين والقوانين الضريبية المحددة لـ {country}.",
+      taxCalculatorButton: "حاسبة ضرائب {country}",
+      budgetToolsButton: "أدوات ميزانية {country}",
+      topEconomies: "أفضل الاقتصادات العالمية"
+    },
+    megaMenu: {
+      countries: "البلدان",
+      popularTools: "الأدوات الشائعة",
+      advancedTools: "الأدوات المتقدمة",
+      countryPopularTools: "{country} الأدوات الشائعة",
+      countryAdvancedTools: "{country} الأدوات المتقدمة"
+    }
+  }
 };
-
-// Fallback for other languages to English
-const translations: Record<LanguageCode, typeof translationsData.en> = {
-  en: translationsData.en,
-  de: translationsData.de,
-  fr: translationsData.fr,
-  es: translationsData.es,
-  hi: translationsData.en, // Placeholder
-  zh: translationsData.en, // Placeholder
-  ja: translationsData.en, // Placeholder
-  ar: translationsData.en, // Placeholder
-};
-
-export type TranslationSet = typeof translationsData.en;
-
-export { translations };

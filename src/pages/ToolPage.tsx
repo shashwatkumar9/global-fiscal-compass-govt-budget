@@ -39,7 +39,8 @@ const ToolPage = () => {
     return <Navigate to="/404" replace />;
   }
 
-  const toolTitle = `[${lang.toUpperCase()}] ${country} ${tool}`;
+  // Remove language code from tool title - just show country and tool name
+  const toolTitle = `${country} ${tool}`;
   const toolSubtitle = `Advanced ${tool.toLowerCase()} tool for ${country}'s regulations. (Viewing in: ${languages[lang].name})`;
 
   return (
@@ -61,7 +62,7 @@ const ToolPage = () => {
           <span>/</span>
           <Link to={`/tool/${lang}/${countrySlug}/${toolSlug}`} className="hover:text-blue-600">{country}</Link>
           <span>/</span>
-          <span className="text-gray-900">{tool} ({lang.toUpperCase()})</span>
+          <span className="text-gray-900">{tool}</span>
         </div>
 
         {/* Back Button */}
