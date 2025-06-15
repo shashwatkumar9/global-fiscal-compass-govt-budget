@@ -20,6 +20,14 @@ const Index = () => {
     return <Navigate to="/en" replace />;
   }
 
+  const handleClearCountrySelection = () => {
+    setSelectedCountry(null);
+  };
+
+  const handleEconomyCountryClick = (country: string) => {
+    setSelectedCountry(country);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header 
@@ -35,7 +43,11 @@ const Index = () => {
       <main>
         <HeroSection />
         <QuickAccessTools />
-        <FeaturedTools />
+        <FeaturedTools 
+          selectedCountry={selectedCountry}
+          onClearCountrySelection={handleClearCountrySelection}
+          onEconomyCountryClick={handleEconomyCountryClick}
+        />
         <FeaturesSection />
       </main>
 

@@ -1,8 +1,10 @@
+
 import { Button } from "@/components/ui/button";
 import { topToolsForEconomies, topEconomies } from "@/data/tools";
 import { handleToolNavigation } from "@/utils/toolNavigation";
 import { useLanguage } from "@/components/i18n/LanguageProvider";
 import { useTranslations } from "@/hooks/useTranslations";
+import { useNavigate } from "react-router-dom";
 
 interface FeaturedToolsProps {
   selectedCountry: string | null;
@@ -18,6 +20,7 @@ const FeaturedTools = ({
   onEconomyCountryClick 
 }: FeaturedToolsProps) => {
   const { language } = useLanguage();
+  const navigate = useNavigate();
   const t = useTranslations();
   
   // Get featured tools based on selected country
@@ -34,7 +37,7 @@ const FeaturedTools = ({
     if (onToolClick) {
       onToolClick(tool);
     } else {
-      handleToolNavigation(tool, language);
+      handleToolNavigation(tool, language, navigate);
     }
   };
 

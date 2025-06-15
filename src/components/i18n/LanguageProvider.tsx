@@ -39,10 +39,21 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     } else if (location.pathname.startsWith('/tool/') && params.countrySlug && params.toolSlug) {
       // On tool page, change language in URL
       navigate(`/tool/${newLang}/${params.countrySlug}/${params.toolSlug}`, { replace: true });
-    } else {
-      // For other pages, try to maintain the structure
-      const pathWithoutLang = location.pathname.replace(`/${params.lang || 'en'}`, '');
+    } else if (location.pathname.startsWith(`/${language}`)) {
+      // For other language-specific pages, replace the language part
+      const pathWithoutLang = location.pathname.replace(`/${language}`, '');
       navigate(`/${newLang}${pathWithoutLang}`, { replace: true });
+    } else {
+      // Fallback: try to maintain the current structure with the new language
+      const pathSegments = location.pathname.split('/').filter(Boolean);
+      if (pathSegments.length > 0 && languages[pathSegments[0] as LanguageCode]) {
+        // Replace the first segment (language) with the new language
+        pathSegments[0] = newLang;
+        navigate(`/${pathSegments.join('/')}`, { replace: true });
+      } else {
+        // If no language in path, prepend the new language
+        navigate(`/${newLang}${location.pathname}`, { replace: true });
+      }
     }
   };
 
