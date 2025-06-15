@@ -36,8 +36,8 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     if (location.pathname === '/' || location.pathname === `/${language}`) {
       // On homepage, navigate to language-specific homepage
       navigate(`/${newLang}`, { replace: true });
-    } else if (location.pathname.startsWith('/tool/') && params.countrySlug && params.toolSlug) {
-      // On tool page, change language in URL
+    } else if (location.pathname.includes('/tool/') && params.countrySlug && params.toolSlug) {
+      // On tool page, maintain the /tool/{lang}/{country}/{tool} format
       navigate(`/tool/${newLang}/${params.countrySlug}/${params.toolSlug}`, { replace: true });
     } else if (location.pathname.startsWith(`/${language}`)) {
       // For other language-specific pages, replace the language part
