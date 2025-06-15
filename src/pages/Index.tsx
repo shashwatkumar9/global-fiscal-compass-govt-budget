@@ -1,3 +1,4 @@
+
 import { useState, useRef, useEffect } from "react";
 import { Search, ChevronDown, Menu, X, User, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,7 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const { user } = useAuth();
@@ -63,16 +65,37 @@ const Index = () => {
       color: "bg-red-600",
       hoverColor: "hover:bg-red-700",
       countries: ["South Africa", "Egypt", "Algeria", "Nigeria", "Ethiopia", "Morocco", "Kenya", "Angola", "Ghana", "Tanzania"]
+    },
+    oceania: {
+      name: "Oceania",
+      color: "bg-teal-600",
+      hoverColor: "hover:bg-teal-700",
+      countries: ["Australia", "New Zealand", "Fiji"]
     }
   };
 
-  const mainTools = [
+  const baseTools = [
     "Income Tax Calculator", "VAT Calculator", "Corporate Tax Calculator", "Budget Analyzer",
     "GDP Calculator", "Currency Converter", "Import Tax Calculator", "Compliance Checker",
     "Inflation Calculator", "Property Tax Calculator", "Payroll Tax Calculator", "Trade Analyzer",
     "Revenue Projector", "Audit Tool", "Policy Analyzer", "Economic Tracker",
     "Sales Tax Calculator", "Customs Calculator", "Filing Tracker", "Legal Guide"
   ];
+
+  // Generate country-specific tools
+  const getCountryTools = (country: string | null) => {
+    if (!country) {
+      return {
+        popular: baseTools.slice(0, 10),
+        advanced: baseTools.slice(10, 20)
+      };
+    }
+
+    return {
+      popular: baseTools.slice(0, 10).map(tool => `${country} ${tool}`),
+      advanced: baseTools.slice(10, 20).map(tool => `${country} ${tool}`)
+    };
+  };
 
   const filteredSuggestions = allTools.filter(tool =>
     tool.toLowerCase().includes(searchQuery.toLowerCase())
@@ -88,6 +111,8 @@ const Index = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const currentTools = getCountryTools(hoveredCountry);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -222,8 +247,14 @@ const Index = () => {
               <div key={key} className="relative group">
                 <button
                   className={`${continent.color} ${continent.hoverColor} text-white px-6 py-4 flex items-center space-x-2 transition-colors duration-200 font-medium text-sm`}
-                  onMouseEnter={() => setActiveMenu(key)}
-                  onMouseLeave={() => setActiveMenu(null)}
+                  onMouseEnter={() => {
+                    setActiveMenu(key);
+                    setHoveredCountry(null);
+                  }}
+                  onMouseLeave={() => {
+                    setActiveMenu(null);
+                    setHoveredCountry(null);
+                  }}
                 >
                   <span>{continent.name}</span>
                   <ChevronDown className="w-4 h-4" />
@@ -234,7 +265,10 @@ const Index = () => {
                   <div
                     className="absolute top-full left-0 bg-white shadow-xl border border-gray-200 rounded-b-lg z-50 w-[800px]"
                     onMouseEnter={() => setActiveMenu(key)}
-                    onMouseLeave={() => setActiveMenu(null)}
+                    onMouseLeave={() => {
+                      setActiveMenu(null);
+                      setHoveredCountry(null);
+                    }}
                   >
                     <div className="p-6">
                       <div className="grid grid-cols-3 gap-8">
@@ -249,6 +283,8 @@ const Index = () => {
                                 key={country}
                                 href={`#${country.toLowerCase().replace(/\s+/g, '-')}`}
                                 className="block text-gray-700 hover:text-blue-600 hover:bg-gray-50 px-2 py-1 rounded transition-colors duration-150"
+                                onMouseEnter={() => setHoveredCountry(country)}
+                                onMouseLeave={() => setHoveredCountry(null)}
                               >
                                 {country}
                               </a>
@@ -256,13 +292,13 @@ const Index = () => {
                           </div>
                         </div>
 
-                        {/* Main Tools Columns */}
+                        {/* Popular Tools Column */}
                         <div>
                           <h3 className="text-lg font-semibold text-gray-900 mb-4 border-b border-gray-200 pb-2">
-                            Popular Tools
+                            {hoveredCountry ? `${hoveredCountry} Popular Tools` : 'Popular Tools'}
                           </h3>
                           <div className="space-y-2">
-                            {mainTools.slice(0, 10).map((tool) => (
+                            {currentTools.popular.map((tool) => (
                               <a
                                 key={tool}
                                 href={`#${tool.toLowerCase().replace(/\s+/g, '-')}`}
@@ -274,12 +310,13 @@ const Index = () => {
                           </div>
                         </div>
 
+                        {/* Advanced Tools Column */}
                         <div>
                           <h3 className="text-lg font-semibold text-gray-900 mb-4 border-b border-gray-200 pb-2">
-                            Advanced Tools
+                            {hoveredCountry ? `${hoveredCountry} Advanced Tools` : 'Advanced Tools'}
                           </h3>
                           <div className="space-y-2">
-                            {mainTools.slice(10, 20).map((tool) => (
+                            {currentTools.advanced.map((tool) => (
                               <a
                                 key={tool}
                                 href={`#${tool.toLowerCase().replace(/\s+/g, '-')}`}
@@ -307,14 +344,14 @@ const Index = () => {
             Global Government Finance & Taxation Tools
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Comprehensive financial tools, tax calculators, and budget analyzers for over 50 countries across 5 continents. 
+            Comprehensive financial tools, tax calculators, and budget analyzers for over 50 countries across 6 continents. 
             Make informed decisions with accurate, up-to-date government finance data.
           </p>
         </div>
 
         {/* Quick Access Tools Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {mainTools.slice(0, 8).map((tool, index) => (
+          {baseTools.slice(0, 8).map((tool, index) => (
             <div key={index} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 border border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900 mb-2">{tool}</h3>
               <p className="text-gray-600 text-sm mb-4">Calculate and analyze with precision</p>
@@ -333,22 +370,22 @@ const Index = () => {
               <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Search className="w-8 h-8 text-blue-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Comprehensive Coverage</h3>
-              <p className="text-gray-600">Over 500 financial tools covering 50+ countries across all major continents</p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Country-Specific Tools</h3>
+              <p className="text-gray-600">Over 500 country-specific financial tools covering 50+ countries across all major continents</p>
             </div>
             <div className="text-center">
               <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <ChevronDown className="w-8 h-8 text-green-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Easy Navigation</h3>
-              <p className="text-gray-600">Intuitive continental organization makes finding country-specific tools effortless</p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Smart Navigation</h3>
+              <p className="text-gray-600">Intelligent navigation that dynamically shows country-specific tools as you browse</p>
             </div>
             <div className="text-center">
               <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <User className="w-8 h-8 text-purple-600" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Expert Accuracy</h3>
-              <p className="text-gray-600">All calculations based on current government data and regulations</p>
+              <p className="text-gray-600">All calculations based on current country-specific government data and regulations</p>
             </div>
           </div>
         </div>
@@ -360,7 +397,7 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <h3 className="text-lg font-semibold mb-4">GovtBudget.com</h3>
-              <p className="text-gray-300 text-sm">Your trusted source for government finance and taxation tools worldwide.</p>
+              <p className="text-gray-300 text-sm">Your trusted source for country-specific government finance and taxation tools worldwide.</p>
             </div>
             <div>
               <h4 className="text-md font-semibold mb-4">Quick Links</h4>
