@@ -7,15 +7,14 @@ import FeaturedTools from "@/components/home/FeaturedTools";
 import QuickAccessTools from "@/components/home/QuickAccessTools";
 import FeaturesSection from "@/components/home/FeaturesSection";
 import Footer from "@/components/layout/Footer";
+import { handleToolNavigation } from "@/utils/toolNavigation";
 
 const Index = () => {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleToolClick = (tool: string) => {
-    const toolSlug = tool.toLowerCase().replace(/\s+/g, '-');
-    console.log(`Navigating to /tool/${toolSlug}`);
-    // In the future, this will use: navigate(`/tool/${toolSlug}`);
+    handleToolNavigation(tool);
   };
 
   const handleEconomyCountryClick = (country: string) => {

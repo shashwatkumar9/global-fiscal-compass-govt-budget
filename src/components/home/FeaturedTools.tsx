@@ -1,11 +1,12 @@
 
 import { Button } from "@/components/ui/button";
 import { topToolsForEconomies, topEconomies } from "@/data/tools";
+import { handleToolNavigation } from "@/utils/toolNavigation";
 
 interface FeaturedToolsProps {
   selectedCountry: string | null;
   onClearCountrySelection: () => void;
-  onToolClick: (tool: string) => void;
+  onToolClick?: (tool: string) => void;
   onEconomyCountryClick: (country: string) => void;
 }
 
@@ -24,6 +25,14 @@ const FeaturedTools = ({
   };
 
   const featuredTools = getFeaturedTools();
+
+  const handleClick = (tool: string) => {
+    if (onToolClick) {
+      onToolClick(tool);
+    } else {
+      handleToolNavigation(tool);
+    }
+  };
 
   return (
     <div className="mb-12">
@@ -58,7 +67,7 @@ const FeaturedTools = ({
             <Button 
               size="sm" 
               className="w-full bg-blue-600 hover:bg-blue-700 text-xs"
-              onClick={() => onToolClick(tool)}
+              onClick={() => handleClick(tool)}
             >
               Launch Tool
             </Button>
@@ -78,13 +87,13 @@ const FeaturedTools = ({
             </p>
             <div className="flex justify-center space-x-4">
               <Button 
-                onClick={() => onToolClick(`${selectedCountry} Income Tax Calculator`)}
+                onClick={() => handleClick(`${selectedCountry} Income Tax Calculator`)}
                 className="bg-blue-600 hover:bg-blue-700"
               >
                 {selectedCountry} Tax Calculator
               </Button>
               <Button 
-                onClick={() => onToolClick(`${selectedCountry} Budget Analyzer`)}
+                onClick={() => handleClick(`${selectedCountry} Budget Analyzer`)}
                 variant="outline"
               >
                 {selectedCountry} Budget Tools

@@ -1,5 +1,6 @@
 
 import { baseTools } from "@/data/tools";
+import { handleToolNavigation } from "@/utils/toolNavigation";
 
 interface MegaMenuProps {
   continent: {
@@ -9,7 +10,7 @@ interface MegaMenuProps {
   hoveredCountry: string | null;
   setHoveredCountry: (country: string | null) => void;
   onCountryClick: (country: string) => void;
-  onToolClick: (tool: string) => void;
+  onToolClick?: (tool: string) => void;
 }
 
 const MegaMenu = ({ 
@@ -35,6 +36,14 @@ const MegaMenu = ({
   };
 
   const currentTools = getCountryTools(hoveredCountry);
+
+  const handleToolClick = (tool: string) => {
+    if (onToolClick) {
+      onToolClick(tool);
+    } else {
+      handleToolNavigation(tool);
+    }
+  };
 
   return (
     <div className="p-6">
@@ -67,7 +76,7 @@ const MegaMenu = ({
             {currentTools.popular.map((tool) => (
               <button
                 key={tool}
-                onClick={() => onToolClick(tool)}
+                onClick={() => handleToolClick(tool)}
                 className="block w-full text-left text-gray-700 hover:text-blue-600 hover:bg-gray-50 px-2 py-1 rounded transition-colors duration-150 text-sm"
               >
                 {tool}
@@ -85,7 +94,7 @@ const MegaMenu = ({
             {currentTools.advanced.map((tool) => (
               <button
                 key={tool}
-                onClick={() => onToolClick(tool)}
+                onClick={() => handleToolClick(tool)}
                 className="block w-full text-left text-gray-700 hover:text-blue-600 hover:bg-gray-50 px-2 py-1 rounded transition-colors duration-150 text-sm"
               >
                 {tool}

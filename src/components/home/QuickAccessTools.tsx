@@ -1,12 +1,21 @@
 
 import { Button } from "@/components/ui/button";
 import { baseTools } from "@/data/tools";
+import { handleToolNavigation } from "@/utils/toolNavigation";
 
 interface QuickAccessToolsProps {
-  onToolClick: (tool: string) => void;
+  onToolClick?: (tool: string) => void;
 }
 
 const QuickAccessTools = ({ onToolClick }: QuickAccessToolsProps) => {
+  const handleClick = (tool: string) => {
+    if (onToolClick) {
+      onToolClick(tool);
+    } else {
+      handleToolNavigation(tool);
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
       {baseTools.slice(0, 8).map((tool, index) => (
@@ -16,7 +25,7 @@ const QuickAccessTools = ({ onToolClick }: QuickAccessToolsProps) => {
           <Button 
             size="sm" 
             className="w-full bg-blue-600 hover:bg-blue-700"
-            onClick={() => onToolClick(tool)}
+            onClick={() => handleClick(tool)}
           >
             Launch Tool
           </Button>

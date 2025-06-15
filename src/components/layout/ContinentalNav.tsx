@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { continents, ContinentKey } from "@/data/continents";
 import MegaMenu from "./MegaMenu";
+import { handleToolNavigation } from "@/utils/toolNavigation";
 
 interface ContinentalNavProps {
   selectedCountry: string | null;
@@ -23,9 +24,8 @@ const ContinentalNav = ({ selectedCountry, setSelectedCountry }: ContinentalNavP
   };
 
   const handleToolClick = (tool: string) => {
-    const toolSlug = tool.toLowerCase().replace(/\s+/g, '-');
-    console.log(`Navigating to /tool/${toolSlug}`);
-    // In the future, this will use: navigate(`/tool/${toolSlug}`);
+    handleToolNavigation(tool);
+    setActiveMenu(null);
   };
 
   return (
