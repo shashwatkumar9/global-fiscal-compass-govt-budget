@@ -1,5 +1,5 @@
 
-import { baseTools } from "@/data/tools";
+import { baseTools, germanTools, ukTools } from "@/data/tools";
 import { handleToolNavigation } from "@/utils/toolNavigation";
 import { useLanguage } from "@/components/i18n/LanguageProvider";
 import { useTranslations } from "@/hooks/useTranslations";
@@ -36,6 +36,21 @@ const MegaMenu = ({
       };
     }
 
+    if (country === 'Germany') {
+      return {
+        popular: germanTools.slice(0, 10),
+        advanced: germanTools.slice(10)
+      };
+    }
+    
+    if (country === 'United Kingdom') {
+      return {
+        popular: ukTools.slice(0, 10),
+        advanced: ukTools.slice(10)
+      };
+    }
+
+    // Fallback for other countries
     return {
       popular: baseTools.slice(0, 10).map(tool => `${country} ${tool}`),
       advanced: baseTools.slice(10, 20).map(tool => `${country} ${tool}`)
