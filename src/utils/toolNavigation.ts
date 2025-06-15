@@ -89,9 +89,9 @@ export const generateToolSlug = (toolString: string): string => {
 };
 
 export const generateCountrySlug = (country: string): string => {
-  // Handle special country slug mappings - this was the issue!
+  // Handle special country slug mappings
   const countrySlugMap: { [key: string]: string } = {
-    "United Kingdom": "united-kingdom",  // This was mapping incorrectly before
+    "United Kingdom": "uk",  // Changed to "uk" to match desired URL format
     "United States": "united-states",
     "South Korea": "south-korea",
     "New Zealand": "new-zealand",
@@ -106,7 +106,7 @@ export const getToolRoute = (toolString: string, lang: string): string => {
   
   // Check if it's a UK tool with existing page
   if (ukToolRoutes[toolString]) {
-    const route = `/tool/${lang}/united-kingdom/${ukToolRoutes[toolString]}`;
+    const route = `/tool/${lang}/uk/${ukToolRoutes[toolString]}`;
     console.log(`Found UK tool route: ${route}`);
     return route;
   }

@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -103,7 +102,29 @@ const App = () => (
               <Route path="/tool/:lang/germany/budget-allocation-tool" element={<GermanBudgetAllocationToolPage />} />
               <Route path="/tool/:lang/germany/deficit-calculator" element={<GermanDeficitCalculatorPage />} />
 
-              {/* UK Tool Routes */}
+              {/* UK Tool Routes - Updated to use /uk/ instead of /united-kingdom/ */}
+              <Route path="/tool/:lang/uk/income-tax-calculator" element={<UKIncomeTaxPage />} />
+              <Route path="/tool/:lang/uk/vat-calculator" element={<UKVATPage />} />
+              <Route path="/tool/:lang/uk/corporate-tax-calculator" element={<UKCorporateTaxPage />} />
+              <Route path="/tool/:lang/uk/capital-gains-tax-calculator" element={<UKCapitalGainsTaxPage />} />
+              <Route path="/tool/:lang/uk/property-tax-calculator" element={<UKPropertyTaxPage />} />
+              <Route path="/tool/:lang/uk/inheritance-tax-calculator" element={<UKInheritanceTaxPage />} />
+              <Route path="/tool/:lang/uk/payroll-tax-calculator" element={<UKPayrollTaxPage />} />
+              <Route path="/tool/:lang/uk/sales-tax-calculator" element={<UKSalesTaxPage />} />
+              <Route path="/tool/:lang/uk/import-tax-calculator" element={<UKImportTaxPage />} />
+              <Route path="/tool/:lang/uk/municipal-tax-calculator" element={<UKMunicipalTaxPage />} />
+              <Route path="/tool/:lang/uk/budget-analyzer" element={<UKBudgetAnalyzerPage />} />
+              <Route path="/tool/:lang/uk/gdp-calculator" element={<UKGDPCalculatorPage />} />
+              <Route path="/tool/:lang/uk/public-debt-calculator" element={<UKPublicDebtCalculatorPage />} />
+              <Route path="/tool/:lang/uk/revenue-projector" element={<UKRevenueProjectorPage />} />
+              <Route path="/tool/:lang/uk/spending-tracker" element={<UKSpendingTrackerPage />} />
+              <Route path="/tool/:lang/uk/budget-comparison" element={<UKBudgetComparisonPage />} />
+              <Route path="/tool/:lang/uk/fiscal-impact-tool" element={<UKFiscalImpactToolPage />} />
+              <Route path="/tool/:lang/uk/economic-growth-calculator" element={<UKEconomicGrowthCalculatorPage />} />
+              <Route path="/tool/:lang/uk/budget-allocation-tool" element={<UKBudgetAllocationToolPage />} />
+              <Route path="/tool/:lang/uk/deficit-calculator" element={<UKDeficitCalculatorPage />} />
+
+              {/* Keep the old UK routes for backward compatibility */}
               <Route path="/tool/:lang/united-kingdom/income-tax-calculator" element={<UKIncomeTaxPage />} />
               <Route path="/tool/:lang/united-kingdom/vat-calculator" element={<UKVATPage />} />
               <Route path="/tool/:lang/united-kingdom/corporate-tax-calculator" element={<UKCorporateTaxPage />} />
