@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -101,9 +100,14 @@ const UKRevenueProjector = () => {
           const cumulativeProfits = Math.pow(1 + economicFactors.profits / 100, year);
           
           growthFactor = Math.pow(cumulativeGrowth, elasticity.growth || 0) *
-                        Math.pow(cumulativeEmployment, elasticity.employment || 0) *
-                        Math.pow(cumulativeWages, elasticity.wages || 0) *
-                        Math.pow(cumulativeProfits, (elasticity as any).profits || 0);
+                        Math.pow(cumulativeEmployment, elasticity.employment || 0);
+          
+          // Use wages if available in elasticity, otherwise use profits
+          if ('wages' in elasticity) {
+            growthFactor *= Math.pow(cumulativeWages, elasticity.wages || 0);
+          } else if ('profits' in elasticity) {
+            growthFactor *= Math.pow(cumulativeProfits, elasticity.profits || 0);
+          }
         }
         
         const projectedAmount = baseAmount * growthFactor;
