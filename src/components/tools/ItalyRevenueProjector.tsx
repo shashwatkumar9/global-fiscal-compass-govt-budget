@@ -213,7 +213,7 @@ const ItalyRevenueProjector = () => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="year" />
                   <YAxis />
-                  <Tooltip formatter={(value) => `€${value.toFixed(1)}B`} />
+                  <Tooltip formatter={(value) => `€${Number(value).toFixed(1)}B`} />
                   <Legend />
                   <Line type="monotone" dataKey="total" stroke="#8884d8" strokeWidth={2} name="Total Revenue" />
                   <Line type="monotone" dataKey="incomeTax" stroke="#82ca9d" name="Income Tax" />
@@ -234,7 +234,7 @@ const ItalyRevenueProjector = () => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
                   <YAxis />
-                  <Tooltip formatter={(value) => `€${value.toFixed(1)}B`} />
+                  <Tooltip formatter={(value) => `€${Number(value).toFixed(1)}B`} />
                   <Bar dataKey="value" fill="#8884d8" />
                 </BarChart>
               </ResponsiveContainer>

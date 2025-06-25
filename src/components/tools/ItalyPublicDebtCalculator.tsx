@@ -193,7 +193,7 @@ const ItalyPublicDebtCalculator = () => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="year" />
                   <YAxis />
-                  <Tooltip formatter={(value, name) => [`${value.toFixed(1)}%`, 'Debt-to-GDP Ratio']} />
+                  <Tooltip formatter={(value, name) => [`${Number(value).toFixed(1)}%`, 'Debt-to-GDP Ratio']} />
                   <Legend />
                   <Line type="monotone" dataKey="debtToGDPRatio" stroke="#8884d8" strokeWidth={2} />
                 </LineChart>
@@ -235,7 +235,7 @@ const ItalyPublicDebtCalculator = () => {
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(value) => `€${value.toFixed(0)}B`} />
+                  <Tooltip formatter={(value) => `€${Number(value).toFixed(0)}B`} />
                 </PieChart>
               </ResponsiveContainer>
             </CardContent>
