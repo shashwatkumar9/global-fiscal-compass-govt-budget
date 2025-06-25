@@ -1,4 +1,3 @@
-
 import { baseTools } from "@/data/tools";
 import { continents } from "@/data/continents";
 
@@ -104,6 +103,20 @@ const italyToolRoutes: { [key: string]: string } = {
   "Italy Deficit Calculator": "deficit-calculator"
 };
 
+// Map of Spanish tools to their actual page routes
+const spainToolRoutes: { [key: string]: string } = {
+  "Spain Income Tax Calculator": "income-tax-calculator",
+  "Spain VAT Calculator": "vat-calculator",
+  "Spain Corporate Tax Calculator": "corporate-tax-calculator",
+  "Spain Capital Gains Tax Calculator": "capital-gains-tax-calculator",
+  "Spain Property Tax Calculator": "property-tax-calculator",
+  "Spain Inheritance Tax Calculator": "inheritance-tax-calculator",
+  "Spain Payroll Tax Calculator": "payroll-tax-calculator",
+  "Spain Sales Tax Calculator": "sales-tax-calculator",
+  "Spain Import Tax Calculator": "import-tax-calculator",
+  "Spain Municipal Tax Calculator": "municipal-tax-calculator"
+};
+
 export const parseToolName = (toolString: string): ParsedTool => {
   // Get all countries from continents
   const allCountries = Object.values(continents).flatMap(continent => continent.countries);
@@ -145,7 +158,8 @@ export const generateCountrySlug = (country: string): string => {
     "New Zealand": "new-zealand",
     "South Africa": "south-africa",
     "France": "france",
-    "Italy": "italy"
+    "Italy": "italy",
+    "Spain": "spain"
   };
   
   return countrySlugMap[country] || country.toLowerCase().replace(/\s+/g, '-');
@@ -179,6 +193,13 @@ export const getToolRoute = (toolString: string, lang: string): string => {
   if (italyToolRoutes[toolString]) {
     const route = `/tool/${lang}/italy/${italyToolRoutes[toolString]}`;
     console.log(`Found Italy tool route: ${route}`);
+    return route;
+  }
+  
+  // Check if it's a Spanish tool with existing page
+  if (spainToolRoutes[toolString]) {
+    const route = `/tool/${lang}/spain/${spainToolRoutes[toolString]}`;
+    console.log(`Found Spain tool route: ${route}`);
     return route;
   }
   

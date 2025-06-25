@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -111,6 +110,18 @@ import ItalyFiscalImpactToolPage from "./pages/tools/ItalyFiscalImpactToolPage";
 import ItalyEconomicGrowthCalculatorPage from "./pages/tools/ItalyEconomicGrowthCalculatorPage";
 import ItalyBudgetAllocationToolPage from "./pages/tools/ItalyBudgetAllocationToolPage";
 import ItalyDeficitCalculatorPage from "./pages/tools/ItalyDeficitCalculatorPage";
+
+// Spain Tool Pages
+import SpainIncomeTaxPage from "./pages/tools/SpainIncomeTaxPage";
+import SpainVATPage from "./pages/tools/SpainVATPage";
+import SpainCorporateTaxPage from "./pages/tools/SpainCorporateTaxPage";
+import SpainCapitalGainsTaxPage from "./pages/tools/SpainCapitalGainsTaxPage";
+import SpainPropertyTaxPage from "./pages/tools/SpainPropertyTaxPage";
+import SpainInheritanceTaxPage from "./pages/tools/SpainInheritanceTaxPage";
+import SpainPayrollTaxPage from "./pages/tools/SpainPayrollTaxPage";
+import SpainSalesTaxPage from "./pages/tools/SpainSalesTaxPage";
+import SpainImportTaxPage from "./pages/tools/SpainImportTaxPage";
+import SpainMunicipalTaxPage from "./pages/tools/SpainMunicipalTaxPage";
 
 const queryClient = new QueryClient();
 
@@ -260,6 +271,18 @@ const App = () => (
               <Route path="/tool/:lang/italy/economic-growth-calculator" element={<ItalyEconomicGrowthCalculatorPage />} />
               <Route path="/tool/:lang/italy/budget-allocation-tool" element={<ItalyBudgetAllocationToolPage />} />
               <Route path="/tool/:lang/italy/deficit-calculator" element={<ItalyDeficitCalculatorPage />} />
+
+              {/* Spain Tool Routes */}
+              <Route path="/tool/:lang/spain/income-tax-calculator" element={<SpainIncomeTaxPage />} />
+              <Route path="/tool/:lang/spain/vat-calculator" element={<SpainVATPage />} />
+              <Route path="/tool/:lang/spain/corporate-tax-calculator" element={<SpainCorporateTaxPage />} />
+              <Route path="/tool/:lang/spain/capital-gains-tax-calculator" element={<SpainCapitalGainsTaxPage />} />
+              <Route path="/tool/:lang/spain/property-tax-calculator" element={<SpainPropertyTaxPage />} />
+              <Route path="/tool/:lang/spain/inheritance-tax-calculator" element={<SpainInheritanceTaxPage />} />
+              <Route path="/tool/:lang/spain/payroll-tax-calculator" element={<SpainPayrollTaxPage />} />
+              <Route path="/tool/:lang/spain/sales-tax-calculator" element={<SpainSalesTaxPage />} />
+              <Route path="/tool/:lang/spain/import-tax-calculator" element={<SpainImportTaxPage />} />
+              <Route path="/tool/:lang/spain/municipal-tax-calculator" element={<SpainMunicipalTaxPage />} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>

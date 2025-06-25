@@ -5,3 +5,4 @@ export * from "./germany";
 export * from "./uk";
 export * from "./france";
 export * from "./italy";
+export * from "./spain";
