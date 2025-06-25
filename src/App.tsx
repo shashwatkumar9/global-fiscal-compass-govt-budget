@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -13,6 +14,15 @@ import Contact from "./pages/Contact";
 import ToolPage from "./pages/ToolPage";
 import NotFound from "./pages/NotFound";
 import ToolRedirect from "./pages/ToolRedirect";
+import CountryPage from "./pages/CountryPage";
+
+// Continent Pages
+import EuropePage from "./pages/continents/EuropePage";
+import AsiaPage from "./pages/continents/AsiaPage";
+import NorthAmericaPage from "./pages/continents/NorthAmericaPage";
+import SouthAmericaPage from "./pages/continents/SouthAmericaPage";
+import AfricaPage from "./pages/continents/AfricaPage";
+import OceaniaPage from "./pages/continents/OceaniaPage";
 
 // German Tool Pages
 import GermanIncomeTaxPage from "./pages/tools/GermanIncomeTaxPage";
@@ -101,6 +111,17 @@ const App = () => (
               <Route path="/services" element={<Services />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
+              
+              {/* Continent Pages */}
+              <Route path="/continent/:lang/europe" element={<EuropePage />} />
+              <Route path="/continent/:lang/asia" element={<AsiaPage />} />
+              <Route path="/continent/:lang/north-america" element={<NorthAmericaPage />} />
+              <Route path="/continent/:lang/south-america" element={<SouthAmericaPage />} />
+              <Route path="/continent/:lang/africa" element={<AfricaPage />} />
+              <Route path="/continent/:lang/oceania" element={<OceaniaPage />} />
+              
+              {/* Country Pages */}
+              <Route path="/country/:lang/:countrySlug" element={<CountryPage />} />
               
               {/* Tool redirects without language */}
               <Route path="/tool/:countrySlug/:toolSlug" element={<ToolRedirect />} />

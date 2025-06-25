@@ -3,9 +3,7 @@ import { useState } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import Header from "@/components/layout/Header";
 import ContinentalNav from "@/components/layout/ContinentalNav";
-import HeroSection from "@/components/home/HeroSection";
-import QuickAccessTools from "@/components/home/QuickAccessTools";
-import FeaturedTools from "@/components/home/FeaturedTools";
+import NewHeroSection from "@/components/home/NewHeroSection";
 import FeaturesSection from "@/components/home/FeaturesSection";
 import Footer from "@/components/layout/Footer";
 import { LanguageCode, languages } from "@/data/languages";
@@ -20,14 +18,6 @@ const Index = () => {
     return <Navigate to="/en" replace />;
   }
 
-  const handleClearCountrySelection = () => {
-    setSelectedCountry(null);
-  };
-
-  const handleEconomyCountryClick = (country: string) => {
-    setSelectedCountry(country);
-  };
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Header 
@@ -41,13 +31,7 @@ const Index = () => {
       />
 
       <main>
-        <HeroSection />
-        <QuickAccessTools />
-        <FeaturedTools 
-          selectedCountry={selectedCountry}
-          onClearCountrySelection={handleClearCountrySelection}
-          onEconomyCountryClick={handleEconomyCountryClick}
-        />
+        <NewHeroSection />
         <FeaturesSection />
       </main>
 

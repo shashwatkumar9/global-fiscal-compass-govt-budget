@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from "react";
 import { continents } from "@/data/continents";
 import { baseTools } from "@/data/tools";
@@ -15,8 +14,20 @@ export const useSearch = () => {
   const navigate = useNavigate();
   const t = useTranslations();
 
-  const generateAllToolSuggestions = () => {
+  const generateAllSuggestions = () => {
     const suggestions: string[] = [];
+    
+    // Add continent names
+    Object.values(continents).forEach(continent => {
+      suggestions.push(continent.name);
+    });
+    
+    // Add all countries
+    Object.values(continents).forEach(continent => {
+      continent.countries.forEach(country => {
+        suggestions.push(country);
+      });
+    });
     
     // Add base tools first
     suggestions.push(...baseTools);
@@ -46,28 +57,26 @@ export const useSearch = () => {
       if (aStartsWith && !bStartsWith) return -1;
       if (bStartsWith && !aStartsWith) return 1;
       
-      // Then country-specific tools (they contain country names)
-      const aIsCountrySpecific = Object.values(continents).some(continent =>
-        continent.countries.some(country => aLower.startsWith(country.toLowerCase()))
-      );
-      const bIsCountrySpecific = Object.values(continents).some(continent =>
-        continent.countries.some(country => bLower.startsWith(country.toLowerCase()))
-      );
+      // Prioritize continents and countries over tools
+      const aIsContinent = Object.values(continents).some(continent => continent.name === a);
+      const bIsContinent = Object.values(continents).some(continent => continent.name === b);
+      const aIsCountry = Object.values(continents).some(continent => continent.countries.includes(a));
+      const bIsCountry = Object.values(continents).some(continent => continent.countries.includes(b));
       
-      if (aIsCountrySpecific && !bIsCountrySpecific) return -1;
-      if (bIsCountrySpecific && !aIsCountrySpecific) return 1;
+      if ((aIsContinent || aIsCountry) && !(bIsContinent || bIsCountry)) return -1;
+      if ((bIsContinent || bIsCountry) && !(aIsContinent || aIsCountry)) return 1;
       
       // Then shorter strings
       return a.length - b.length;
     });
   };
 
-  const allToolSuggestions = generateAllToolSuggestions();
+  const allSuggestions = generateAllSuggestions();
 
   const filteredSuggestions = searchQuery.length > 0 
-    ? allToolSuggestions.filter(tool =>
-        tool.toLowerCase().includes(searchQuery.toLowerCase())
-      ).slice(0, 15) // Increased to 15 suggestions for better coverage
+    ? allSuggestions.filter(suggestion =>
+        suggestion.toLowerCase().includes(searchQuery.toLowerCase())
+      ).slice(0, 15)
     : [];
 
   useEffect(() => {
@@ -81,8 +90,34 @@ export const useSearch = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleToolClick = (tool: string) => {
-    handleToolNavigation(tool, language, navigate);
+  const handleSuggestionClick = (suggestion: string) => {
+    // Check if it's a continent
+    const continent = Object.entries(continents).find(([key, cont]) => cont.name === suggestion);
+    if (continent) {
+      const continentSlug = continent[0] === 'northAmerica' ? 'north-america' : 
+                           continent[0] === 'southAmerica' ? 'south-america' : 
+                           continent[0];
+      navigate(`/continent/${language}/${continentSlug}`);
+      setShowSearchSuggestions(false);
+      setSearchQuery("");
+      return;
+    }
+    
+    // Check if it's a country
+    const isCountry = Object.values(continents).some(continent => 
+      continent.countries.includes(suggestion)
+    );
+    if (isCountry) {
+      const countrySlug = suggestion === "United Kingdom" ? "uk" : 
+                         suggestion.toLowerCase().replace(/\s+/g, '-');
+      navigate(`/country/${language}/${countrySlug}`);
+      setShowSearchSuggestions(false);
+      setSearchQuery("");
+      return;
+    }
+    
+    // Otherwise, handle as a tool
+    handleToolNavigation(suggestion, language, navigate);
     setShowSearchSuggestions(false);
     setSearchQuery("");
   };
@@ -94,7 +129,7 @@ export const useSearch = () => {
     setShowSearchSuggestions,
     searchRef,
     filteredSuggestions,
-    handleToolClick,
-    t, // Pass translations
+    handleToolClick: handleSuggestionClick,
+    t,
   };
 };
