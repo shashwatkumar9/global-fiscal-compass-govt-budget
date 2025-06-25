@@ -94,6 +94,14 @@ import FranceDeficitCalculatorPage from "./pages/tools/FranceDeficitCalculatorPa
 import ItalyIncomeTaxPage from "./pages/tools/ItalyIncomeTaxPage";
 import ItalyVATPage from "./pages/tools/ItalyVATPage";
 import ItalyBudgetAnalyzerPage from "./pages/tools/ItalyBudgetAnalyzerPage";
+import ItalyCorporateTaxPage from "./pages/tools/ItalyCorporateTaxPage";
+import ItalyCapitalGainsTaxPage from "./pages/tools/ItalyCapitalGainsTaxPage";
+import ItalyPropertyTaxPage from "./pages/tools/ItalyPropertyTaxPage";
+import ItalyInheritanceTaxPage from "./pages/tools/ItalyInheritanceTaxPage";
+import ItalyPayrollTaxPage from "./pages/tools/ItalyPayrollTaxPage";
+import ItalySalesTaxPage from "./pages/tools/ItalySalesTaxPage";
+import ItalyImportTaxPage from "./pages/tools/ItalyImportTaxPage";
+import ItalyMunicipalTaxPage from "./pages/tools/ItalyMunicipalTaxPage";
 
 const queryClient = new QueryClient();
 
@@ -225,6 +233,14 @@ const App = () => (
               {/* Italy Tool Routes */}
               <Route path="/tool/:lang/italy/income-tax-calculator" element={<ItalyIncomeTaxPage />} />
               <Route path="/tool/:lang/italy/vat-calculator" element={<ItalyVATPage />} />
+              <Route path="/tool/:lang/italy/corporate-tax-calculator" element={<ItalyCorporateTaxPage />} />
+              <Route path="/tool/:lang/italy/capital-gains-tax-calculator" element={<ItalyCapitalGainsTaxPage />} />
+              <Route path="/tool/:lang/italy/property-tax-calculator" element={<ItalyPropertyTaxPage />} />
+              <Route path="/tool/:lang/italy/inheritance-tax-calculator" element={<ItalyInheritanceTaxPage />} />
+              <Route path="/tool/:lang/italy/payroll-tax-calculator" element={<ItalyPayrollTaxPage />} />
+              <Route path="/tool/:lang/italy/sales-tax-calculator" element={<ItalySalesTaxPage />} />
+              <Route path="/tool/:lang/italy/import-tax-calculator" element={<ItalyImportTaxPage />} />
+              <Route path="/tool/:lang/italy/municipal-tax-calculator" element={<ItalyMunicipalTaxPage />} />
               <Route path="/tool/:lang/italy/budget-analyzer" element={<ItalyBudgetAnalyzerPage />} />
 
               <Route path="*" element={<NotFound />} />
