@@ -90,6 +90,11 @@ import FranceEconomicGrowthCalculatorPage from "./pages/tools/FranceEconomicGrow
 import FranceBudgetAllocationToolPage from "./pages/tools/FranceBudgetAllocationToolPage";
 import FranceDeficitCalculatorPage from "./pages/tools/FranceDeficitCalculatorPage";
 
+// Italy Tool Pages  
+import ItalyIncomeTaxPage from "./pages/tools/ItalyIncomeTaxPage";
+import ItalyVATPage from "./pages/tools/ItalyVATPage";
+import ItalyBudgetAnalyzerPage from "./pages/tools/ItalyBudgetAnalyzerPage";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -216,6 +221,11 @@ const App = () => (
               <Route path="/tool/:lang/france/economic-growth-calculator" element={<FranceEconomicGrowthCalculatorPage />} />
               <Route path="/tool/:lang/france/budget-allocation-tool" element={<FranceBudgetAllocationToolPage />} />
               <Route path="/tool/:lang/france/deficit-calculator" element={<FranceDeficitCalculatorPage />} />
+
+              {/* Italy Tool Routes */}
+              <Route path="/tool/:lang/italy/income-tax-calculator" element={<ItalyIncomeTaxPage />} />
+              <Route path="/tool/:lang/italy/vat-calculator" element={<ItalyVATPage />} />
+              <Route path="/tool/:lang/italy/budget-analyzer" element={<ItalyBudgetAnalyzerPage />} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>

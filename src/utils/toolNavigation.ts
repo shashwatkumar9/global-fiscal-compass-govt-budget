@@ -80,6 +80,30 @@ const franceToolRoutes: { [key: string]: string } = {
   "France Deficit Calculator": "deficit-calculator"
 };
 
+// Map of Italian tools to their actual page routes
+const italyToolRoutes: { [key: string]: string } = {
+  "Italy Income Tax Calculator": "income-tax-calculator",
+  "Italy VAT Calculator": "vat-calculator",
+  "Italy Corporate Tax Calculator": "corporate-tax-calculator",
+  "Italy Capital Gains Tax Calculator": "capital-gains-tax-calculator",
+  "Italy Property Tax Calculator": "property-tax-calculator",
+  "Italy Inheritance Tax Calculator": "inheritance-tax-calculator",
+  "Italy Payroll Tax Calculator": "payroll-tax-calculator",
+  "Italy Sales Tax Calculator": "sales-tax-calculator",
+  "Italy Import Tax Calculator": "import-tax-calculator",
+  "Italy Municipal Tax Calculator": "municipal-tax-calculator",
+  "Italy Budget Analyzer": "budget-analyzer",
+  "Italy GDP Calculator": "gdp-calculator",
+  "Italy Public Debt Calculator": "public-debt-calculator",
+  "Italy Revenue Projector": "revenue-projector",
+  "Italy Spending Tracker": "spending-tracker",
+  "Italy Budget Comparison": "budget-comparison",
+  "Italy Fiscal Impact Tool": "fiscal-impact-tool",
+  "Italy Economic Growth Calculator": "economic-growth-calculator",
+  "Italy Budget Allocation Tool": "budget-allocation-tool",
+  "Italy Deficit Calculator": "deficit-calculator"
+};
+
 export const parseToolName = (toolString: string): ParsedTool => {
   // Get all countries from continents
   const allCountries = Object.values(continents).flatMap(continent => continent.countries);
@@ -120,7 +144,8 @@ export const generateCountrySlug = (country: string): string => {
     "South Korea": "south-korea",
     "New Zealand": "new-zealand",
     "South Africa": "south-africa",
-    "France": "france"
+    "France": "france",
+    "Italy": "italy"
   };
   
   return countrySlugMap[country] || country.toLowerCase().replace(/\s+/g, '-');
@@ -147,6 +172,13 @@ export const getToolRoute = (toolString: string, lang: string): string => {
   if (franceToolRoutes[toolString]) {
     const route = `/tool/${lang}/france/${franceToolRoutes[toolString]}`;
     console.log(`Found French tool route: ${route}`);
+    return route;
+  }
+  
+  // Check if it's an Italian tool with existing page
+  if (italyToolRoutes[toolString]) {
+    const route = `/tool/${lang}/italy/${italyToolRoutes[toolString]}`;
+    console.log(`Found Italy tool route: ${route}`);
     return route;
   }
   
