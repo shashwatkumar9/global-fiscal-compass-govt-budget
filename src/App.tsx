@@ -102,6 +102,15 @@ import ItalyPayrollTaxPage from "./pages/tools/ItalyPayrollTaxPage";
 import ItalySalesTaxPage from "./pages/tools/ItalySalesTaxPage";
 import ItalyImportTaxPage from "./pages/tools/ItalyImportTaxPage";
 import ItalyMunicipalTaxPage from "./pages/tools/ItalyMunicipalTaxPage";
+import ItalyGDPCalculatorPage from "./pages/tools/ItalyGDPCalculatorPage";
+import ItalyPublicDebtCalculatorPage from "./pages/tools/ItalyPublicDebtCalculatorPage";
+import ItalyRevenueProjectorPage from "./pages/tools/ItalyRevenueProjectorPage";
+import ItalySpendingTrackerPage from "./pages/tools/ItalySpendingTrackerPage";
+import ItalyBudgetComparisonPage from "./pages/tools/ItalyBudgetComparisonPage";
+import ItalyFiscalImpactToolPage from "./pages/tools/ItalyFiscalImpactToolPage";
+import ItalyEconomicGrowthCalculatorPage from "./pages/tools/ItalyEconomicGrowthCalculatorPage";
+import ItalyBudgetAllocationToolPage from "./pages/tools/ItalyBudgetAllocationToolPage";
+import ItalyDeficitCalculatorPage from "./pages/tools/ItalyDeficitCalculatorPage";
 
 const queryClient = new QueryClient();
 
@@ -242,6 +251,15 @@ const App = () => (
               <Route path="/tool/:lang/italy/import-tax-calculator" element={<ItalyImportTaxPage />} />
               <Route path="/tool/:lang/italy/municipal-tax-calculator" element={<ItalyMunicipalTaxPage />} />
               <Route path="/tool/:lang/italy/budget-analyzer" element={<ItalyBudgetAnalyzerPage />} />
+              <Route path="/tool/:lang/italy/gdp-calculator" element={<ItalyGDPCalculatorPage />} />
+              <Route path="/tool/:lang/italy/public-debt-calculator" element={<ItalyPublicDebtCalculatorPage />} />
+              <Route path="/tool/:lang/italy/revenue-projector" element={<ItalyRevenueProjectorPage />} />
+              <Route path="/tool/:lang/italy/spending-tracker" element={<ItalySpendingTrackerPage />} />
+              <Route path="/tool/:lang/italy/budget-comparison" element={<ItalyBudgetComparisonPage />} />
+              <Route path="/tool/:lang/italy/fiscal-impact-tool" element={<ItalyFiscalImpactToolPage />} />
+              <Route path="/tool/:lang/italy/economic-growth-calculator" element={<ItalyEconomicGrowthCalculatorPage />} />
+              <Route path="/tool/:lang/italy/budget-allocation-tool" element={<ItalyBudgetAllocationToolPage />} />
+              <Route path="/tool/:lang/italy/deficit-calculator" element={<ItalyDeficitCalculatorPage />} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>
